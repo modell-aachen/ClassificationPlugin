@@ -70,9 +70,9 @@ in the baseweb will be listed below.
   <td style="padding-top:1em">
     <input type="submit" class="twikiSubmit natOkButton" value="Submit" />&nbsp;
 %IFDEFINEDTHEN{"%URLPARAM{"manage"}%" as="on"}%
-    <input type="button" class="twikiButton natAltButton" value="Hide all Categories" onclick="window.location.href='%SCRIPTURL{view}%/%BASEWEB%/%BASETOPIC%';"/>
+    <input type="button" class="foswikiButton natAltButton" value="Hide all Categories" onclick="window.location.href='%SCRIPTURL{view}%/%BASEWEB%/%BASETOPIC%';"/>
 %ELSEDEFINED%
-    <input type="button" class="twikiButton natAltButton" value="Show all Categories" onclick="window.location.href='%SCRIPTURL{view}%/%BASEWEB%/%BASETOPIC%?manage=on';"/>
+    <input type="button" class="foswikiButton natAltButton" value="Show all Categories" onclick="window.location.href='%SCRIPTURL{view}%/%BASEWEB%/%BASETOPIC%?manage=on';"/>
 %FIDEFINED%
     &nbsp;<input type="button" class="twikiButtonCancel natCancelButton" value="Reset" onclick="window.location.href='%SCRIPTURL{view}%/%BASEWEB%/%BASETOPIC%';"/>
   </td>

@@ -1,7 +1,7 @@
 %META:TOPICINFO{author="ProjectContributor" date="1196879877" format="1.1" version="$Rev$"}%
 %META:TOPICPARENT{name="TopicView"}%
 %TMPL:INCLUDE{"view"}%
-%TMPL:DEF{"textcontent"}%<div class="patternTopic">
+%TMPL:DEF{"textcontent"}%<div class="foswikiTopic">
 %DBCALL{"Applications.ClassificationApp.RenderClassifiedTopicView"}%
 <hr class="clsTopicInfoSep" />
 %TEXT% 

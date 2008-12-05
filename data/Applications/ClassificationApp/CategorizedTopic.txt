@@ -38,7 +38,7 @@ See also: CategorizedTopicTemplate, ClassifiedTopic, TaggedTopic
   <th class="foswikiFirstCol">&nbsp;</th>
   <td style="padding-top:1em">
     <input type="submit" class="twikiSubmit natOkButton" value="Submit" />
-    <input type="reset" class="twikiButton natCancelButton" value="Reset" />
+    <input type="reset" class="foswikiButton natCancelButton" value="Reset" />
   </td>
 </tr>
 </table>

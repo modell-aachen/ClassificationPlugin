@@ -171,11 +171,11 @@
 }
 
 /* pattern skin tweaks */
-.patternTopic h1 a,
-.patternTopic h2 a,
-.patternTopic h3 a,
-.patternTopic h4 a,
-.patternTopic h5 a,
-.patternTopic h6 a {
+.foswikiTopic h1 a,
+.foswikiTopic h2 a,
+.foswikiTopic h3 a,
+.foswikiTopic h4 a,
+.foswikiTopic h5 a,
+.foswikiTopic h6 a {
   text-decoration:none;
 }

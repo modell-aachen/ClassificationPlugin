@@ -67,9 +67,9 @@
 ~~~ </div>
 ~~~ %IFDEFINEDTHEN{"%BUTTONS%" as="off"}%%ELSEDEFINED%
 ~~~ <div class="clsButtonBox">
-~~~ <input class="twikiButton natCancelButton" type="button" value="Clear" 
+~~~ <input class="foswikiButton natCancelButton" type="button" value="Clear" 
 ~~~   onclick="clsClearSelection('%NAME%', 'clsCatSelector_%NAME%')" />
-~~~ <input class="twikiButton natAltButton" type="button" value="Reset"
+~~~ <input class="foswikiButton natAltButton" type="button" value="Reset"
 ~~~   onclick="clsClearSelection('%NAME%', 'clsCatSelector_%NAME%');clsSetSelection('%NAME%', 'clsCatSelector_%NAME%', '%IFDEFINED{"%VALUE%"}%')" />
 ~~~ </div>
 ~~~ %FIDEFINED%

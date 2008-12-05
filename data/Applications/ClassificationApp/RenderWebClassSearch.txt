@@ -42,7 +42,7 @@
 <tr>
   <th>&nbsp;</th>
   <td><input type="submit" value="Ok" class="twikiSubmit natOkButton" />&nbsp;
-      <input type="button" value="Reset" class="twikiButton natCancelButton" onclick="window.location.href= '%SCRIPTURLPATH{view}%/%BASEWEB%/%BASETOPIC%';" />&nbsp;
+      <input type="button" value="Reset" class="foswikiButton natCancelButton" onclick="window.location.href= '%SCRIPTURLPATH{view}%/%BASEWEB%/%BASETOPIC%';" />&nbsp;
       <label><input type="checkbox" value="on" name="searchallwebs" %IFDEFINED{"%SEARCHALLWEBS%" as="on" then=" checked "}% /> search in all webs</label>
              <input type="hidden" name="searchallwebs" value="off" />
 </tr>

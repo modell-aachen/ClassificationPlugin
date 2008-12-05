@@ -40,8 +40,8 @@
 ~~~ </td>
 ~~~ <td>
 ~~~ <div class="clsButtonBox">
-~~~   <input class="twikiButton natCancelButton clsClearButton" type="button" value="Clear" />
-~~~   <input class="twikiButton natAltButton clsResetButton" type="button" value="Reset" />
+~~~   <input class="foswikiButton natCancelButton clsClearButton" type="button" value="Clear" />
+~~~   <input class="foswikiButton natAltButton clsResetButton" type="button" value="Reset" />
 ~~~ </div>
 ~~~ </td></tr></table>
 ~~~ <div class="clsTagCloud">

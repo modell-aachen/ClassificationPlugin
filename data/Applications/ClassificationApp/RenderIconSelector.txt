@@ -36,7 +36,7 @@ This function renders a selection widget to chose an icon
 ~~~    format="
 ~~~      <div id='clsEditIcon$index'>
 ~~~      <input type='radio'
-~~~        class='twikiRadioButton'
+~~~        class='foswikiRadioButton'
 ~~~        id='clsIcon$index'
 ~~~        name='Icon'
 ~~~        value='$name'
@@ -70,7 +70,7 @@ This function renders a selection widget to chose an icon
 ~~~  <div class="clsButtonBox">
 ~~~  <input type="button" 
 ~~~         title="No photo"
-~~~         class="twikiButton natCancelButton" 
+~~~         class="foswikiButton natCancelButton" 
 ~~~         value="Clear"
 ~~~    onclick="
 ~~~      this.blur();
@@ -79,7 +79,7 @@ This function renders a selection widget to chose an icon
 ~~~      $('#clsIconNone').attr('checked', 'checked');
 ~~~    "
 ~~~  >
-~~~  <input type="button" class="twikiButton natAltButton" value="Reset"
+~~~  <input type="button" class="foswikiButton natAltButton" value="Reset"
 ~~~    onclick="
 ~~~      this.blur();
 ~~~      $('.clsEditIcon').removeClass('selected');
