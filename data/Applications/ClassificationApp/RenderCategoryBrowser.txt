@@ -18,7 +18,7 @@
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
-<verbatim>
+<verbatim class="tml">
 %STARTINCLUDE%<div class="clsBrowser">
 ~~~ <noautolink>
 %~~ HIERARCHY{
@@ -37,9 +37,9 @@
 ~~~     <a href=\"$url\" 
 ~~~          title=\"$summary\">
 ~~~         <img src='$icon' alt='$percntENCODE{$title}$percnt'/>
-~~~         $title</a>
+~~~         <noautolink>$title</noautolink></a>
 ~~~       $percntIFDEFINED{\"$cyclic\" as=\"1\" 
-~~~         then=\" <span class='foswikiAlert'>C</span>\"
+~~~         then=\" <span class='twikiAlert'>C</span>\"
 ~~~       }$percnt
 ~~~     $percntIFDEFINED{\"$leafs \" as=\"0 \" then=\" \" else=\" ($leafs)\"}$percnt
 ~~~     $percntIFDEFINED{\"$subcats\" as=\"0\" 

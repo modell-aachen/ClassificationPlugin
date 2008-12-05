@@ -17,7 +17,7 @@ in the baseweb will be listed below.
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
-<verbatim>
+<verbatim class="tml">
 %STARTINCLUDE%<!-- render category factory -->
 ---++ Create a new category
 <noautolink>
@@ -33,19 +33,19 @@ in the baseweb will be listed below.
 <input type="hidden" name="topicparent" value="%BASEWEB%.%BASETOPIC%" />
 <table>
 <tr>
-  <th class="foswikiFirstCol">Title:</th>
+  <th class="twikiFirstCol">Title:</th>
   <td><input class="twikiInputField" type="text" id="title" name="TopicTitle" size="60" onblur="wikify('title','topic', 'Category')" onkeyup="wikify('title','topic', 'Category')" value="%URLPARAM{"TopicTitle"}%" /></td>
 </tr>
 <tr>
-  <th class="foswikiFirstCol">Topic:</th>
+  <th class="twikiFirstCol">Topic:</th>
   <td><input class="twikiInputField" type="text" id="topic" name="topic" size="60" value="%URLPARAM{"topic"}%" /></td>
 </tr>
 <tr>
-  <th class="foswikiFirstCol">Summary:</th>
+  <th class="twikiFirstCol">Summary:</th>
   <td><input class="twikiInputField" type="text" name="Summary" size="60" value="%URLPARAM{"Summary"}%"/></td>
 </tr>
 <tr>
-  <th class="foswikiFirstCol" valign="top">Parent:</th>
+  <th class="twikiFirstCol" valign="top">Parent:</th>
   <td>
 %~~ DBCALL{"Applications.ClassificationApp.RenderEditCategoryBrowser" 
 ~~~   NAME="Category" 
@@ -56,17 +56,17 @@ in the baseweb will be listed below.
   </td>
 </tr>
 <tr>
-  <th class="foswikiFirstCol" valign="top">Icon:
+  <th class="twikiFirstCol" valign="top">Icon:
     %TWISTYBUTTON{showimg="%ICONURLPATH{plus}%" hideimg="%ICONURLPATH{minus}%" id="icons" link=""}%
   </th>
   <td>
     %TWISTYTOGGLE{id="icons"}%
-      %DBCALL{"Applications.ClassificationApp.RenderIconSelector" BUTTONS="off" VALUE="%URLPARAM{"Icon"}%"}%
+      %DBCALL{"Applications.ClassificationApp.RenderIconSelector" BUTTONS="off" VALUE="%URLPARAM{"Icon"}%" SOURCE="%CLASSIFICATIONPLUGIN_ICONSET%"}%
     %ENDTWISTYTOGGLE%
   </td>
 </tr>
 <tr style="padding-top:1em">
-  <th class="foswikiFirstCol">&nbsp;</th>
+  <th class="twikiFirstCol">&nbsp;</th>
   <td style="padding-top:1em">
     <input type="submit" class="twikiSubmit natOkButton" value="Submit" />&nbsp;
 %IFDEFINEDTHEN{"%URLPARAM{"manage"}%" as="on"}%

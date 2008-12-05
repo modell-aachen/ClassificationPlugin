@@ -1,12 +1,12 @@
-%META:TOPICINFO{author="ProjectContributor" date="1199824438" format="1.1" reprev="1.1" version="$Rev$"}%
+%META:TOPICINFO{author="ProjectContributor" date="1222197731" format="1.1" reprev="1.1" version="$Rev$"}%
 %META:TOPICPARENT{name="TopicView"}%
 %TMPL:INCLUDE{"edit"}%
-%TMPL:DEF{"title"}%%TOPICTITLE% - (%MAKETEXT{"edit classified topic"}%) - %WIKITOOLNAME%%TMPL:END%
+%TMPL:DEF{"title"}%%TOPICTITLE% - (%MAKETEXT{"edit categorized topic"}%) - %WIKITOOLNAME%%TMPL:END%
 %TMPL:DEF{"contenttitle"}%<!-- contenttitle -->
 %IFDEFINEDTHEN{"%IFEXISTS{"%WEB%.%TOPIC%"}%" as="1"}%
-<h1>[[%WEB%.%TOPIC%][%WEBLINK{format="$web"}%.%TOPIC%]] (%MAKETEXT{"edit classified topic"}%)</h1>
+<h1>[[%WEB%.%TOPIC%][%WEBLINK{format="$web"}%.%TOPIC%]] (%MAKETEXT{"edit categorized topic"}%)</h1>
 %ELSEDEFINED%
-<h1><nop>%WEBLINK{format="$web"}%.%TOPIC% (%MAKETEXT{"new classified topic"}%)</h1>
+<h1><nop>%WEBLINK{format="$web"}%.%TOPIC% (%MAKETEXT{"new categorized topic"}%)</h1>
 %FIDEFINED%
 <!-- //contenttitle -->%TMPL:END%
 %TMPL:DEF{"topicmeta"}%<!-- topicmeta -->
@@ -35,19 +35,10 @@
   }%
 </div>
 %ENDTAB%
-%TAB{"Tags" after="fixHeightOfPane()"}%
-<div class="natTopicEditForm">
-  %DBCALL{"Applications.ClassificationApp.RenderEditTagCloud"
-    NAME="Tag"
-    TITLE="Tags: "
-    VALUE="%URLPARAM{"Tag" default="%FORMFIELD{topic="%BASEWEB%.%BASETOPIC%" "Tag"}%"}%"
-  }%
-</div>
-%ENDTAB%
 <!-- //formfields -->%TMPL:END%
 
 %META:FORM{name="Applications.ApplicationTopic"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="TopicView"}%
-%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
-%META:FIELD{name="Summary" attributes="" title="Summary" value="Editor for classified topics, <nop>NatSkin version"}%
+%META:FIELD{name="TopicType" title="TopicType" value="TopicView"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="NatSkinCategorizedTopicEditTemplate"}%
+%META:FIELD{name="Summary" attributes="" title="Summary" value="Editor for CategorizedTopics, <nop>NatSkin variation"}%
 %META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%

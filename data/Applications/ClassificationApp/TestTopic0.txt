@@ -10,8 +10,8 @@ TestTopic0
    * Set TOPICTITLE = Foo
 
 %META:FORM{name="Applications.ClassificationApp.ClassifiedTopic"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="ClassifiedTopic, CategorizedTopic, TaggedTopic"}%
-%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="TestTopic0"}%
+%META:FIELD{name="TopicType" title="TopicType" value="ClassifiedTopic, CategorizedTopic, TaggedTopic"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="Foo"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value="foo bar"}%
-%META:FIELD{name="Tag" attributes="" title="Tag" value="client, fat, foo, sql"}%
-%META:FIELD{name="Category" attributes="" title="Category" value="PlansAndPresentations, TestCategory11"}%
+%META:FIELD{name="Tag" attributes="" title="Tag" value="fertig, festival, freak"}%
+%META:FIELD{name="Category" attributes="" title="Category" value="PlansAndPresentations"}%

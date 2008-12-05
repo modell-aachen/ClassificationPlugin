@@ -17,7 +17,7 @@
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
-<verbatim>
+<verbatim class="tml">
 %STARTINCLUDE%<!-- render all categories -->
 <noautolink>
 %~~ MAKEINDEX{"

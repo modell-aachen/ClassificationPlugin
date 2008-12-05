@@ -26,7 +26,7 @@ This function renders a selection widget to chose an icon
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
-<verbatim>
+<verbatim class="tml">
 %STARTINCLUDE%<!-- render photo selector -->
 ~~~  <div class="clsIconSelector">
 %~~  ATTACHMENTS{

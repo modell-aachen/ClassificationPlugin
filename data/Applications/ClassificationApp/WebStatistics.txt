@@ -4,17 +4,18 @@
 
 | *Month:* | *Topic <br /> views:* | *Topic <br /> saves:* | *File <br /> uploads:* | *Most popular <br /> topic views:* | *Top contributors for <br /> topic save and uploads:* |
 | <!--statDate--> | <!--statViews--> | <!--statSaves--> | <!--statUploads--> | <!--statTopViews--> | <!--statTopContributors--> |
+| Sep 2008 |  16 |  2 |  1 | &nbsp;&nbsp;6 [[WebHome]]<br />&nbsp;&nbsp;5 [[IconSet]]<br />&nbsp;&nbsp;3 [[RenderCategory]]<br />&nbsp;&nbsp;1 [[TopicFunction]]<br />&nbsp;&nbsp;1 [[BusinessStructure]] | &nbsp;&nbsp;3 Main.MichaelDaum |
 | Apr 2008 |  0 |  0 |  0 |  |  |
 | Mar 2008 |  52 |  6 |  0 | &nbsp;15 [[Category]]<br />&nbsp;&nbsp;7 [[RenderCategory]]<br />&nbsp;&nbsp;6 [[WebHome]]<br />&nbsp;&nbsp;6 [[TopicType]]<br />&nbsp;&nbsp;3 [[ClassifiedTopic]]<br />&nbsp;&nbsp;3 [[WebTagCloud]]<br />&nbsp;&nbsp;3 [[RenderClassifiedTopicView]]<br />&nbsp;&nbsp;2 [[NatSkinClassifiedTopicViewTemplate]]<br />&nbsp;&nbsp;2 [[TaggedTopic]]<br />&nbsp;&nbsp;1 [[WebClassSearch]]<br />&nbsp;&nbsp;1 [[CategorizedTopic]] | &nbsp;&nbsp;6 Main.MichaelDaum |
 | Feb 2008 |  0 |  0 |  0 |  |  |
 | Jan 2008 |  0 |  0 |  0 |  |  |
 
 __Notes:__
-	* Do not edit this topic, it is updated automatically. (You can also <a href="%SCRIPTURLPATH{"statistics"}%/%BASEWEB%">force</a> an update)
+	* Do not edit this topic, it is updated automatically. (You can also <a href="%SCRIPTURLPATH{"statistics"}%/%WEB%/%TOPIC%">force</a> an update)
 	* %SYSTEMWEB%.CompleteDocumentation tells you how to enable the automatic updates of the statistics.
 	* Suggestion: You could archive this topic once a year and delete the previous year's statistics from the table.
 
 %META:FORM{name="Applications.ApplicationTopic"}%
-%META:FIELD{name="TopicType" attributes="M" title="TopicType" value="WebTool"}%
+%META:FIELD{name="TopicType" title="TopicType" value="WebTool"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value="Statistics"}%
 %META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="TWikiWorkbench"}%

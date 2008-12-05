@@ -3,6 +3,9 @@
 %DBCALL{"Applications.ClassificationApp.RenderCategory"}%
 
 %META:FORM{name="Applications.ClassificationApp.Category"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="Category, CategorizedTopic"}%
-%META:FIELD{name="Summary" attributes="" title="Summary" value=""}%
+%META:FIELD{name="TopicType" title="TopicType" value="Category, CategorizedTopic"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="TestCategory6"}%
+%META:FIELD{name="Summary" attributes="" title="Summary" value="blabla"}%
 %META:FIELD{name="Category" attributes="" title="Category" value="TestCategory5"}%
+%META:FIELD{name="Icon" attributes="" title="Icon" value=""}%
+%META:FIELD{name="ImportedCategory" attributes="" title="<nop>ImportedCategory" value=""}%

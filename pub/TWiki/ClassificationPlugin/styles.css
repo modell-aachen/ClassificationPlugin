@@ -1,14 +1,14 @@
 .clsTopicInfo {
-  color:gray;
+  color:#808080;
 }
 .clsTopicInfoSep {
   margin:0.3em 0em 1em 0em;
   clear:both;
 }
 .clsBrowser a {
-  text-decoration:none;
+  text-decoration:none !important;
 }
-.clsBrowser a.foswikiCurrentTopicLink {
+.clsBrowser a.twikiCurrentTopicLink {
   color:red;
 }
 .clsBrowser .treeview li { 
@@ -42,6 +42,20 @@
   border:1px solid #ccc;
   margin-bottom:5px;
 }
+.clsBrowser ul li a:hover,
+.clsBrowser ul li a {
+  background-image:none;
+  padding:0px;
+}
+.clsSideBar.clsBrowser {
+  border:0px;
+  padding:0px;
+  margin-bottom:0px;
+}
+
+.clsIconSelector label {
+  padding:0px;
+}
 .clsTagSelector table td,
 .clsTagSelector table th {
   padding:0em 1em 0em 0em;
@@ -49,49 +63,6 @@
 .clsTagSelector table {
   margin:5px 0px;
   width:auto !important;
-}
-.clsButtonBox
-.aquaPillSelected,
-.aquaPill {
-  background-repeat:no-repeat;
-  background-image:url('aqua-pill-18.gif');
-  background-position:left top;
-  text-decoration:none !important;
-  font-size:11px;
-  line-height:18px;
-  height:18px;
-  float:left;
-  vertical-align:middle;
-}
-.aquaPillSelected span,
-.aquaPill span {
-  color:white;
-  font-weight:bold;
-  margin:0px 0px 0px 10px;
-  padding:0px 10px 0px 0px;
-  background-image:url('aqua-pill-18.gif');
-  background-repeat:no-repeat;
-  background-position:right top;
-  font-size:11px;
-  line-height:18px;
-  line-height:18px;
-  height:18px;
-  float:left;
-  vertical-align:middle;
-}
-.aquaPill:hover,
-.aquaPillSelected:hover {
-  text-decoration:none;
-  color:white;
-}
-.aquaPill:hover,
-.aquaPillSelected {
-  background-image:url('aqua-pill-18.gif') !important;
-  background-position:left bottom !important;
-}
-.aquaPill:hover span,
-.aquaPillSelected span {
-  background-position:right bottom;
 }
 #clsNewCategory, #clsNewTopic {
   margin-bottom:0.5em;
@@ -103,7 +74,7 @@
 .clsTagCloud .typed {
   background:pink;
 }
-.clsCategoryFactory .foswikiFirstCol {
+.clsCategoryFactory .twikiFirstCol {
   width:100px;
 }
 
@@ -111,21 +82,31 @@
 .fltMakeIndexWrapper {
   margin:1em 0px;
 }
+.fltMakeIndexWrapper table {
+  width:100%;
+}
+.fltMakeIndexWrapper a {
+  text-decoration:none;
+}
 .fltMakeIndexWrapper h3 {
-  margin:0px !important;
+  border:0px;
+  margin:0px;
+  padding:0px;
+  font-size:110%;
 }
 .fltMakeIndexWrapper ul {
-  margin:0px;
-  padding-top:0px;
-  padding-bottom:0px;
+  margin:0em 0em 1.0em 0em;
+  padding:0em;
+  list-style-type:none;
 }
 .fltMakeIndexWrapper li {
-  padding:7px 0px 0px 0px;
-  margin:0px 0px 3px 0px;
+  padding:0.5em 0em 0.5em 0em;
+  margin:0em 0em 0.5em 0em;
   border-bottom:1px solid #eeeeee;
+  min-height:16px;
 }
 .fltMakeIndexWrapper .clsTopicInfo {
-  color:gray;
+  color:#808080;
   margin:0px;
 }
 .fltMakeIndexWrapper .redDot a {
@@ -136,20 +117,36 @@
 }
 
 .fltMakeIndexWrapper .clsSubCategories {
+  display:inline;
   margin-top:0.2em;
   margin-bottom:0.2em;
 }
 .fltMakeIndexWrapper .clsSubCategories a,
 .fltMakeIndexWrapper .clsSubCategories {
-  color:gray;
+  color:#808080;
+}
+.fltAnchors {
+  margin:1.5em 0em 0em;
+  /*
+  text-align:center;
+  border-bottom:1px solid #eeeeee;
+  */
+}
+.fltMakeIndexWrapper .fltAnchors a {
+  /*text-decoration:none;*/
+  padding:2px 4px;
+  margin:0px;
+}
+.clsIndexItem {
+  min-height:16px;
 }
 .clsTopicItem {
-  padding-left:18px;
+  padding-left:20px;
   background-image:url(../../Applications/ClassificationApp/IconSet/text.png); 
   background-repeat:no-repeat;
 }
 .clsCategoryItem {
-  padding-left:18px;
+  padding-left:20px;
   background-image:url(../../Applications/ClassificationApp/IconSet/folder.gif);
   background-repeat:no-repeat;
 }
@@ -170,12 +167,33 @@
   display:none;
 }
 
-/* pattern skin tweaks */
-.foswikiTopic h1 a,
-.foswikiTopic h2 a,
-.foswikiTopic h3 a,
-.foswikiTopic h4 a,
-.foswikiTopic h5 a,
-.foswikiTopic h6 a {
+
+.clsCategoryIcon {
+  margin:0px 5px 0px 3px;
+}
+.clsFilterForm.twikiFormSteps {
+  border-width:1px 0px;
+  margin:1.5em 0em 0em;
+}
+.clsFilterForm .twikiFormStep {
+  float:left;
+  border:0px;
+  margin:0.5em 2em 0.5em 0.5em;
+}
+.clsFilterForm .twikiFormStep h3,
+.clsFilterForm .twikiFormStep h4 {
+  display:inline;
+  font-weight:bold;
   text-decoration:none;
+  border:0px;
+  font-style:normal;
+}
+/* pattern skin tweaks */
+#patternMainContents h1 a,
+#patternMainContents h2 a,
+#patternMainContents h3 a,
+#patternMainContents h4 a,
+#patternMainContents h5 a,
+#patternMainContents h6 a {
+  text-decoration:none !important;
 }

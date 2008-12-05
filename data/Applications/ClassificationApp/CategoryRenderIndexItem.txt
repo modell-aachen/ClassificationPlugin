@@ -16,7 +16,7 @@ a summary for an object of type ClassifiedTopic.
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
-<verbatim>
+<verbatim class="tml">
 %STARTINCLUDE%<!-- CategoryRenderIndexItem -->
 %~~ CATINFO{cat="%DBQUERY{topic="%OBJECT%" format="$topic"}%"
 ~~~   maxchildren="6"
@@ -26,9 +26,8 @@ a summary for an object of type ClassifiedTopic.
 *~~     <div class='clsIndexItem clsCategoryItem' style='background-image:url($icon)'>
 ~~~       $link
 ~~~       $percntIFDEFINED{\"$leafs\" as=\"0\" then=\"\" else=\"&nbsp;($leafs)\"}$percnt
-*~~       &nbsp;$percntREDDOT{$web.$topic}$percnt
 ~~~       <div class='clsTopicInfo'>$summary</div>
-~~~       <div class='clsSubCategories'>$children&nbsp;$more</div>
+~~~       <div class='clsSubCategories'>$children $more</div>
 *~~     </div>
 ~~~  "
 ~~~ }%

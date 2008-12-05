@@ -16,12 +16,12 @@ The output format for the list formats is fixed currently to be used in RenderCa
    * web: name of the web where to extract the hierarchy from, defaults to BASEWEB
    * root: top category inside the hierarchy to start extracting information from, defaults to !TopCategory
    * depth: number of levels to extract, defaults to 2
-   * format: one of "browser" or "editor", defaults to "browser"
+   * format: one of "browser", "sidebar", or "editor", defaults to "browser"
 
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
-<verbatim>
+<verbatim class="tml">
 %STARTINCLUDE%
 *~~ [
 %~~ HIERARCHY{
@@ -49,7 +49,7 @@ The output format for the list formats is fixed currently to be used in RenderCa
 </verbatim>
 
 ---++ Browser format
-<verbatim>
+<verbatim class="tml">
 %STARTSECTION{"browser"}%
 *~~  <a href='$url' 
 ~~~     title='$percntENCODE{$summary}$percnt'>
@@ -57,7 +57,7 @@ The output format for the list formats is fixed currently to be used in RenderCa
 ~~~    $title
 ~~~  </a>
 ~~~  $percntIFDEFINED{\"$cyclic\" as=\"1\" 
-~~~    then=\" <span class='foswikiAlert'>C</span>\"
+~~~    then=\" <span class='twikiAlert'>C</span>\"
 ~~~  }$percnt
 ~~~  $percntIFDEFINED{\"$leafs\" as=\"0\"
 ~~~    then=\"\"
@@ -67,8 +67,19 @@ The output format for the list formats is fixed currently to be used in RenderCa
 %ENDSECTION{"browser"}%
 </verbatim>
 
+---++ Sidebar format
+<verbatim class="tml">
+%STARTSECTION{"sidebar"}%
+*~~  <table cellspacing='0' cellpadding='0'><tr>
+*~~    <td valign='top'><img class='clsCategoryIcon' src='$icon' alt='$percntENCODE{$title}$percnt' /></td>
+*~~    <td valign='top'><a href='$url' title='$percntENCODE{$summary}$percnt'><noautolink>$title</noautolink></a></td>
+*~~  </tr></table>
+*~~
+%ENDSECTION{"sidebar"}%
+</verbatim>
+
 ---++ Editor format
-<verbatim>
+<verbatim class="tml">
 %STARTSECTION{"editor"}%
 *~~  <a href='javascript:void(0)'
 ~~~     title='$percntENCODE{$summary}$percnt'
@@ -79,7 +90,7 @@ The output format for the list formats is fixed currently to be used in RenderCa
 ~~~     }$percnt'
 ~~~     >
 ~~~     <img src='$icon' alt='$percntENCODE{$title}$percnt' />
-~~~    $title</a>
+~~~    <noautolink>$title</noautolink></a>
 *~~
 %ENDSECTION{"editor"}%
 </verbatim>

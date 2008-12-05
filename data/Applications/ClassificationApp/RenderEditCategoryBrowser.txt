@@ -22,7 +22,7 @@
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
-<verbatim>
+<verbatim class="tml">
 %STARTINCLUDE%<div id="clsCatSelector_%NAME%"><noautolink>
 ~~~ <input type="hidden" size="75" name="%NAME%" id="%NAME%" value="%IFDEFINED{"%VALUE%"}%" />
 ~~~ %IFDEFINED{"%TITLE%" then="<h3 class='clsBrowserTitle'>%TITLE%</h3>"}%
@@ -58,7 +58,7 @@
 ~~~            }$percnt'
 ~~~            title='$percntENCODE{$summary}$percnt'>
 ~~~         <img src='$icon' alt='$percntENCODE{$title}$percnt'/>
-~~~         $title</a>
+~~~         <noautolink>$title</noautolink></a>
 ~~~         $percntIFDEFINED{\"$subcats\" as=\"0\" 
 ~~~           then=\"\" else=\"<ul><li><span class='placeholder'>&nbsp;</span></li></ul>\"
 ~~~         }$percnt

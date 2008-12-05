@@ -1,6 +1,6 @@
 # Plugin for Foswiki - The Free and Open Source Wiki, http://foswiki.org/
 #
-# Copyright (C) 2006-2007 Michael Daum http://michaeldaumconsulting.com
+# Copyright (C) 2006-2008 Michael Daum http://michaeldaumconsulting.com
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -16,9 +16,13 @@ package TWiki::Plugins::ClassificationPlugin::Core;
 
 use strict;
 
-use vars qw(%hierarchies $baseWeb $baseTopic);
+use vars qw(%hierarchies %timeStamps $baseWeb $baseTopic 
+  $purgeMode
+  @touchedCats
+);
 
 use constant DEBUG => 0; # toggle me
+use constant FIXFORMFIELDS => 1; # work around a but in TWiki <= 4.2.3 
 
 ###############################################################################
 sub writeDebug {
@@ -29,17 +33,24 @@ sub writeDebug {
 sub init {
   ($baseWeb, $baseTopic) = @_;
 
-  %hierarchies = ();
+  $purgeMode = 0;
+  @touchedCats = ();
+
+  #%hierarchies = ();
+  #%timeStamps = ();
 }
 
 ###############################################################################
 sub finish {
 
+  writeDebug("called finish()");
   foreach my $hierarchy (values %hierarchies) {
     next unless defined $hierarchy;
     $hierarchy->finish();
-    undef $hierarchies{$hierarchy->{web}};
+    #undef $hierarchies{$hierarchy->{web}};
+    #undef $timeStamps{$hierarchy->{web}};
   }
+  writeDebug("done finish()");
 }
 
 
@@ -295,7 +306,7 @@ sub handleHIERARCHY {
   $thisWeb =~ s/\./\//go;
 
   my $hierarchy = getHierarchy($thisWeb);
-  return $hierarchy->toHTML($params);
+  return $hierarchy->traverse($params);
 }
 
 ###############################################################################
@@ -517,6 +528,7 @@ sub handleCATINFO {
   }
 
   my $hierarchy = getHierarchy($thisWeb);
+  #writeDebug("thisWeb=$thisWeb, thisTopic=$thisTopic");
   return '' unless $hierarchy;
 
   $theSubsumes =~ s/^\s+//go;
@@ -531,7 +543,7 @@ sub handleCATINFO {
   }
 
   my @categories = keys %$categories;
-  #@categories = grep (!/^(TopCategory|BottomCategory)$/, @categories);
+  #writeDebug("categories=".join(', ', @categories));
   return '' unless @categories;
   
   my @result;
@@ -541,11 +553,8 @@ sub handleCATINFO {
       next;
     }
     my $category = $hierarchy->getCategory($catName);
-    unless ($category) {
-      writeDebug("Woops: there's no category '$catName' ... found in $thisTopic");
-      next;
-    }
-
+    next unless $category;
+    #writeDebug("found $category");
 
     # skip catinfo from another branch of the hierarchy
     next if $subsumesCat && !$hierarchy->subsumes($subsumesCat, $category);
@@ -553,56 +562,76 @@ sub handleCATINFO {
     my $line = $theFormat;
 
     my $parents = '';
+    my @parents;
+    if ($line =~ /\$parent/) {
+      @parents = sort {uc($a->{title}) cmp uc($b->{title})} $category->getParents();
+    }
     if ($line =~ /\$parents?\b/) {
       my @links = ();
-      foreach my $parent ($category->getParents()) {
+      foreach my $parent (@parents) {
         push @links, $parent->getLink();
       }
-      $parents = join(', ', @links);
+      $parents = join($theSep, @links);
     }
 
     my $parentsName = '';
     if ($line =~ /\$parents?names?/) {
       my @names = ();
-      foreach my $parent ($category->getParents()) {
+      foreach my $parent (@parents) {
         push @names, $parent->{name};
       }
-      $parentsName = join(', ', @names);
+      $parentsName = join($theSep, @names);
     }
 
     my $parentsTitle = '';
     if ($line =~ /\$parents?title/) {
       my @titles = ();
-      foreach my $parent ($category->getParents()) {
+      foreach my $parent (@parents) {
         push @titles, $parent->{title};
       }
-      $parentsTitle = join(', ', @titles);
+      $parentsTitle = join($theSep, @titles);
     }
 
     my $parentLinks = '';
     if ($line =~ /\$parents?links?/) {
       my @links = ();
-      foreach my $parent ($category->getParents()) {
+      foreach my $parent (@parents) {
         push @links, $parent->getLink();
       }
-      $parentLinks = join(', ', @links);
+      $parentLinks = join($theSep, @links);
     }
 
     my $parentUrls = '';
     if ($line =~ /\$parents?urls?/) {
       my @urls = ();
-      foreach my $parent ($category->getParents()) {
+      foreach my $parent (@parents) {
         push @urls, $parent->getUrl();
       }
-      $parentUrls = join(', ', @urls);
+      $parentUrls = join($theSep, @urls);
+    }
+
+    my $breadCrumbs = '';
+    if ($line =~ /\$breadcrumbs?/) {
+      my @breadCrumbs = ();
+      my $parent = $category;
+      my %seen = ();
+      while ($parent) {
+        last if $seen{$parent};
+        $seen{$parent} = 1;
+        push @breadCrumbs, $parent->getLink();
+        my @parents = $parent->getParents();
+        last unless @parents;
+        $parent = shift @parents;
+        last if $parent eq $parent->{hierarchy}{_top};
+      }
+      $breadCrumbs = join($theSep, reverse @breadCrumbs);
     }
 
     my @children;
     my $moreChildren = '';
     if ($line =~ /\$children/) {
-      @children = $category->getChildren();
-      @children = grep {$_->{name} ne 'BottomCategory'} 
-        @children;
+      @children = sort {uc($a->{title}) cmp uc($b->{title})} $category->getChildren();
+      @children = grep {$_->{name} ne 'BottomCategory'} @children;
 
       if ($theHideNull eq 'on') {
         @children = grep {$_->countLeafs() > 0} 
@@ -629,7 +658,7 @@ sub handleCATINFO {
       foreach my $child (@children) {
         push @links, $child->getLink();
       }
-      $children = join(', ', @links);
+      $children = join($theSep, @links);
     }
 
     my $childrenName = '';
@@ -638,7 +667,7 @@ sub handleCATINFO {
       foreach my $child (@children) {
         push @names, $child->{name};
       }
-      $childrenName = join(', ', @names);
+      $childrenName = join($theSep, @names);
     }
 
     my $childrenTitle = '';
@@ -647,7 +676,7 @@ sub handleCATINFO {
       foreach my $child (@children) {
         push @titles, $child->{title};
       }
-      $childrenTitle = join(', ', @titles);
+      $childrenTitle = join($theSep, @titles);
     }
 
     my $childrenLinks = '';
@@ -656,7 +685,7 @@ sub handleCATINFO {
       foreach my $child (@children) {
         push @links, $child->getLink();
       }
-      $childrenLinks = join(', ', @links);
+      $childrenLinks = join($theSep, @links);
     }
 
     my $childrenUrls = '';
@@ -665,8 +694,14 @@ sub handleCATINFO {
       foreach my $child (@children) {
         push @urls, $child->getUrl();
       }
-      $childrenUrls = join(', ', @urls);
+      $childrenUrls = join($theSep, @urls);
     }
+
+    my $tags = '';
+    if ($line =~ /\$tags/) {
+      $tags = join($theSep, sort $category->getTagsOfTopics());
+    }
+
 
     my $isCyclic = 0;
     $isCyclic = $category->isCyclic() if $theFormat =~ /\$cyclic/;
@@ -696,13 +731,14 @@ sub handleCATINFO {
     $line =~ s/\$parents?/$parents/g;
     $line =~ s/\$cyclic/$isCyclic/g;
     $line =~ s/\$leafs/$countLeafs/g;
-
+    $line =~ s/\$breadcrumbs?/$breadCrumbs/g;
     $line =~ s/\$children?name/$childrenName/g;
     $line =~ s/\$children?title/$childrenTitle/g;
     $line =~ s/\$children?links?/$childrenLinks/g;
     $line =~ s/\$children?urls?/$childrenUrls/g;
     $line =~ s/\$children?/$children/g;
     $line =~ s/\$icon/$iconUrl/g;
+    $line =~ s/\$tags/$tags/g;
     push @result, $line;
   }
   return '' unless @result;
@@ -750,8 +786,8 @@ sub handleTAGINFO {
     $tag =~ s/^\s+//go;
     $tag =~ s/\s+$//go;
     my $line = $theFormat;
-    my $url = TWiki::Func::getScriptUrl($thisWeb, "WebTagCloud", "view", search=>$tag);
-    my $link = "<a href='$url'>$tag</a>";
+    my $url = TWiki::Func::getScriptUrl($thisWeb, "WebTagCloud", "view", tag=>$tag);
+    my $link = "<a href='$url'><noautolink>$tag</noautolink></a>";
     $line =~ s/\$url/$url/g;
     $line =~ s/\$link/$link/g;
     $line =~ s/\$web/$thisWeb/g;
@@ -772,12 +808,59 @@ sub beforeSaveHandler {
   my ($text, $topic, $web, $meta) = @_;
 
   writeDebug("beforeSaveHandler($web, $topic)");
+
   my $doAutoReparent = TWiki::Func::getPreferencesFlag('CLASSIFICATIONPLUGIN_AUTOREPARENT', $web);
   $doAutoReparent = 1 unless defined $doAutoReparent;
 
   unless ($meta) {
     my $session = $TWiki::Plugins::SESSION;
     $meta = new TWiki::Meta($session, $web, $topic, $text);
+    writeDebug("creating a new meta object");
+  }
+
+  # There's a serious bug in all TWiki's that it rewrites all of the
+  # topic text - including the meta data - if a topic gets moved to
+  # a different web. In an attempt to keep linking WikiWords intact,
+  # it rewrites the TWikiForm, i.e. the names and titles of the
+  # formfields. This however breaks mostly every code that relies
+  # on the formfields to be named like they where in the beginning.
+  # AFAICS, there's no case where renaming the formfield names is
+  # desired.
+  #
+  # What we do here is to loop pre-process the topic being saved right here
+  # and remove any leading webname from the those formfields
+  # playing a central role in this plugin, TopicType and Category.
+  # 
+  if (FIXFORMFIELDS) {
+    #if (DEBUG) {
+    #  use Data::Dumper;
+    #  $Data::Dumper::Maxdepth = 3;
+    #  writeDebug("BEFORE FIXFORMFIELDS");
+    #  writeDebug(Dumper($meta));
+    #}
+
+    foreach my $field ($meta->find('FIELD')) {
+      my $name = $field->{name};
+      my $title = $field->{title};
+      if ($field->{name} =~ /TopicType|Category/) {
+        $field->{name} =~ s/^.*[\.\/](.*?)$/$1/;
+        $field->{title} =~ s/^.*[\.\/](.*?)$/$1/;
+        writeDebug("APPLYING FIX for formfield $name");
+      }
+    }
+
+    #if (DEBUG) {
+    #  use Data::Dumper;
+    #  $Data::Dumper::Maxdepth = 3;
+    #  writeDebug("AFTER FIXFORMFIELDS");
+    #  writeDebug(Dumper($meta));
+    #}
+  }
+
+  my $trashWeb = $Foswiki::cfg{TrashWebName} || $TWiki::cfg{TrashWebName};
+  if ($web eq $trashWeb) {
+    writeDebug("detected a move from $baseWeb to trash");
+    $web = $baseWeb;# operations are on the baseWeb
   }
 
   # get topic type info
@@ -785,77 +868,180 @@ sub beforeSaveHandler {
   return unless $topicType;
   $topicType = $topicType->{value};
 
-  if ($doAutoReparent) {
+  # fix topic type depending on the form
+  my $formName = $meta->getFormName();
+  my @topicType = split(/\s*,\s*/, $topicType);
+  my %newTopicType = map {$_ => 1} @topicType;
 
-    # get categories of this topic,
-    # must get it from current meta data
-    return unless $topicType =~ /ClassifiedTopic|CategorizedTopic|Category/;
+  if ($formName =~ /^Applications[\.\/]ClassificationApp[\.\/]Category$/ && 
+    !($topicType =~ /\bCategory\b/ && $topicType =~ /\bCategorizedTopic\b/)) {
+    $newTopicType{Category} = 1;
+    $newTopicType{CategorizedTopic} = 1;
+  } 
+  elsif ($formName =~ /^Applications[\.\/]ClassificationApp[\.\/]CategorizedTopic$/ && 
+    $topicType !~ /\bCategorizedTopic\b/) {
+    %newTopicType = map {$_ => 1} split(/\s*,\s*/, $topicType);
+    $newTopicType{CategorizedTopic} = 1;
+  }
+  elsif ($formName =~ /^Applications[\.\/]ClassificationApp[\.\/]TaggedTopic$/ && 
+    $topicType !~ /\bTaggedTopic\b/) {
+    %newTopicType = map {$_ => 1} split(/\s*,\s*/, $topicType);
+    $newTopicType{TaggedTopic} = 1;
+  }
+  elsif ($formName =~ /^Applications[\.\/]ClassificationApp[\.\/]ClassifiedTopic$/ && 
+    !($topicType =~ /\bClassifiedTopic\b/ && $topicType =~ /\bCategorizedTopic\b/ && $topicType =~ /\bTaggedTopic\b/)) {
+    %newTopicType = map {$_ => 1} split(/\s*,\s*/, $topicType);
+    $newTopicType{CategorizedTopic} = 1;
+    $newTopicType{ClassifiedTopic} = 1;
+    $newTopicType{TaggedTopic} = 1;
+  }
+  if ($formName !~ /^Applications[\.\/]TopicStub$/) {
+    delete $newTopicType{TopicStub};
+  }
+  if (keys %newTopicType) {
+    my @newTopicType;
+    foreach my $item (@topicType) {
+      next unless defined $newTopicType{$item};
+      push @newTopicType, $item;
+      delete $newTopicType{$item};
+    }
+    foreach my $item (keys %newTopicType) {
+      push @newTopicType, $item;
+    }
+    my $newTopicType = join(', ', @newTopicType);
+    $meta->putKeyed('FIELD', {name =>'TopicType', title=>'TopicType', value=>$newTopicType});
+  }
 
-    my @allCats;
-    my $hierarchy = getHierarchy($web);
-    my $catFields = $hierarchy->getCatFields(split(/\s*,\s*/,$topicType));
+  # get categories of this topic,
+  # must get it from current meta data
 
-    # get categories from meta data
-    foreach my $field (@$catFields) {
-      my $cats = $meta->get('FIELD',$field);
-      next unless $cats;
-      $cats = $cats->{value};
-      next unless $cats;
-      foreach my $cat (split(/\s*,\s*/,$cats)) {
-        $cat =~ s/^\s+//go;
-        $cat =~ s/\s+$//go;
-        push @allCats, $cat;
+  return unless $topicType =~ /ClassifiedTopic|CategorizedTopic|Category|TaggedTopic/;
+
+  my $hierarchy = getHierarchy($web);
+  my $catFields = $hierarchy->getCatFields(split(/\s*,\s*/,$topicType));
+
+  # get new categories from meta data
+  my %newCats;
+  foreach my $field (@$catFields) {
+    my $cats = $meta->get('FIELD',$field);
+    next unless $cats;
+
+    my $title = $cats->{title};
+    $cats = $cats->{value};
+    next unless $cats;
+
+    # assigning TopCategory only empties the cat field
+    if ($cats eq 'TopCategory') {
+      writeDebug("found TopCategory assignment");
+      $meta->putKeyed('FIELD', {name =>$field, title=>$title, value=>''});
+      next;
+    }
+
+    foreach my $cat (split(/\s*,\s*/,$cats)) {
+      $cat =~ s/^\s+//go;
+      $cat =~ s/\s+$//go;
+      $newCats{$cat} = 1;
+    }
+  }
+
+  # get old categories from store 
+  my $db = TWiki::Plugins::DBCachePlugin::Core::getDB($web);
+  my $topicObj = $db->fastget($topic);
+  my %oldCats;
+  if (!$topicObj) {
+    $purgeMode = 2; # new topic
+  } else {
+    my $form = $topicObj->fastget("form");
+
+    if (!$form) {
+      $purgeMode = 2; # new form
+    } else {
+      $form = $topicObj->fastget($form);
+      
+      foreach my $field (@$catFields) {
+        my $cats = $form->fastget($field);
+        next unless $cats;
+        foreach my $cat (split(/\s*,\s*/,$cats)) {
+          $cat =~ s/^\s+//go;
+          $cat =~ s/\s+$//go;
+          $oldCats{$cat} = 1;
+        }
       }
     }
+  }
 
-    # set the new parent topic
-    if (@allCats) {
-      @allCats = sort @allCats;
-      my $firstCat = shift @allCats;
-      # TODO: check if the firstCat exists and only then set the parent
-      # don't autoset to HomeTopic if TopCategory
-      $firstCat = $TWiki::cfg{HomeTopic} if $firstCat eq 'TopCategory';
-      $meta->remove('TOPICPARENT');
-      $meta->putKeyed('TOPICPARENT', {name=>$firstCat});
-
-    } else {
-      #$meta->putKeyed('TOPICPARENT', {name=>''});
+  # set the new parent topic
+  if ($doAutoReparent) {
+    writeDebug("autoreparenting");
+    my $newParentCat;
+    foreach my $cat (sort keys %newCats) {
+      if ($cat ne 'TopCategory') {
+        $newParentCat = $cat;
+        last;
+      }
     }
+    my $homeTopicName = $Foswiki::cfg{HomeTopicName} || $TWiki::cfg{HomeTopicName};
+    $newParentCat = $homeTopicName unless defined $newParentCat;
+    writeDebug("newParentCat=$newParentCat");
+    $meta->remove('TOPICPARENT');
+    $meta->putKeyed('TOPICPARENT', {name=>$newParentCat});
   } else {
     writeDebug("not autoreparenting");
   }
 
-  # cache invalidation
-  my $mode = 0;
-  $mode = 1 if $topicType =~ /\bTaggedTopic\b/;
-  $mode = 2 if $topicType =~ /\bCategorizedTopic\b/;
-  $mode = 3 if $topicType =~ /\bClassifiedTopic\b/;
-  $mode = 4 if $topicType =~ /\bCategory\b/;
+  # get touched categories
+  my %touchedCats;
+  foreach my $cat (keys %oldCats) {
+    $touchedCats{$cat} = 1;
+  }
+  foreach my $cat (keys %newCats) {
+    $touchedCats{$cat} = 1;
+  }
+  $touchedCats{$topic} = 1 if $topicType =~ /\bCategory\b/;
+
+  @touchedCats = keys %touchedCats; #remember 
+
+  # cache invalidation: compute the purgeMode to be executed after save
+  $purgeMode = 1 if $topicType =~ /\bTaggedTopic\b/;
+  $purgeMode = 2 if $topicType =~ /\bCategorizedTopic\b/;
+  $purgeMode = 3 if $topicType =~ /\bClassifiedTopic\b/;
+  $purgeMode = 4 if $topicType =~ /\bCategory\b/;
 
   # try even harder if it missing the CategorizedTopic TopicType but
   # still uses categories
-  if ($mode < 2) { 
+  if ($purgeMode < 2) { 
     my $hierarchy = getHierarchy($web); 
     my $catFields = $hierarchy->getCatFields(split(/\s*,\s*/,$topicType));
     if ($catFields && @$catFields) {
-      $mode = ($mode < 1)?2:3;
+      $purgeMode = ($purgeMode < 1)?2:3;
     }
   }
 
-  writeDebug("mode=$mode");
-
-  if ($mode) {
-    my $hierarchy;
-
-    $hierarchy = getHierarchy($web);
-    $hierarchy->purgeCache($mode);
-#    $hierarchy->init();
-  }
+  writeDebug("purgeMode=$purgeMode");
+  writeDebug("touchedCats=".join(',', @touchedCats));
 }
 
 ###############################################################################
 sub afterSaveHandler {
   #my ($text, $topic, $web, $meta) = @_;
+  my $topic = $_[1];
+  my $web = $_[2];
+
+  writeDebug("afterSaveHandler($web, $topic)");
+
+  my $trashWeb = $Foswiki::cfg{TrashWebName} || $TWiki::cfg{TrashWebName};
+  if ($web eq $trashWeb) {
+    writeDebug("detected a move from $baseWeb to trash");
+    $web = $baseWeb;# operations are on the baseWeb
+  }
+ 
+  if ($purgeMode) {
+    writeDebug("purging hierarchy $web");
+    my $hierarchy;
+
+    $hierarchy = getHierarchy($web);
+    $hierarchy->purgeCache($purgeMode, \@touchedCats);
+  }
 
   finish(); # not called by modifyHeaderHandler
 }
@@ -943,6 +1129,34 @@ sub getTopicTypes {
   return \@topicTypes;
 }
 
+################################################################################
+sub getCacheFile {
+  my $web = shift;
+
+  $web =~ s/^\s+//go;
+  $web =~ s/\s+$//go;
+  $web =~ s/[\/\.]/_/go;
+
+  return TWiki::Func::getWorkArea("ClassificationPlugin").'/'.$web.'.hierarchy';
+}
+
+###############################################################################
+sub getModificationTime {
+  my $web = shift;
+
+  my $cacheFile = getCacheFile($web);
+  my @stat = stat($cacheFile);
+
+  return $stat[9] || $stat[10] || 0;
+}
+
+###############################################################################
+sub isUpToDate {
+  my $web = shift;
+
+  return 0 if !$timeStamps{$web} || $timeStamps{$web} < getModificationTime($web);
+  return 1;
+}
 
 ###############################################################################
 # returns the hierarchy object for a given web; construct a new one if
@@ -950,9 +1164,13 @@ sub getTopicTypes {
 sub getHierarchy {
   my $web = shift;
 
-  unless (defined $hierarchies{$web}) {
+  $web =~ s/\//\./go;
+  unless (isUpToDate($web)) {
+    writeDebug("constructing hierarchy for $web");
     require TWiki::Plugins::ClassificationPlugin::Hierarchy;
     $hierarchies{$web} = new TWiki::Plugins::ClassificationPlugin::Hierarchy($web);
+    $timeStamps{$web} = time();
+    writeDebug("DONE constructing hierarchy for $web");
   }
 
   return $hierarchies{$web};

@@ -8,6 +8,8 @@ See also: WebSideBar
 <div class="natSideBarContents">
 %STARTINCLUDE% <!-- -->
 %INCLUDE{"%IF{"context can_login" then="%SYSTEMWEB%.WebLeftBarLogin" else="<nop>"}%" warn="off"}%
+<b>Categories</b>
+%DBCALL{"Applications.ClassificationApp.RenderSideBar"}%
 <b>Tools</b>
 %DBCALL{"Applications.RenderSideBar"}%
 

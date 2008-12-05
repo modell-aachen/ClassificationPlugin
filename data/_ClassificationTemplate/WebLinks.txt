@@ -2,7 +2,7 @@
 %META:TOPICPARENT{name="WebPreferences"}%
 ---+ WebLinks for the %WEB% web
 
-%STARTINCLUDE%<!-- -->
+%STARTINCLUDE%<!-- weblinks -->
    * [[ClassifiedTopic][%MAKETEXT{"New Topic"}%]]
    * [[Category][Categories]]
    * [[CategoryBrowser][Category Browser]]
@@ -11,9 +11,6 @@
    * [[WebChanges][%MAKETEXT{"Changes"}%]]
    * [[WebNotify][%MAKETEXT{"Notifications"}%]]
    * [[WebStatistics][%MAKETEXT{"Statistics"}%]]
-%IFDEFINEDTHEN{"%IFACCESS{"%BASEWEB%.WebPreferences" type="change"}%" as="1"}%
-   * [[WebPreferences][%MAKETEXT{"Preferences"}%]]
-%FIDEFINED% 
 %~~ TAGRELATEDTOPICS{"%BASETOPIC%" 
 ~~~   header="<h2><a name=\"related\">Related Topics</a></h2>$n" 
 ~~~   format="   1 <a href=\"%SCRIPTURLPATH{"view"}%/%BASEWEB%/$topic\"
@@ -21,4 +18,4 @@
 *~~                $percntTOPICTITLE{\"$web.$topic\"}$percnt</a>"
 ~~~   separator="$n"
 ~~~ }%
-<!-- -->%STOPINCLUDE%
+<!-- //weblinks -->%STOPINCLUDE%

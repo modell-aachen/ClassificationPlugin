@@ -1,10 +1,50 @@
 %META:TOPICINFO{author="ProjectContributor" date="1214237774" format="1.1" reprev="1.3" version="$Rev$"}%
 %META:TOPICPARENT{name="BusinessStructure"}%
 
+   * from <nop>IntranetDirectory to <nop>IntranetDirectory = 
+     %DISTANCE{from="IntranetDirectory" to="IntranetDirectory"}% ...
+     should be 0
+
+   * from <nop>IntranetDirectory to <nop>BusinessStructure = 
+     %DISTANCE{from="IntranetDirectory" to="BusinessStructure"}% ...
+     should be 2
+
+   * from <nop>BusinessStructure to <nop>IntranetDirectory = 
+     %DISTANCE{from="BusinessStructure" to="IntranetDirectory"}% ...
+     should be -2
+
+   * from <nop>IntranetDirectory to <nop>%TOPIC% = 
+     %DISTANCE{from="IntranetDirectory" to="%TOPIC%"}% ...
+     should be 3
+
+   * from <nop>%TOPIC% to <nop>IntranetDirectory = 
+     %DISTANCE{from="%TOPIC%" to="IntranetDirectory"}% ...
+     should be -3
+
+   * from <nop>TestCategory8 to <nop>%TOPIC% = 
+     %DISTANCE{from="TestCategory8" to="%TOPIC%"}% ...
+     should be 1
+
+   * from <nop>%TOPIC% to <nop>TestCategory8 = 
+     %DISTANCE{from="%TOPIC%" to="TestCategory8"}% ...
+     should be -1
+
+   * from <nop>%TOPIC% to <nop>%TOPIC% = 
+     %DISTANCE{from="%TOPIC%" to="%TOPIC%"}% ...
+     should be 0
+
+   * from <nop>%TOPIC% to <nop>TestTopic = 
+     '%DISTANCE{from="%TOPIC%" to="TestTopic"}%' ...
+     should be ''
+
+   * from TestTopic0 to %TOPIC% = 
+     %DISTANCE{from="TestTopic0" to="%TOPIC%"}% ...
+     should be 
+
+
 
 %META:FORM{name="Applications.ClassificationApp.CategorizedTopic"}%
 %META:FIELD{name="TopicType" attributes="" title="TopicType" value="CategorizedTopic"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="Org.Chart"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value="This is a test topic with a nop  in it"}%
 %META:FIELD{name="Category" attributes="" title="Category" value="BusinessStructure, TestCategory8"}%
-%META:TOPICMOVED{by="micha" date="1214237774" from="Applications/ClassificationApp.TestCategorizedTopic1" to="Applications/ClassificationApp.OrgChart"}%

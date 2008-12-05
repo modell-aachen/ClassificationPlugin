@@ -3,10 +3,14 @@
 ---+ %TOPIC%
 %FORMFIELD{"Summary"}%
 
-%STARTINCLUDE%%DBCALL{"Applications.RenderSideBar"}%%STOPINCLUDE%
-
+%STARTINCLUDE%<!-- classificationapp.weblinks -->
+%DBCALL{"Applications.ClassificationApp.RenderSideBar"}%
+<h2 >TopicTypes</h2>
+%DBCALL{"Applications.RenderSideBar"}%
+<!-- //classificationapp.weblinks -->%STOPINCLUDE%
 
 %META:FORM{name="Applications.ApplicationTopic"}%
-%META:FIELD{name="TopicType" attributes="M" title="TopicType" value="WebTool"}%
+%META:FIELD{name="TopicType" attributes="" title="TopicType" value="WebTool"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="WebLinks"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value="Navigation for the NatSkin WebSideBar"}%
 %META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="TWikiWorkbench"}%

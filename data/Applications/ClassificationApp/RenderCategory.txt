@@ -12,13 +12,41 @@ This function is called in Category topics.
 See the CategoryTemplate.
 ---+++++ Parameters
    * CAT: category to be rendered, defaults to BASETOPIC
+   * KEYWORDS: keywords to filter for
+   * TAG: tags to be searching for in this category
+   * FORM: display the search form on or of, defaults to on
 
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
-<verbatim>
+<verbatim class="tml">
 %STARTINCLUDE%<!-- rendercategory -->
 <noautolink>
+~~~ <form id="filterForm" action="%SCRIPTURLPATH{"view"}%/%BASEWEB%/%BASETOPIC%" 
+~~~   style="%IFDEFINED{"%FORM%" as="off" then="display:none"}%">
+~~~ <input type="hidden" name="catname" value="%URLPARAM{"catname"}%" />
+~~~ <div class="clsFilterForm twikiFormSteps"> 
+~~~   <div class="twikiFormStep">
+~~~     <h4>Search</h4>
+~~~     <input type="text" name="search" value="%URLPARAM{"search" default="%IFDEFINED{"%KEYWORDS%"}%"}%" size="20" class="twikiInputField" />
+~~~   </div>
+~~~   <div class="twikiFormStep">
+~~~     <h4>Tag</h4>
+~~~     <select name="tag" style="max-width:20em" onchange="this.form.submit()">
+~~~       <option value='' %URLPARAM{"tag" default="%IFDEFINED{"%TAG%"}%" as="" then=" selected"}%>ALL</option>
+%~~       CATINFO{cat="%IFDEFINED{"%CAT%" then="%CAT%" else="%BASETOPIC%"}%"
+~~~         format="
+*~~           $percntFORMATLIST{\"$tags\"
+~~~             format=\"<option$dollarmarker>$1</option>\"
+~~~             selection=\"%URLPARAM{"tag" default="%IFDEFINED{"%TAG%"}%"}%\"
+~~~           }$percnt"
+~~~       }%
+~~~     </select> 
+~~~   </div>
+~~~   <input type="submit" style="display:none" />
+~~~   <br clear="both" />
+~~~ </div>
+~~~ </form>
 %~~ MAKEINDEX{"
 *~~
 %~~     HIERARCHY{
@@ -30,22 +58,27 @@ See the CategoryTemplate.
 ~~~     }%
 *~~   "
 ~~~   cols="%IFDEFINED{"%CLASSIFICATIONPLUGIN_NRCOLS%" then="$test" else="3"}%"
-~~~   header="<h2>Categories</h2>
-~~~     There 
-~~~     $percntIFDEFINED{\"$count\" as=\"1\" 
-~~~       then=\" is one subcategory \"
-~~~       else=\" are $count subcategories \"
-~~~     }$percnt in this category."
 ~~~   split="\n"
 ~~~   pattern="(.*);(.*);(.*)"
+~~~   sort="nocase"
 ~~~   format="$percntDBCALL{\"$3.$2->RenderIndexItem\"}$percnt"
 ~~~ }%
-
 %~~ MAKEINDEX{"
 *~~
 %~~    DBQUERY{
 ~~~      "!(TopicType=~'\bCategory\b') AND 
-~~~        ('%IFDEFINED{"%CAT%" then="%CAT%" else="%BASETOPIC%"}%' DISTANCE topic) = 1"
+~~~        ('%IFDEFINED{"%CAT%" then="%CAT%" else="%BASETOPIC%"}%' DISTANCE topic) = 1
+~~~        %FORMATLIST{"%URLPARAM{"tag" default="%IFDEFINED{"%TAG%"}%"}%" 
+~~~          header="AND" 
+~~~          format=" Tag=~'\b$1\b' "
+~~~          separator="AND"
+~~~        }%
+~~~        %FORMATLIST{"%URLPARAM{"search" default="%IFDEFINED{"%KEYWORDS%"}%"}%"
+~~~          header="AND" 
+~~~          format=" uc(all) =~ uc('$1') "
+~~~          separator="AND"
+~~~        }%
+~~~      "
 ~~~      web="%BASEWEB%"
 ~~~      hidenull="on"
 ~~~      format="$expand(TopicTitle or topic);$topic;$web"
@@ -53,14 +86,9 @@ See the CategoryTemplate.
 ~~~    }%
 *~~   "
 ~~~   cols="%IFDEFINED{"%CLASSIFICATIONPLUGIN_NRCOLS%" then="$test" else="3"}%"
-~~~   header="<h2>Topics in $percntTOPICTITLE$percnt</h2>
-~~~     There
-~~~     $percntIFDEFINED{\"$count\" as=\"1\" 
-~~~       then=\" is one topic \"
-~~~       else=\" are $count topics \"
-~~~     }$percnt in this category."
 ~~~   split="\n"
 ~~~   pattern="(.*);(.*);(.*)"
+~~~   sort="nocase"
 ~~~   format="$percntDBCALL{\"$3.$2->RenderIndexItem\"}$percnt"
 ~~~ }%
 </noautolink>
@@ -68,7 +96,7 @@ See the CategoryTemplate.
 </verbatim>
 
 ---++ Toolbar 
-<verbatim>
+<verbatim class="tml">
 %STARTSECTION{"toolbar"}%<!-- toolbar -->
 <div class="toolbar">
 %~~ BUTTON{"New Topic" href="%SCRIPTURLPATH{view}%/%BASEWEB%/ClassifiedTopic?cat=%BASETOPIC%
@@ -82,7 +110,7 @@ See the CategoryTemplate.
 ~~~   }%" 
 ~~~   title="Create a new topic in %CATINFO{cat="%BASEWEB%.%BASETOPIC%" format="<nop>$title"}%"
 ~~~ }%  
-%IFDEFINEDTHEN{"%IFACCESS{"%MAINWEB%.AdminGroup" type="change"}%" as="1"}%
+%IFDEFINEDTHEN{"%IFACCESS{"%MAINWEB%.TWikiAdminGroupGroup" type="change"}%" as="1"}%
 %BUTTON{"Manage" href="%SCRIPTURLPATH{view}%/%BASEWEB%/Category" title="Manage categories"}%  
 %BUTTON{"Browse" href="%SCRIPTURLPATH{view}%/%BASEWEB%/CategoryBrowser" title="Browse the hierarchy"}%  
 %FIDEFINED%
@@ -109,7 +137,7 @@ See the CategoryTemplate.
 
 
 %META:FORM{name="Applications.ApplicationTopic"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="DocuTopic, TopicFunction"}%
+%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="RenderCategory"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value="Render tools to handle categories"}%
 %META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%

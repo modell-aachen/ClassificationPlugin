@@ -1,12 +1,12 @@
-%META:TOPICINFO{author="ProjectContributor" date="1199824438" format="1.1" reprev="1.1" version="$Rev$"}%
+%META:TOPICINFO{author="ProjectContributor" date="1222198081" format="1.1" reprev="1.1" version="$Rev$"}%
 %META:TOPICPARENT{name="TopicView"}%
 %TMPL:INCLUDE{"edit"}%
-%TMPL:DEF{"title"}%%TOPICTITLE% - (%MAKETEXT{"edit classified topic"}%) - %WIKITOOLNAME%%TMPL:END%
+%TMPL:DEF{"title"}%%TOPICTITLE% - (%MAKETEXT{"edit tagged topic"}%) - %WIKITOOLNAME%%TMPL:END%
 %TMPL:DEF{"contenttitle"}%<!-- contenttitle -->
 %IFDEFINEDTHEN{"%IFEXISTS{"%WEB%.%TOPIC%"}%" as="1"}%
-<h1 class="patternTemplateTitle">%TOPIC% (%MAKETEXT{"edit classified topic"}%)</h1>
+<h1 class="patternTemplateTitle">%TOPIC% (%MAKETEXT{"edit tagged topic"}%)</h1>
 %ELSEDEFINED%
-<h1 class="patternTemplateTitle"><nop>%TOPIC% (%MAKETEXT{"new classified topic"}%)</h1>
+<h1 class="patternTemplateTitle"><nop>%TOPIC% (%MAKETEXT{"new tagged topic"}%)</h1>
 %FIDEFINED%
 <!-- //contenttitle -->%TMPL:END%
 %TMPL:DEF{"topicmeta"}%<!-- topicmeta -->
@@ -24,13 +24,6 @@
 </literal>
 <!-- //topicmeta -->%TMPL:END%
 %TMPL:DEF{"formfields"}%<!-- formfields -->
-%TAB{"Categories" after="fixHeightOfPane()"}%
-<input type="hidden" name="TopicType" value="<nop>ClassifiedTopic, <nop>CategorizedTopic, <nop>TaggedTopic" />
-%DBCALL{"Applications.ClassificationApp.RenderEditCategoryBrowser"
-  NAME="Category"
-  VALUE="%URLPARAM{"Category" default="%FORMFIELD{topic="%BASEWEB%.%BASETOPIC%" "Category"}%"}%"
-}%
-%ENDTAB%
 %TAB{"Tags" after="fixHeightOfPane()"}%
 %DBCALL{"Applications.ClassificationApp.RenderEditTagCloud"
   NAME="Tag"
@@ -42,6 +35,6 @@
 
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="TopicView"}%
-%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="ClassifiedTopicEditTemplate"}%
-%META:FIELD{name="Summary" attributes="" title="Summary" value="Editor for classified topics, <nop>NatSkin version"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="TaggedTopicEditTemplate"}%
+%META:FIELD{name="Summary" attributes="" title="Summary" value="Editor for TaggedTopics"}%
 %META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%

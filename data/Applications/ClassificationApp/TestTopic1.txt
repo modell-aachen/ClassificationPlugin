@@ -1,5 +1,6 @@
 %META:TOPICINFO{author="ProjectContributor" date="1214239169" format="1.1" version="$Rev$"}%
 %META:TOPICPARENT{name="CorporateCategory"}%
+<verbatim>
    * ISA{IntranetDirectory}: %ISA{cat="IntranetDirectory"}%
    * ISA{CorporateCategory}: %ISA{cat="CorporateCategory"}%
    * DISTANCE: %DISTANCE%
@@ -10,14 +11,15 @@
    * DISTANCE{from="TopCategory" to="FinanceAndPlaning"}: %DISTANCE{from="TopCategory" to="FinanceAndPlaning"}%
    * DISTANCE{from="TestCategory8" to="FinanceAndPlaning"}: %DISTANCE{from="TestCategory8" to="FinanceAndPlaning" abs="off"}%
    * DISTANCE{from="FinanceAndPlaning" to="TestCategory8"}: %DISTANCE{from="FinanceAndPlaning" to="TestCategory8" abs="off"}%
-
+</verbatim>
 
 
 -- Main.MichaelDaum - 25 Oct 2006
 
 
 %META:FORM{name="Applications.ClassificationApp.ClassifiedTopic"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="ClassifiedTopic, TaggedTopic, CategorizedTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="ClassifiedTopic, CategorizedTopic, TaggedTopic"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="TestTopic1"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value=""}%
 %META:FIELD{name="Tag" attributes="" title="Tag" value="test, topic"}%
 %META:FIELD{name="Category" attributes="" title="Category" value="CorporateCategory"}%

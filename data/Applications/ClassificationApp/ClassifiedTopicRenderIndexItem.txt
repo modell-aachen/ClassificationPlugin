@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" date="1206371854" format="1.1" reprev="1.1" version="$Rev$"}%
+%META:TOPICINFO{author="ProjectContributor" date="1227786459" format="1.1" reprev="1.2" version="$Rev$"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 ---+!! Function: %TOPIC%
 %FORMFIELD{"Summary"}%
@@ -16,15 +16,20 @@ a summary for an object of type ClassifiedTopic.
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
-<verbatim>
+<verbatim class="tml">
 %STARTINCLUDE%<!-- ClassifiedTopicRenderIndexItem -->
 %~~ DBQUERY{topic="%OBJECT%"
-~~~   format="<div class='clsIndexItem clsTopicItem clsCassifiedTopicItem'>[[$web.$topic][$expand(TopicTitle or topic)]]
-*~~     &nbsp;$percntREDDOT{$web.$topic}$percnt
+~~~   format="<div class='clsIndexItem clsTopicItem clsCassifiedTopicItem'>[[$web.$topic][$expand(topictitle)]]
+~~~     $percntREDDOT{\"$web.$topic\"}$percnt
 ~~~     <div class='clsTopicInfo'>$expand(Summary and ', ')
-~~~      <span class='clsAuthorDateInfo'>last modified $formatTime(info.date)
-~~~        by $percntSPACEOUT{$expand(info.author)}$percnt</div>
-~~~     </span></div>
+~~~      <span class='clsAuthorDateInfo'>
+~~~        by $percntGETTOPICTITLE{\"
+~~~             $percntUSERINFO{\"$expand(info.author)\"
+~~~               format=\"$wikiusername\"
+~~~             }$percnt\"
+~~~           }$percnt,
+~~~           $formatTime(info.date)
+~~~     </span></div></div>
 ~~~   "
 ~~~ }%
 <!-- //ClassifiedTopicRenderIndexItem -->%STOPINCLUDE%
@@ -49,7 +54,7 @@ a summary for an object of type ClassifiedTopic.
 
 
 %META:FORM{name="Applications.ApplicationTopic"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="DocuTopic, TopicFunction"}%
+%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value="Render a summary for a ClassifiedTopic in a category index"}%
 %META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%

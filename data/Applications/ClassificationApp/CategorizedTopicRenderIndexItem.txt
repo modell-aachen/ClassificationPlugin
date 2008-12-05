@@ -16,18 +16,23 @@ a summary for an object listed within the Category topic.
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
-<verbatim>
-%STARTINCLUDE%<!-- ClassifiedTopicRenderIndexItem -->
+<verbatim class="tml">
+%STARTINCLUDE%<!-- CategorizedTopicRenderIndexItem -->
 %~~ DBQUERY{topic="%OBJECT%"
-~~~   format="<div class='clsIndexItem clsTopicItem clsCategorizedTopicItem'>[[$web.$topic][$expand(TopicTitle or topic)]]
-*~~     &nbsp;$percntREDDOT{$web.$topic}$percnt
+~~~   format="<div class='clsIndexItem clsTopicItem clsCategorizedTopicItem'>[[$web.$topic][$expand(topictitle)]] 
+~~~     $percntREDDOT{\"$web.$topic\"}$percnt
 ~~~     <div class='clsTopicInfo'>$expand(Summary and ', ')
-~~~      <span class='clsAuthorDateInfo'>last modified $formatTime(info.date)
-~~~        by $percntSPACEOUT{$expand(info.author)}$percnt</div>
-~~~     </span></div>
+~~~      <span class='clsAuthorDateInfo'>
+~~~        by $percntGETTOPICTITLE{\"
+~~~             $percntUSERINFO{\"$expand(info.author)\"
+~~~               format=\"$wikiusername\"
+~~~             }$percnt\"
+~~~           }$percnt,
+~~~           $formatTime(info.date)
+~~~     </span></div></div>
 ~~~   "
 ~~~ }%
-<!-- //ClassifiedTopicRenderIndexItem -->%STOPINCLUDE%
+<!-- //CategorizedTopicRenderIndexItem -->%STOPINCLUDE%
 </verbatim>
 
 <!-- interrupt glue -->

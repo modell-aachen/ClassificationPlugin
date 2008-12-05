@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" date="1200331240" format="1.1" reprev="1.2" version="$Rev$"}%
+%META:TOPICINFO{author="ProjectContributor" date="1228423025" format="1.1" reprev="1.2" version="$Rev$"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 ---+!! Function: %TOPIC%
 %FORMFIELD{"Summary"}%
@@ -20,33 +20,34 @@
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
-<verbatim>
+<verbatim class="tml">
 %STARTINCLUDE%<!-- render web class search -->
-<div class="twikiPageForm">
+<div class="twikiFormSteps">
+<h2>Search for a topic</h2>
 <form action="%SCRIPTURLPATH{"view"}%/%BASEWEB%/%BASETOPIC%#results" DISmethod="post">
 <input type="hidden" name="trigger" value="on" />
 <input type="hidden" name="refresh" value="on" />
-<table>
-<tr>
-   <th>Text:</th>
-   <td><input class="twikiInputField" type="text" name="qtext" size="50" value="%IFDEFINED{"%QTEXT%"}%" />
-</tr>
-<tr>
-   <th>Tags:</th>
-   <td><input class="twikiInputField" type="text" name="qtags" size="50" value="%IFDEFINED{"%QTAGS%"}%" /> 
-</tr>
-<tr>
-   <th>Categories:</th>
-   <td><input class="twikiInputField" type="text" name="qcats" size="50" value="%IFDEFINED{"%QCATS%"}%" />
-</tr>
-<tr>
-  <th>&nbsp;</th>
-  <td><input type="submit" value="Ok" class="twikiSubmit natOkButton" />&nbsp;
-      <input type="button" value="Reset" class="foswikiButton natCancelButton" onclick="window.location.href= '%SCRIPTURLPATH{view}%/%BASEWEB%/%BASETOPIC%';" />&nbsp;
-      <label><input type="checkbox" value="on" name="searchallwebs" %IFDEFINED{"%SEARCHALLWEBS%" as="on" then=" checked "}% /> search in all webs</label>
-             <input type="hidden" name="searchallwebs" value="off" />
-</tr>
-</table>
+<div class="twikiFormStep">
+  <h3>Text:</h3>
+  <input class="twikiInputField" type="text" name="qtext" size="50" value="%IFDEFINED{"%QTEXT%"}%" />
+</div>
+<div class="twikiFormStep">
+  <h3>Tags:</h3>
+  <input class="twikiInputField" type="text" name="qtags" size="50" value="%IFDEFINED{"%QTAGS%"}%" /> 
+</div>
+<div class="twikiFormStep">
+  <h3>Categories:</h3>
+  <input class="twikiInputField" type="text" name="qcats" size="50" value="%IFDEFINED{"%QCATS%"}%" />
+</div>
+<div class="twikiFormStep">
+  <h3>Options:</h3>
+  <label><input type="checkbox" value="on" name="searchallwebs" %IFDEFINED{"%SEARCHALLWEBS%" as="on" then=" checked "}% /> search in all webs</label>
+  <input type="hidden" name="searchallwebs" value="off" />
+</div>
+<div class="twikiFormStep twikiFormButton twikiFormLast">
+  %BUTTON{"Search" icon="find" type="submit"}%
+  %CLEAR%
+</div>
 </form>
 </div>
 %IFDEFINEDTHEN{"%URLPARAM{"trigger"}%" as="on" glue="off"}%
@@ -80,7 +81,7 @@
 ~~~     web=\"$1\"
 ~~~     header=\"
 ~~~       <h2>Results in $1</h2>
-~~~       *Found <span class='foswikiAlert'> $dollarcount </span> topic(s)* %BR%
+~~~       *Found <span class='twikiAlert'> $dollarcount </span> topic(s)* %BR%
 ~~~       <noautolink><div class='clsHitList'> $n
 ~~~       | *Nr* | *Topic* | *Summary* | *Changed* | *By* |$n
 ~~~       $dollarpercntTABLE{tablewidth=\\"100%\\"}$dollarpercnt$n\"
@@ -117,7 +118,7 @@
 
 
 %META:FORM{name="Applications.ApplicationTopic"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="DocuTopic, TopicFunction"}%
+%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value="Render a search tool for ClassifiedTopics"}%
 %META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%

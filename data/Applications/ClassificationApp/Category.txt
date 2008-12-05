@@ -1,6 +1,6 @@
 %META:TOPICINFO{author="ProjectContributor" date="1214469138" format="1.1" reprev="1.6" version="$Rev$"}%
 %META:TOPICPARENT{name="TopicType"}%
----+!! [[%WEB%.%TOPIC%][%TOPICTITLE%]]
+---+!! [[%BASEWEB%.%BASETOPIC%][%TOPICTITLE%]]
 %FORMFIELD{"Summary"}%
 
 %TOC%
@@ -15,7 +15,7 @@ categories are a predefined hierarchy where content is situated in separate comp
 
 Categories themselves are CategorizedTopics thus implementing a hierarchy.
 
-See also: See CategorizedTopic, ClassifiedTopic, TaggedTopic, CategoryTemplate
+See also: See CategorizedTopic, ClassifiedTopic, TaggedTopic, CategoryTemplate, CategoryViewTemplate, CategoryEditTemplate
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Installation
@@ -26,11 +26,11 @@ See also: See CategorizedTopic, ClassifiedTopic, TaggedTopic, CategoryTemplate
 }%
 
 %STARTINCLUDE%<!-- category -->
-%IFDEFINEDTHEN{"%URLPARAM{"name"}%" glue="off"}%
+%IFDEFINEDTHEN{"%URLPARAM{"catname"}%" glue="off"}%
 ~~~ <div class="clsTopicInfo">
 ~~~ <noautolink>
 %~~ CATINFO$nop{
-~~~   cat="%URLPARAM{"name"}%"
+~~~   cat="%URLPARAM{"catname"}%"
 ~~~   format="<h1>$link 
 ~~~     $percntIFDEFINED{\"$summary\"
 ~~~       then=\" - <span class='clsTopicSummary'>$test</span>\"
@@ -42,13 +42,12 @@ See also: See CategorizedTopic, ClassifiedTopic, TaggedTopic, CategoryTemplate
 ~~~ </noautolink>
 ~~~ </div>
 <hr class="clsTopicInfoSep" />
-%$nopDBCALL{"Applications.ClassificationApp.RenderCategory" CAT="%URLPARAM{"name"}%"}%
-%ELSEDEFINED%
----+!! %TOPIC%
-%FORMFIELD{"Summary"}%
+%$nopDBCALL{"Applications.ClassificationApp.RenderCategory" CAT="%URLPARAM{"catname"}%"}%
+%ELSEDEFINED%<!-- else category -->
+%$nopDBCALL{"Applications.ClassificationApp.RenderClassifiedTopicView"}%
 %$nopDBCALL{"Applications.ClassificationApp.RenderCategoryFactory"}%
 %FIDEFINED%
-<!-- category -->%STOPINCLUDE%
+<!-- //category -->%STOPINCLUDE%
 
 ---++ %TOPIC% form
 | *Name:*| *Type:* | *Size:* | *Values:* | *Tooltip message:* | *Attributes:* |

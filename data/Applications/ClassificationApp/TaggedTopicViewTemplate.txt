@@ -1,9 +1,7 @@
 %META:TOPICINFO{author="ProjectContributor" date="1181331903" format="1.1" reprev="1.2" version="$Rev$"}%
 %META:TOPICPARENT{name="TopicView"}%
 %TMPL:INCLUDE{"view"}%
-%TMPL:DEF{"simpleheader"}%
-%DBCALL{"Applications.ClassificationApp.RenderClassifiedTopicView"}%
-%TMPL:END% 
+%TMPL:DEF{"beforetext"}%%DBCALL{"Applications.ClassificationApp.RenderClassifiedTopicView"}%<hr class="clsTopicInfoSep" />%TMPL:END% 
 %TMPL:DEF{"form"}%%TMPL:END%
 
 %META:FORM{name="Applications.ApplicationTopic"}%

@@ -20,7 +20,7 @@ use TWiki::Plugins::ClassificationPlugin::Category;
 use Storable;
 require TWiki::Prefs;
 
-use constant OBJECTVERSION => 0.49;
+use constant OBJECTVERSION => 0.51;
 use constant DEBUG => 0; # toggle me
 
 use vars qw(%insideInit);
@@ -33,18 +33,6 @@ sub writeDebug {
 }
 
 ################################################################################
-# static
-sub getCacheFile {
-  my $web = shift;
-
-  $web =~ s/^\s+//go;
-  $web =~ s/\s+$//go;
-  $web =~ s/[\/\.]/_/go;
-
-  return TWiki::Func::getWorkArea("ClassificationPlugin").'/'.$web.'.hierarchy';
-}
-
-################################################################################
 # constructor
 sub new {
   my $class = shift;
@@ -53,11 +41,12 @@ sub new {
   $web =~ s/\//\./go;
   #writeDebug("new hierarchy for web $web");
   my $this;
-  my $cacheFile = getCacheFile($web);
+  my $cacheFile = TWiki::Plugins::ClassificationPlugin::Core::getCacheFile($web);
   
   my $session = $TWiki::Plugins::SESSION;
   my $refresh = '';
-  $refresh = $session->{cgiQuery}->param('refresh') || '' if defined $session;
+  my $query = TWiki::Func::getCgiQuery();
+  $refresh = $query->param('refresh') || '' if defined $session;
   $refresh = $refresh eq 'on'?1:0;
 
   unless ($refresh) {
@@ -94,19 +83,33 @@ sub new {
 sub finish {
   my $this = shift;
 
+  writeDebug("called finish()");
   my $gotUpdate = $this->{gotUpdate};
   $this->{gotUpdate} = 0;
 
-  foreach my $cat ($this->getCategories()) {
-    $gotUpdate ||= $cat->{gotUpdate};
-    $cat->{gotUpdate} = 0;
+  if (defined($this->{_categories})) {
+    foreach my $cat ($this->getCategories()) {
+      $gotUpdate ||= $cat->{gotUpdate};
+      $cat->{gotUpdate} = 0;
+    }
   }
 
+  writeDebug("gotUpdate=$gotUpdate");
   if ($gotUpdate) {
     writeDebug("saving hierarchy $this->{web}");
-    my $cacheFile = getCacheFile($this->{web});
+    my $cacheFile = TWiki::Plugins::ClassificationPlugin::Core::getCacheFile($this->{web});
+
+    # SMELL: don't cache the prefs for now
+    undef $this->{_prefs}; 
+
+    #if (DEBUG) {
+    #  use Data::Dumper;
+    #  writeDebug(Dumper($this));
+    #}
+
     Storable::lock_store($this, $cacheFile);
   }
+  writeDebug("done finish()");
 
 }
 
@@ -118,7 +121,7 @@ sub finish {
 # mode = 4 -> a category has been saved
 # mode = 5 -> clear all
 sub purgeCache {
-  my ($this, $mode) = @_;
+  my ($this, $mode, $touchedCats) = @_;
 
   return unless $mode;
   writeDebug("purging hierarchy cache for $this->{web} - mode = $mode");
@@ -129,18 +132,24 @@ sub purgeCache {
   } 
 
   if ($mode > 1) { # categorized and classified topics
-    foreach my $cat (values %{$this->{_categories}}) {
+    foreach my $catName (@$touchedCats) {
+      my $cat = $this->getCategory($catName);
       $cat->purgeCache() if $cat;
     }
   } 
 
   if ($mode > 3) { # category topics
+    # nuke all categories
+    foreach my $cat (values %{$this->{_categories}}) {
+      $cat->purgeCache() if $cat;
+    }
     undef $this->{_categories};
     undef $this->{_distance};
     undef $this->{_prefs};
     undef $this->{_top};
     undef $this->{_bottom};
     undef $this->{_aclAttribute};
+    $this->{idCounter} = 0;
   }
 
   if ($mode > 4) { # clear all of the rest
@@ -152,22 +161,14 @@ sub purgeCache {
 }
 
 ################################################################################
-# destructor
-sub DESTROY {
-  my $this = shift;
-
-  $this->purgeCache(5);
-}
-
-################################################################################
 sub init {
   my $this = shift;
 
   # be anal
-  die "recursive call to Hierarchy::init" if $insideInit{$this->{web}};
+  die "recursive call to Hierarchy::init for $this->{web}" if $insideInit{$this->{web}};
   $insideInit{$this->{web}} = 1;
 
-  writeDebug("called Hierarchy::init for $this->{web}");
+  writeDebug("called Hierarchy::init for $this->{web} ... EXPENSIVE");
   my $session = $TWiki::Plugins::SESSION;
   $this->{_prefs} = new TWiki::Prefs($session);
 
@@ -211,12 +212,14 @@ sub init {
       $cat->setTitle($title);
       $cat->setIcon($form->fastget("Icon"));
 
+      #writeDebug("$topicName has got title '$title'");
+
       # import foregin categories
       $cat->importCategories($form->fastget("ImportedCategory"), $seenImport);
     }
   }
 
-  #writeDebug("checking for default categories");
+  writeDebug("checking for default categories");
   # every hierarchy has one top node
   my $topCat = 
     $this->{_categories}{'TopCategory'} || 
@@ -316,6 +319,7 @@ sub computeDistance {
   }
 
   writeDebug("finit");
+  #my $loops = 0;
   my $maxId = $this->{idCounter}-1;
   for my $id1 (0..$maxId) {
     for my $id2 ($id1..$maxId) {
@@ -327,127 +331,16 @@ sub computeDistance {
         $dist = $distance[$id2][$id1];
         $distance[$id1][$id2] = -$dist if defined $dist;
       }
+      #$loops++;
     }
   }
 
+  #writeDebug("maxId=$maxId, loops=$loops");
   writeDebug("done computeDistance() Wallace-Kollias");
 
-  if (0) {
-    my $oldDistance = $this->DISABLED_computeDistance();
-    foreach my $catName1 (sort $this->getCategoryNames()) {
-      my $cat1 = $this->{_categories}{$catName1};
-      my $catId1 = $cat1->{id};
-      foreach my $catName2 (sort $this->getCategoryNames()) {
-        my $cat2 = $this->{_categories}{$catName2};
-        my $catId2 = $cat2->{id};
-        my $dist =  $distance[$catId1][$catId2];
-        my $oldDist = $$oldDistance[$catId1][$catId2];
-        if (defined($dist)) {
-          if (defined($oldDist)) {
-            if ($oldDist == $dist) {
-              #writeDebug("distance($ancestors{$id1}->{name},$ancestors{$id2}->{name}) = $dist ... OK");
-            } else {
-              writeDebug("distance($catName1,$catName2) = $dist != $oldDist");
-            }
-          } else {
-            writeDebug("distance($catName1,$catName2) = $dist ... but NO OLD");
-          }
-        } else {
-          if (defined($oldDist)) {
-            writeDebug("distance($catName1,$catName2) = $oldDist ... but NO NEW");
-          }
-        }
-      }
-    }
-  }
-
   $this->{_distance} = \@distance;
   $this->{gotUpdate} = 1;
 
-  return \@distance;
-}
-
-################################################################################
-# computes the distance between all categories using a modified floyd-warshall
-# algorithm for transitive closures
-sub DISABLED_computeDistance {
-  my $this = shift;
-
-  writeDebug("called computeDistance_FLOYD_WARSHALL()");
-
-  # init matrix
-  my $totalIterations = 0;
-  my $effectiveIteratons = 0;
-
-  my @distance;
-  my $bottomId = $this->{_bottom}->{id};
-
-
-  writeDebug("init");
-  for my $cat ($this->getCategories()) {
-    my $id = $cat->{id};
-    $distance[$id][$id] = 0; # diagonal
-
-    my @children = $cat->getChildren();
-    if (@children) {
-      foreach my $child (@children) {
-        $distance[$id][$child->{id}] = 1; # direct contectedness
-      }
-    } else {
-      unless ($id == $bottomId) { # bottom
-        $distance[$id][$bottomId] = 1; # leaf nodes
-      }
-    }
-  }
-
-  # floyd-warshall algorithm for transitive closure
-  # used to computing min- and max distances, reused in
-  # subsumption and partof relations
-  my $maxId = $this->{idCounter}-1;
-  writeDebug("propagate");
-  writeDebug("maxId=$maxId");
-  foreach my $catIId (0..$maxId) {
-
-    foreach my $catJId (0..$maxId) {
-      next if $catIId == $catJId; # skip current row
-
-      my $distIJ = $distance[$catIId][$catJId];
-
-      foreach my $catKId (0..$maxId) {
-        $totalIterations++;
-        next if $catKId == $catIId || $catKId == $catJId; # skip current row
-
-        my $distIK = $distance[$catIId][$catKId];
-        next unless $distIK;
-
-        my $distKJ = $distance[$catKId][$catJId];
-        next unless $distKJ;
-
-        my $minSum = $distIK+$distKJ;
-        $distance[$catIId][$catJId] = $minSum if !$distIJ || $distIJ > $minSum;
-        $effectiveIteratons++;
-      }
-    }
-  }
-
-  # fill other half of the matrix, the reverse relation,
-  # we are using qubic memory already anyway
-  writeDebug("finit");
-  for my $id1 (0..$maxId) {
-    for my $id2 (0..$maxId) {
-      next if $id1 == $id2;
-      my $dist = $distance[$id1][$id2];
-      next unless $dist;
-      $distance[$id2][$id1] = -$dist;
-    }
-  }
-
-  $this->{_distance} = \@distance;
-  $this->{gotUpdate} = 1;
-
-  writeDebug("totalIterations=$totalIterations, effectiveIteratons=$effectiveIteratons");
-  writeDebug("done computeDistance");
-  
   return \@distance;
 }
 
@@ -470,33 +363,40 @@ sub distance {
   # to be taken under consideration
 
   # check topic1
-  my $extraDistance = 0;
   my $catObj = $this->getCategory($topic1);
+  my $firstIsTopic;
   if ($catObj) { # known category
+    $firstIsTopic = 0;
     $catSet1{$topic1} = $catObj->{id};
   } else {
+    $firstIsTopic = 1;
     my $cats = $this->getCategoriesOfTopic($topic1);
     return undef unless $cats; # no categories, no distance
     foreach my $name (keys %$cats) {
       $catObj = $this->getCategory($name);
       $catSet1{$name} = $catObj->{id} if $catObj;
     }
-    $extraDistance++; # going to its categories is one extra step
   }
 
   # check topic2
+  my $secondIsTopic;
   $catObj = $this->getCategory($topic2);
   if ($catObj) { # known category
+    $secondIsTopic = 0;
     $catSet2{$topic2} = $catObj->{id};
   } else {
+    $secondIsTopic = 1;
     my $cats = $this->getCategoriesOfTopic($topic2);
     return undef unless $cats; # no categories, no distance
     foreach my $name (keys %$cats) {
       $catObj = $this->getCategory($name);
       $catSet2{$name} = $catObj->{id} if $catObj
     }
-    $extraDistance++; # going to its categories is one extra step
   }
+  return 0 if 
+    $firstIsTopic == 1 &&
+    $secondIsTopic == 1 &&
+    $topic1 eq $topic2;
 
   if (DEBUG) {
     #writeDebug("catSet1 = ".join(',', sort keys %catSet1));
@@ -517,8 +417,9 @@ sub distance {
   # both sets aren't connected
   return undef unless defined($min);
 
-  $min += $extraDistance;
-  #writeDebug("min=$min");
+  $min = abs($min) + 2 if $firstIsTopic && $secondIsTopic;
+  $min-- if $firstIsTopic;
+  $min++ if $secondIsTopic;
 
   return $min;
 }
@@ -748,7 +649,7 @@ sub subsumes {
   my ($this, $cat1, $cat2) = @_;
 
   my $result = $this->catDistance($cat1, $cat2);
-  return (defined($result) && $result > 0)?1:0;
+  return (defined($result) && $result >= 0)?1:0;
 }
 
 ################################################################################
@@ -1020,8 +921,8 @@ sub getCategory {
   unless ($cat) {
     # try id
     if ($name =~ /^\d+/) {
-      foreach my $cat (keys %{$this->{_categories}}) {
-        last if $cat->{id} == $name;
+      foreach my $cat (values %{$this->{_categories}}) {
+        last if $cat->{id} eq $name;
       }
     }
   }
@@ -1042,14 +943,14 @@ sub createCategory {
 ###############################################################################
 # static
 sub inlineError {
-  return '<span class="foswikiAlert">' . $_[0] . '</span>' ;
+  return '<span class="twikiAlert">' . $_[0] . '</span>' ;
 }
 
 ###############################################################################
-sub toHTML {
+sub traverse {
   my ($this, $params) = @_;
 
-  #writeDebug("called toHTML for hierarchy in '$this->{web}'");
+  #writeDebug("called traverse for hierarchy in '$this->{web}'");
 
   my $nrCalls = 0;
   my $top = $params->{top} || 'TopCategory';
@@ -1063,7 +964,7 @@ sub toHTML {
     my $cat = $this->getCategory($name);
     next unless $cat;
     #writeDebug("found category ".$cat->{name});
-    my $catResult =  $cat->toHTML($params, \$nrCalls);
+    my $catResult =  $cat->traverse($params, \$nrCalls);
     push @result, $catResult if $catResult
   }
   my $result = '';
@@ -1081,7 +982,7 @@ sub toHTML {
     indent=>'',
   );
 
-  #writeDebug("done toHTML");
+  #writeDebug("done traverse");
   return TWiki::Func::expandCommonVariables($header.$result.$footer);
 }
 

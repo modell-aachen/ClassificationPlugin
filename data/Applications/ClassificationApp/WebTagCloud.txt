@@ -10,13 +10,13 @@ See also: RenderWebTagCloud
 ---++ Implementation
 %STARTINCLUDE%<!-- applications.classificationapp.webtagcloud -->
 %~~ DBCALL{"Applications.ClassificationApp.RenderWebTagCloud" 
-~~~   QUERY="%URLPARAM{"search"}%" 
+~~~   KEYWORDS="%URLPARAM{"search"}%" 
+~~~   TAG="%URLPARAM{"tag"}%" 
 ~~~   CAT="%URLPARAM{"cat"}%" 
 ~~~   TOPCAT="%URLPARAM{"topcat" default="%TOPCAT%"}%"
 ~~~   EXCLUDECAT="%URLPARAM{"excludecat" default="%EXCLUDECAT%"}%"
 ~~~   RECENCY="%URLPARAM{"recency"}%"
-~~~   MIN="%URLPARAM{"min"}%"
-~~~   MIN="%MIN%"
+~~~   MIN="%URLPARAM{"min" default="%MIN%"}%"
 ~~~   CATTITLE="%CATTITLE%"
 ~~~   SHOWFILTER="on"
 ~~~ }%

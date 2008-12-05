@@ -5,7 +5,7 @@
 %IMAGEGALLERY%
 
 %META:FORM{name="Applications.ApplicationTopic"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="ApplicationTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="ApplicationTopic"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="IconSet"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value=""}%
 %META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
@@ -132,3 +132,4 @@
 %META:FILEATTACHMENT{name="door_open.png" attachment="door_open.png" attr="h" comment="" date="1214251379" path="door_open.png" size="508" stream="door_open.png" tmpFilename="/var/tmp/CGItemp54035" user="ProjectContributor" version="1"}%
 %META:FILEATTACHMENT{name="ipod_cast.png" attachment="ipod_cast.png" attr="h" comment="" date="1214251645" path="ipod_cast.png" size="711" stream="ipod_cast.png" tmpFilename="/var/tmp/CGItemp54156" user="ProjectContributor" version="1"}%
 %META:FILEATTACHMENT{name="presentation.png" attachment="presentation.png" attr="h" comment="" date="1214252360" path="presentation.png" size="715" stream="presentation.png" tmpFilename="/var/tmp/CGItemp53974" user="ProjectContributor" version="1"}%
+%META:FILEATTACHMENT{name="pencil.png" attachment="pencil.png" attr="h" comment="" date="1221736546" path="pencil.png" size="450" stream="IO::File=GLOB(0xab3c9bc)" tmpFilename="" user="ProjectContributor" version="1"}%

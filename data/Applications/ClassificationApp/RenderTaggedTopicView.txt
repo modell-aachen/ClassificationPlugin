@@ -17,7 +17,7 @@ none
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
-<verbatim>
+<verbatim class="tml">
 %STARTINCLUDE%<!-- -->
 ---+!! <nop>%BASETOPIC%
 <div class="clsTopicInfo">
@@ -26,7 +26,7 @@ none
 ~~~    $percntIFDEFINEDTHEN{\"$formfield(Tag)\" glue=\"off\"}$percnt
 ~~~      Tagged 
 ~~~      $percntFORMATLIST{\"$formfield(Tag)\"
-~~~        format=\"<a href=\\"%SCRIPTURLPATH{"view"}%/$web/WebTagCloud?search=$1\\">$1</a>\"
+~~~        format=\"<a href=\\"%SCRIPTURLPATH{"view"}%/$web/WebTagCloud?tag=$1\\">$1</a>\"
 ~~~      }$percnt
 ~~~    $percntFIDEFINED$percnt
 ~~~    <div class=\"clsTopicSummary\">$formfield(Summary)</div>"

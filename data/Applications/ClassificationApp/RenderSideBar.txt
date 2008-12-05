@@ -1,0 +1,93 @@
+%META:TOPICINFO{author="ProjectContributor" date="1219136768" format="1.1" version="$Rev$"}%
+%META:TOPICPARENT{name="TopicFunction"}%
+---+!! Function: %TOPIC%
+%FORMFIELD{"Summary"}%
+
+%TOC{depth="2"}%
+
+---++ Documentation
+%STARTSECTION{name="documentation" type="section"}%
+This function displays part of the hierarchy a topic is situated in.
+It tries to provide a sense of "location" for the topic based on
+the way it is classified. 
+
+TODO: what do we display for topics that are not categorized?
+
+%ENDSECTION{name="documentation" type="section"}%
+
+---++ Implementation
+<verbatim class="tml">
+%STARTINCLUDE%<!-- rendersidebar -->
+~~~ <div class="clsSideBar clsBrowser" id="clsSideBarCategoryBrowser" style="display:none">
+%~~ HIERARCHY{
+~~~   web="%BASEWEB%"
+~~~   open="%IFDEFINED{
+~~~     "%CATINFO{"%BASETOPIC%" format="$topic"}%" 
+~~~     then="$test" 
+~~~     else="TopCategory"
+~~~   }%, %BASETOPIC%, %URLPARAM{"catname"}%"
+~~~   placeholder="<li><span class='placeholder'>&nbsp;</span></li>"
+~~~   exclude="TopCategory"
+~~~   header="<ul>"
+~~~   footer="</ul>"
+~~~   format="<li 
+~~~     id=\"$name\"
+~~~     class=\"
+~~~       $percntIFDEFINED{\"$subcats\" as=\"0\" 
+~~~         then=\"\" else=\"hasChildren\"
+~~~       }$percnt
+~~~     \">
+*~~     <table cellspacing='0' cellpadding='0' width='100%'><tr>
+*~~     <td valign='top'><img class='clsCategoryIcon' src='$icon' alt='$percntENCODE{$title}$percnt'/></td>
+*~~     <td valign='top' width='100%'><a 
+~~~       $percntIFDEFINED{
+~~~         \"$name\" 
+~~~         as=\"%BASETOPIC%|%URLPARAM{catname}%\" 
+~~~         then=\" class='current' \"
+~~~         glue=\"off\"
+~~~       }$percnt
+~~~       href=\"$url\" title=\"$percntENCODE{$summary}$percnt\"><noautolink>$title</noautolink></a></td>
+~~~     </tr></table>
+~~~     $children</li>"
+~~~ }%
+~~~ </div>
+~~~ <script type="text/javascript">
+~~~ $(function () {
+~~~     $("#clsSideBarCategoryBrowser > ul").each(function() {
+~~~       var $this = $(this);
+~~~       $this.find("li ul").parent().addClass("open");
+~~~       $this.find(".placeholder").parent().parent().parent().removeClass("open");
+~~~       $this.find(".hasChildren.open").removeClass("hasChildren");
+~~~       $this.treeview({
+~~~         url: "%SCRIPTURLPATH{"rest"}%/RenderPlugin/tag?
+*~~                 name=DBCALL;
+*~~                 param=Applications.ClassificationApp.RenderHierarchyAsJSON;
+*~~                 depth=2;
+*~~                 format=sidebar;
+*~~                 web=%BASEWEB%
+*~~              ",
+~~~         animated: 'fast'
+~~~       }).parent().show();
+~~~    });
+~~~ });
+~~~ </script>
+<!-- //rendersidebar -->%STOPINCLUDE%
+</verbatim>
+
+
+%DBCALL{"Applications.RenderFunctionCallers"}%
+
+---++ Copyright
+<div style="text-align:justify;margin:1em;">
+&copy; 2008 Michael Daum info@michaeldaumconsulting.com
+
+%DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
+</div>
+
+
+
+%META:FORM{name="Applications.ApplicationTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="RenderSideBar"}%
+%META:FIELD{name="Summary" attributes="" title="Summary" value="Render tools to handle categories"}%
+%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%

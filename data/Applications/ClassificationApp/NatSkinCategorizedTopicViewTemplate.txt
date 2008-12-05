@@ -1,9 +1,7 @@
 %META:TOPICINFO{author="ProjectContributor" date="1182192477" format="1.1" version="$Rev$"}%
 %META:TOPICPARENT{name="TopicView"}%
 %TMPL:INCLUDE{"view"}%
-%TMPL:DEF{"content"}%
-%DBCALL{"Applications.ClassificationApp.RenderClassifiedTopicView"}%
-<hr class="clsTopicInfoSep" />
+%TMPL:DEF{"content"}%%DBCALL{"Applications.ClassificationApp.RenderClassifiedTopicView"}%<hr class="clsTopicInfoSep" />
 %TEXT%
 %TMPL:END% %{
 %RED%Note, this is only a view template.%ENDCOLOR%

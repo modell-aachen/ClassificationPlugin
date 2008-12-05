@@ -1,14 +1,10 @@
 %META:TOPICINFO{author="ProjectContributor" date="1212998697" format="1.1" version="$Rev$"}%
 %META:TOPICPARENT{}%
----+!! %TOPIC%
-%FORMFIELD{"Summary"}%
-%DBCALL{"Applications.RenderWebChanges" 
-  SKIP="%URLPARAM{"skip" default=" 0"}%"
-  LIMIT="%URLPARAM{"limit" default="10"}%"
-}%
+%INCLUDE{"%SYSTEMWEB%.%TOPIC%"}%
 
 <!--
    * Set VIEW_TEMPLATE = Applications.HiddenFormView
+   * Set STYLETOPICACTIONS = off
 -->
 
 

@@ -22,8 +22,10 @@
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
-<verbatim>
+<verbatim class="tml">
 %STARTINCLUDE%<!-- render edit tag cloud -->
+~~~ <link rel="stylesheet" href="%PUBURLPATH%/%SYSTEMWEB%/JQueryPlugin/jquery.autocomplete.css" type="text/css" media="all" />
+~~~ <script type="text/javascript" src="%PUBURLPATH%/%SYSTEMWEB%/JQueryPlugin/jquery.autocomplete.js"></script>
 ~~~ <script type="text/javascript" src="%PUBURLPATH%/%SYSTEMWEB%/ClassificationPlugin/jquery.tagselector.js"></script>
 ~~~ <script type="text/javascript">
 ~~~ $(function() {
@@ -44,7 +46,6 @@
 ~~~   <input class="foswikiButton natAltButton clsResetButton" type="button" value="Reset" />
 ~~~ </div>
 ~~~ </td></tr></table>
-~~~ <div class="clsTagCloud">
 %~~ TAGCLOUD{
 ~~~   "$percntDBQUERY{\"TopicType=~'\b(Tagged|Classified)Topic\b'
 ~~~      %IFDEFINED{"%FILTER%" then="AND (%FILTER%)" glue="off"}%\"
@@ -57,6 +58,8 @@
 ~~~    warn="off"
 ~~~    split=","
 ~~~    group=" <strong>$group</strong> "
+~~~    header="<div class='clsTagCloud'>"
+~~~    footer="</div>"
 ~~~    format="<span 
 ~~~      style=\"font-size:$weight%;\">
 *~~      <a id=\"$term\" href=\"javascript:void(0)\"
@@ -65,14 +68,13 @@
 ~~~          }$percnt
 ~~~         title=\"$count\">$term</a></span>"
 ~~~  }%
-~~~ </div>
 ~~~ </noautolink>
 ~~~ </div>%STOPINCLUDE%
 </verbatim>
 
 
 <!-- disabled 
-<verbatim>
+<verbatim class="tml">
 %~~   TAGCOOCCURRENCE{
 ~~~     web="%IFDEFINED{"%THEWEB%" then="$test" else="%BASEWEB%"}%"
 ~~~     header="var coocc = {$n"

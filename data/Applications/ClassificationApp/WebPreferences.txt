@@ -21,15 +21,16 @@ Flag to enable/disable listing this web on the sitemap:
 ---+++ Access rights
    * Set #DENYWEBVIEW =
    * Set #ALLOWWEBVIEW = 
-   * Set DENYWEBCHANGE = %MAINWEB%.WikiGuest
-   * Set ALLOWWEBCHANGE = %MAINWEB%.AdminGroup
-   * Set ALLOWTOPICCHANGE = %MAINWEB%.AdminGroup
+   * Set DENYWEBCHANGE = %MAINWEB%.TWikiGuest
+   * Set ALLOWWEBCHANGE = %MAINWEB%.TWikiAdminGroupGroup
+   * Set ALLOWTOPICCHANGE = %MAINWEB%.TWikiAdminGroupGroup
 
 ---+++ Application Pointer
 <nop>DBCachePlugin settings registering the !WebDB
 implementation for this web (don't change):
    * Set WEBDB = TWiki::Plugins::DBCachePlugin::WebDB
    * Set CLASSIFICATIONPLUGIN_AUTOREPARENT  = 1
+   * Set THISBREADCRUMBS = %CATINFO{cat="%URLPARAM{"catname" default="%BASEWEB%.%BASETOPIC%"}%" header="$percntBREADCRUMBS{recurse=\"topicoff\" separator=\"<span class='natSep'>&nbsp;&#187; </span>\"}$percnt<span class='natSep'>&nbsp;&#187; </span>" format="$breadcrumb" separator="<span class='natSep'>&nbsp;&#187; </span>"}%
 
 TopicFunctions to generate html page header information:
 <verbatim>
@@ -42,8 +43,8 @@ TopicFunctions to generate html page header information:
 </verbatim>
 
 ---+++ Misc
-Definition of DataForms:
-   * Set WEBFORMS = Applications.TWikiTopic, Applications.TopicStub
+Definition of TWikiForms:
+   * Set WEBFORMS = Applications.ClassificationApp.Category, Applications.ClassificationApp.ClassifiedTopic, Applications.ClassificationApp.CategorizedTopic, Applications.ClassificationApp.TaggedTopic
    * Set FINALPREFERENCES = ATTACHFILESIZELIMIT, WIKIWEBMASTER, WEBCOPYRIGHT, WEBTOPICLIST, DENYWEBVIEW, ALLOWWEBVIEW, DENYWEBCHANGE, ALLOWWEBCHANGE, WEBDB
 
 __Related Topics__:

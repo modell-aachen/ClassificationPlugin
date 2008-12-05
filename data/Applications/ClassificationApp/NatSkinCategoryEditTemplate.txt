@@ -9,7 +9,7 @@
 <h1><nop>%WEBLINK{format="$web"}%.%TOPIC% (%MAKETEXT{"new classified topic"}%)</h1>
 %FIDEFINED%
 <!-- //contenttitle -->%TMPL:END%
-%TMPL:DEF{"topicinfo"}%<!-- topicinfo -->
+%TMPL:DEF{"topicmeta"}%<!-- topicmeta -->
 <literal>
 <div class="natEditTopicInfo">
   <table>
@@ -24,19 +24,22 @@
   </table>
 </div>
 </literal>
-<!-- //topicinfo -->%TMPL:END%
+<!-- //topicmeta -->%TMPL:END%
 %TMPL:DEF{"formfields"}%<!-- formfields -->
 %TAB{"Categories" after="fixHeightOfPane()"}%
+<literal>
 <div class="natTopicEditForm">
   %DBCALL{"Applications.ClassificationApp.RenderEditCategoryBrowser"
     NAME="Category"
     VALUE="%URLPARAM{"Category" default="%FORMFIELD{topic="%BASEWEB%.%BASETOPIC%" "Category"}%"}%"
   }%
 </div>
+</literal>
 %ENDTAB%
 <!-- //formfields -->%TMPL:END%
 %TMPL:DEF{"settings"}%<!-- settings -->
 <div class="natSubmitOptions">
+<literal>
 <table>
 <tr>
   <th>%MAKETEXT{"Parent topic"}%:</th>
@@ -51,10 +54,12 @@
   <td>
     %DBCALL{"Applications.ClassificationApp.RenderIconSelector"
       VALUE="%URLPARAM{"Icon" default="%FORMFIELD{topic="%BASEWEB%.%BASETOPIC%" "Icon"}%"}%"
+      SOURCE="%CLASSIFICATIONPLUGIN_ICONSET%"
     }%
   </td>
 </tr>
 </table>
+</literal>
 </div>%TMPL:END%
 
 %META:FORM{name="Applications.ApplicationTopic"}%

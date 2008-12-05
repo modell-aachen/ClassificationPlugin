@@ -13,8 +13,8 @@ Format:
 
 Examples:
 
-   * %MAINWEB%.WikiGuest
-   * %MAINWEB%.WikiGuest - example@your.company
+   * %MAINWEB%.TWikiGuest
+   * %MAINWEB%.TWikiGuest - example@your.company
 
 <!--
    * Set VIEW_TEMPLATE = Applications.HiddenFormView
