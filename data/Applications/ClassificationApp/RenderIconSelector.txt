@@ -36,7 +36,7 @@ This function renders a selection widget to chose an icon
 ~~~    format="
 ~~~      <div id='clsEditIcon$index'>
 ~~~      <input type='radio'
-~~~        class='foswikiRadioButton'
+~~~        class='twikiRadioButton'
 ~~~        id='clsIcon$index'
 ~~~        name='Icon'
 ~~~        value='$name'
