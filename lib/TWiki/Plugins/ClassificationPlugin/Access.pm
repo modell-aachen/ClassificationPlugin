@@ -23,7 +23,8 @@ use constant NO_CATACL => 0;
 use constant DENY_ALLOW => 1;
 use constant ALLOW_DENY => 2;
 
-use base 'TWiki::Access';
+use TWiki::Access;
+our @ISA = qw( TWiki::Access );
 
 ###############################################################################
 # static

@@ -18,7 +18,8 @@
 # As per the GPL, removal of this notice is prohibited.
 
 package TWiki::Form::Cat;
-use base 'TWiki::Form::ListFieldDefinition';
+use TWiki::Form::ListFieldDefinition;
+our @ISA = qw( TWiki::Form::ListFieldDefinition );
 
 use TWiki::Plugins::ClassificationPlugin;
 use TWiki::Attrs;
