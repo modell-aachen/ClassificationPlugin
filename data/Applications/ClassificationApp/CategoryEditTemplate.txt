@@ -1,50 +1,31 @@
-%META:TOPICINFO{author="ProjectContributor" date="1199824438" format="1.1" reprev="1.1" version="$Rev$"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1275571864" format="1.1" reprev="4" version="4"}%
 %META:TOPICPARENT{name="TopicView"}%
-%TMPL:INCLUDE{"edit"}%
-%TMPL:DEF{"title"}%%TOPICTITLE% - (%MAKETEXT{"edit category"}%) - %WIKITOOLNAME%%TMPL:END%
-%TMPL:DEF{"contenttitle"}%<!-- contenttitle -->
-%IFDEFINEDTHEN{"%IFEXISTS{"%WEB%.%TOPIC%"}%" as="1"}%
-<h1 class="patternTemplateTitle">%TOPIC% (%MAKETEXT{"edit category"}%)</h1>
-%ELSEDEFINED%
-<h1 class="patternTemplateTitle"><nop>%TOPIC% (%MAKETEXT{"new classified topic"}%)</h1>
-%FIDEFINED%
-<!-- //contenttitle -->%TMPL:END%
-%TMPL:DEF{"topicmeta"}%<!-- topicmeta -->
-<literal>
-<div class="natEditTopicInfo">
-  <table>
-  <tr class="natEditTopicTitle">
-    <th>Title:</th>
-    <td><input class="twikiInputField" type="text" name="TopicTitle" size="80" value="%URLPARAM{"TopicTitle" default="%TOPICTITLE%"}%"/></td>
-  </tr>
-  <tr class="natEditTopicSummary">
-    <th>Summary:</th>
-    <td><input class="twikiInputField" type="text" name="Summary" size="80" value="%URLPARAM{"Summary" default="%FORMFIELD{topic="%BASEWEB%.%BASETOPIC%" "Summary"}%"}%" /></td>
-  </tr>
-  </table>
-</div>
-</literal>
-<!-- //topicmeta -->%TMPL:END%
+%{<verbatim class="tml">}%
+%TMPL:INCLUDE{"Applications.ClassificationApp.ClassifiedTopicEdit"}%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"topictype"}%%MAKETEXT{"category"}%%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
 %TMPL:DEF{"formfields"}%<!-- formfields -->
-%TAB{"Categories" after="fixHeightOfPane()"}%
-<div class="natTopicEditForm">
-  %DBCALL{"Applications.ClassificationApp.RenderEditCategoryBrowser"
-    NAME="Category"
-    VALUE="%URLPARAM{"Category" default="%FORMFIELD{topic="%BASEWEB%.%BASETOPIC%" "Category"}%"}%"
-  }%
-</div>
-%ENDTAB%
+%TMPL:P{"categoriestab"}%
 <!-- //formfields -->%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
 %TMPL:DEF{"settings"}%<!-- settings -->
-<div class="natSubmitOptions">
-<table>
+<h2>Category preferences</h2>
+<div class="foswikiFormSteps">
+<table class="foswikiLayoutTable">
 <tr>
-  <th>%MAKETEXT{"Parent topic"}%:</th>
-  <td><input class="twikiInputField" type="text" name="topicparent" size="80" value="%TOPICPARENT%" /></td>
+  <th>%MAKETEXT{"Order"}%:</th>
+  <td><input class="foswikiInputField" type="text" name="Order" size="10" value="%URLPARAM{"Order" default="%FORMFIELD{topic="%BASEWEB%.%BASETOPIC%" "Order"}%"}%" /></td>
 </tr>
 <tr>
   <th>%MAKETEXT{"Imported Categories"}%:</th>
-  <td><input class="twikiInputField" type="text" name="ImportedCategory" size="80" value="%URLPARAM{"ImportedCategory" default="%FORMFIELD{topic="%BASEWEB%.%BASETOPIC%" "ImportedCategory"}%"}%" /></td>
+  <td><input class="foswikiInputField" type="text" name="ImportedCategory" size="80" value="%URLPARAM{"ImportedCategory" default="%FORMFIELD{topic="%BASEWEB%.%BASETOPIC%" "ImportedCategory"}%"}%" /></td>
 </tr>
 <tr>
   <th valign="top">%MAKETEXT{"Icon"}%:</th>
@@ -56,10 +37,12 @@
   </td>
 </tr>
 </table>
-</div>%TMPL:END%
+</div>
+<!-- //settings -->%TMPL:END%
+%{</verbatim>}%
 
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="TopicView"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="CategoryEditTemplate"}%
-%META:FIELD{name="Summary" attributes="" title="Summary" value="Editor for category topics, <nop>NatSkin version"}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Editor for category topics"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

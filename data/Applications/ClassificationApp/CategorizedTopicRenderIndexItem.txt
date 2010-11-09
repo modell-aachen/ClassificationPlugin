@@ -1,8 +1,5 @@
-%META:TOPICINFO{author="ProjectContributor" date="1206371854" format="1.1" reprev="1.1" version="$Rev$"}%
+%META:TOPICINFO{author="ProjectContributor" date="1250778388" format="1.1" version="1.4"}%
 %META:TOPICPARENT{name="TopicFunction"}%
----+!! Function: %TOPIC%
-%FORMFIELD{"Summary"}%
-
 %TOC{depth="2"}%
 
 ---++ Documentation
@@ -19,17 +16,22 @@ a summary for an object listed within the Category topic.
 <verbatim class="tml">
 %STARTINCLUDE%<!-- CategorizedTopicRenderIndexItem -->
 %~~ DBQUERY{topic="%OBJECT%"
-~~~   format="<div class='clsIndexItem clsTopicItem clsCategorizedTopicItem'>[[$web.$topic][$expand(topictitle)]] 
+~~~   format="<div class='clsIndexItem clsTopicItem clsCategorizedTopicItem'>
+~~~     $percntDBCALL{\"Applications.RenderTopicThumbnail\"}$percnt 
+~~~     [[$web.$topic][$expand(topictitle)]] 
 ~~~     $percntREDDOT{\"$web.$topic\"}$percnt
-~~~     <div class='clsTopicInfo'>$expand(Summary and ', ')
+~~~     $expand('<div class=\"foswikiTopicSummary\">' and Summary and '</div>')
+~~~     <div class='foswikiTopicInfo'>$expand(Summary and ', ')
 ~~~      <span class='clsAuthorDateInfo'>
-~~~        by $percntGETTOPICTITLE{\"
+~~~      $percntCATINFO{\"$web.$topic\" header=\"Filed in \" footer=\"<br />\"}$percnt 
+~~~        $formatTime(info.date),
+~~~        <nop>$percntGETTOPICTITLE{\"
 ~~~             $percntUSERINFO{\"$expand(info.author)\"
 ~~~               format=\"$wikiusername\"
 ~~~             }$percnt\"
-~~~           }$percnt,
-~~~           $formatTime(info.date)
-~~~     </span></div></div>
+~~~        }$percnt
+~~~      </span>
+~~~     </div></div>
 ~~~   "
 ~~~ }%
 <!-- //CategorizedTopicRenderIndexItem -->%STOPINCLUDE%
@@ -45,16 +47,13 @@ a summary for an object listed within the Category topic.
 %DBCALL{"Applications.RenderFunctionCallers"}%
 
 ---++ Copyright
-<div style="text-align:justify;margin:1em;">
-&copy; 2008 Michael Daum info@michaeldaumconsulting.com
+&copy; 2008-2010 Michael Daum http://michaeldaumconsulting.com
 
 %DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
-</div>
-
 
 
 %META:FORM{name="Applications.ApplicationTopic"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="DocuTopic, TopicFunction"}%
-%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="CategorizedTopicRenderIndexItem"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value="Render a summary for a ClassifiedTopic in a category index"}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

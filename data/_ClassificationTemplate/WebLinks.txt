@@ -1,21 +1,66 @@
-%META:TOPICINFO{author="ProjectContributor" date="1199552369" format="1.1" version="$Rev$"}%
+%META:TOPICINFO{author="micha" comment="reprev" date="1282589522" format="1.1" reprev="4" version="4"}%
 %META:TOPICPARENT{name="WebPreferences"}%
----+ WebLinks for the %WEB% web
-
+---+ %TOPIC%
+<verbatim class="tml">
 %STARTINCLUDE%<!-- weblinks -->
-   * [[ClassifiedTopic][%MAKETEXT{"New Topic"}%]]
-   * [[Category][Categories]]
-   * [[CategoryBrowser][Category Browser]]
-   * [[WebTagCloud][Tags]]
-   * [[WebTopicList][%MAKETEXT{"Index"}%]]
-   * [[WebChanges][%MAKETEXT{"Changes"}%]]
-   * [[WebNotify][%MAKETEXT{"Notifications"}%]]
-   * [[WebStatistics][%MAKETEXT{"Statistics"}%]]
-%~~ TAGRELATEDTOPICS{"%BASETOPIC%" 
-~~~   header="<h2><a name=\"related\">Related Topics</a></h2>$n" 
-~~~   format="   1 <a href=\"%SCRIPTURLPATH{"view"}%/%BASEWEB%/$topic\"
-~~~                   title=\"$percntDBQUERY{topic=\"$topic\" format=\"$formfield(Tag)\"}$percnt\">
-*~~                $percntTOPICTITLE{\"$web.$topic\"}$percnt</a>"
-~~~   separator="$n"
-~~~ }%
+<noautolink>
+%IF{
+  "context SolrPluginEnabled" 
+  then="$percntINCLUDE{\"%WEB%.%TOPIC%\" section=\"solrsimilar\"}$percnt"
+}%
+%DBCALL{"%WEB%.%TOPIC%" section="recentchanges"}%
+</noautolink>
 <!-- //weblinks -->%STOPINCLUDE%
+</verbatim>
+---++ Recent changes
+<verbatim class="tml">
+%STARTSECTION{"recentchanges"}%<!-- recentchanges -->
+%DBQUERY{
+ web="%BASEWEB%" 
+ order="modified" 
+ limit="5" 
+ reverse="on"
+ exclude="WebHome|WebLinks|WebSideBar|WebPreferences|WebStatistics|WebTopicList|WebSearch|WebIndex|WebAdvancedSearch"
+ header="<h2 >%MAKETEXT{"Recent Changes"}%</h2>$n<ul>"
+ footer="</ul>"
+ format="<li>
+     <a href='%SCRIPTURLPATH{"view"}%/$web/$topic'>
+       $percntDBCALL{\"Applications.RenderTopicThumbnail\"
+         OBJECT=\"$web.$topic\"
+         TYPE=\"plain\"
+       }$percnt<!-- -->
+       $percntGETTOPICTITLE{\"$web.$topic\"}$percnt<br />
+       <span class='foswikiTopicInfo foswikiSmall'>$formfield(Summary)</span>
+       %CLEAR%
+     </a>
+   </li>"
+}%
+<!-- //recentchanges -->%ENDSECTION{"recentchanges"}%
+</verbatim>
+---++ Solr
+<verbatim class="tml">
+%STARTSECTION{"solrsimilar"}%<!-- solrsimilar -->
+%SOLRSIMILAR{"id:%BASEWEB%.%BASETOPIC%"
+   filter="web:%BASEWEB% type:topic"
+   header="<h2>Similar Topics</h2>$n<ul>" 
+   footer="</ul>"
+   format="<li>
+       <a href='%SCRIPTURLPATH{"view"}%/$web/$topic' title='score: $score'>
+         $percntDBCALL{\"Applications.RenderTopicThumbnail\"
+           OBJECT=\"$web.$topic\"
+           TYPE=\"plain\"
+         }$percnt<!-- -->
+         <!-- -->$title
+         $percntDBQUERY{
+           header=\"<br /><span class='foswikiTopicInfo foswikiSmallish'>\"
+           topic=\"$web.$topic\" 
+           format=\"$formfield(Summary)\"
+           footer=\"</span>\"
+         }$percnt
+         %CLEAR%
+       </a>
+     </li>"
+   separator="$n"
+   rows="5"
+}%<!-- //solrsimilar -->%ENDSECTION{"solrsimilar"}%
+</verbatim>

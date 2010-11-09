@@ -1,43 +1,39 @@
-%META:TOPICINFO{author="ProjectContributor" date="1213786209" format="1.1" version="$Rev$"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1271176237" format="1.1" reprev="1.4" version="1.4"}%
 %META:TOPICPARENT{name="TopicFunction"}%
----+!! Function: %TOPIC%
-%FORMFIELD{"Summary"}%
-
 %TOC{depth="2"}%
 
 ---++ Documentation
 %STARTSECTION{name="documentation" type="section"}%
-%RED%TODO%ENDCOLOR%
+Renders the results of a WebTagCloud search
 
 ---+++++ Parameters
-   * QUERY
+   * THEQUERY
    * SKIP
    * LIMIT
 
----+++++ Css
-   * 
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
 <verbatim class="tml">
-%STARTINCLUDE%<!-- rendertagcloudhitlist -->
-*~~ <noautolink>
-%~~ MAKEINDEX{"
-%~~   DBQUERY{"TopicType=~'\b(Tagged|Classified)Topic\b' %QUERY%"
-~~~    web="%BASEWEB%"
-~~~    limit="%IFDEFINED{"%LIMIT%" then="$test"}%" 
-~~~    format="$expand(topictitle);$topic;$web"
-~~~    separator="$n"
-~~~   }%"
-~~~   cols="%IFDEFINED{"%CLASSIFICATIONPLUGIN_NRCOLS%" then="$test" else="3"}%"
-~~~   header="<span class='twikiAlert'>$count</span> topic(s) found"
-~~~   split="\n"
-~~~   pattern="(.*);(.*);(.*)"
-~~~   format="$percntDBCALL{\"$3.$2->RenderIndexItem\"}$percnt"
-~~~ "
-~~~ }%
-~~~ </noautolink>
-<!-- //rendertagcloudhitlist-->%STOPINCLUDE%
+%STARTINCLUDE%<div class='clsMakeIndexWrapper'>
+<noautolink>
+%MAKEINDEX{
+  "%DBQUERY{"%IF{"defined THEQUERY" then="%THEQUERY%"}%"
+     web="%BASEWEB%"
+    limit="%IF{"defined LIMIT" then="%LIMIT%"}%" 
+    format="$expand(topictitle);$topic;$web"
+    separator="$n"
+  }%"
+  sort="nocase"
+  cols="%IF{"defined CLASSIFICATIONPLUGIN_NRCOLS" then="%CLASSIFICATIONPLUGIN_NRCOLS%" else="3"}%"
+  header="<div class='clsHitList'><span class='foswikiAlert'>$count</span> topic(s) found"
+  footer="</div>"
+  split="\n"
+  pattern="(.*);(.*);(.*)"
+  format="$percntDBCALL{\"$3.$2->RenderIndexItem\"}$percnt"
+}%
+</noautolink>
+</div>%STOPINCLUDE%
 </verbatim>
 
 ---++ Test
@@ -48,16 +44,13 @@
 %DBCALL{"Applications.RenderFunctionCallers"}%
 
 ---++ Copyright
-<div style="text-align:justify;margin:1em;">
-&copy; 2007 Michael Daum http://wikiring.de
+&copy; 2007-2010 Michael Daum http://michaeldaumconsulting.com
 
 %DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
-</div>
-
 
 
 %META:FORM{name="Applications.ApplicationTopic"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="DocuTopic, TopicFunction"}%
+%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="RenderWebTagCloudHitList"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value="Renders the hit list in a WebTagCloud selection"}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

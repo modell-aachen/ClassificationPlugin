@@ -1,14 +1,12 @@
-%META:TOPICINFO{author="ProjectContributor" date="1214252361" format="1.1" reprev="1.4" version="$Rev$"}%
+%META:TOPICINFO{author="ProjectContributor" date="1257866820" format="1.1" version="1.2"}%
 %META:TOPICPARENT{name="ApplicationTopic"}%
----+!! %TOPICTITLE%
-
 %IMAGEGALLERY%
 
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="ApplicationTopic"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="IconSet"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value=""}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%
 %META:FILEATTACHMENT{name="folder_edit.png" attr="h" comment="" date="1214228332" path="folder_edit.png" size="733" version=""}%
 %META:FILEATTACHMENT{name="page_copy.png" attr="h" comment="" date="1214228612" path="page_copy.png" size="663" version=""}%
 %META:FILEATTACHMENT{name="money_pound.png" attr="h" comment="" date="1214228541" path="money_pound.png" size="565" version=""}%

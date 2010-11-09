@@ -1,9 +1,13 @@
-%META:TOPICINFO{author="ProjectContributor" date="1182174285" format="1.1" reprev="1.5" version="$Rev$"}%
+%META:TOPICINFO{author="ProjectContributor" date="1246969553" format="1.1" version="1.2"}%
 %META:TOPICPARENT{name="TestCategory"}%
 %DBCALL{"Applications.ClassificationApp.RenderCategory"}%
 
 
 %META:FORM{name="Applications.ClassificationApp.Category"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="Category, CategorizedTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="Category, CategorizedTopic, WikiTopic"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value=""}%
 %META:FIELD{name="Category" attributes="" title="Category" value="TestCategory"}%
+%META:FIELD{name="Icon" attributes="" title="Icon" value=""}%
+%META:FIELD{name="ImportedCategory" attributes="" title="<nop>ImportedCategory" value=""}%
+%META:FIELD{name="Order" attributes="" title="Order" value="200"}%

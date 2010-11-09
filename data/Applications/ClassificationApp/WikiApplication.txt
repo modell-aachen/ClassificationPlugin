@@ -1,0 +1,9 @@
+%META:TOPICINFO{author="ProjectContributor" date="1195764356" format="1.1" version="$Rev$"}%
+%META:TOPICPARENT{name="TopicType"}%
+
+%META:FORM{name="Applications.TopicStub"}%
+%META:FIELD{name="TopicType" attributes="" title="TopicType" value="TopicStub, TopicType"}%
+%META:FIELD{name="Summary" attributes="" title="Summary" value="TopicType of a WikiApplication"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="WikiWorkbench"}%
+%META:FIELD{name="Target" attributes="" title="Target" value="Applications.WikiApplication"}%
+%META:FIELD{name="Section" attributes="" title="Section" value=""}%

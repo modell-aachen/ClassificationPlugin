@@ -1,11 +1,16 @@
-%META:TOPICINFO{author="ProjectContributor" date="1196879877" format="1.1" version="$Rev$"}%
+%META:TOPICINFO{author="ProjectContributor" comment="save topic" date="1273175503" format="1.1" reprev="1.5" rev="5" version="1.5"}%
 %META:TOPICPARENT{name="TopicView"}%
-%TMPL:INCLUDE{"view"}%
-%TMPL:DEF{"beforetext"}%%DBCALL{"Applications.ClassificationApp.RenderClassifiedTopicView"}%<hr class="clsTopicInfoSep" />%TMPL:END%
-%TMPL:DEF{"form"}%%TMPL:END%
+%{<verbatim class="tml">}%
+%TMPL:INCLUDE{"Applications.ClassificationApp.ClassifiedTopicView"}%
+
+%TMPL:DEF{"breadcrumbs"}%%DBCALL{
+  "Applications.ClassificationApp.RenderCategoryBreadcrumbs"
+  CAT="%URLPARAM{"catname"}%"
+}%%TMPL:END%
+%{</verbatim>}%
 
 %META:FORM{name="Applications.ApplicationTopic"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="TopicView"}%
+%META:FIELD{name="TopicType" title="TopicType" value="TopicView"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="CategoryViewTemplate"}%
-%META:FIELD{name="Summary" attributes="" title="Summary" value="View for Categories"}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="View for Categories"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

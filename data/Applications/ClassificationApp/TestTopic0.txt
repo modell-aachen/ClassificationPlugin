@@ -1,17 +1,16 @@
-%META:TOPICINFO{author="ProjectContributor" date="1214238900" format="1.1" version="$Rev$"}%
-%META:TOPICPARENT{name="PlansAndPresentations"}%
+%META:TOPICINFO{author="micha" date="1285260166" format="1.1" version="2"}%
+%META:TOPICPARENT{name="MarketingResearchCategory"}%
    * DISTANCE{from="TopCategory" to="BottomCategory" format="min=$min, max=$max"} = %DISTANCE{from="TopCategory" to="BottomCategory" format="min=$min, max=$max"}%
    * DISTANCE{from="%TOPIC%" to="PlansAndPresentations"}: %DISTANCE{from="%TOPIC%" to="PlansAndPresentations"}%
    * DISTANCE{from="%TOPIC%" to="MarketingCategory"}: %DISTANCE{from="%TOPIC%" to="MarketingCategory"}%
-
 
 TestTopic0
 
    * Set TOPICTITLE = Foo
 
 %META:FORM{name="Applications.ClassificationApp.ClassifiedTopic"}%
-%META:FIELD{name="TopicType" title="TopicType" value="ClassifiedTopic, CategorizedTopic, TaggedTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="ClassifiedTopic, CategorizedTopic, TaggedTopic, WikiTopic"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="Foo"}%
-%META:FIELD{name="Summary" attributes="" title="Summary" value="foo bar"}%
+%META:FIELD{name="Summary" attributes="" title="Summary" value="%22foo bar%22"}%
 %META:FIELD{name="Tag" attributes="" title="Tag" value="fertig, festival, freak"}%
-%META:FIELD{name="Category" attributes="" title="Category" value="PlansAndPresentations"}%
+%META:FIELD{name="Category" attributes="" title="Category" value="MarketingResearchCategory, PlansAndPresentations"}%

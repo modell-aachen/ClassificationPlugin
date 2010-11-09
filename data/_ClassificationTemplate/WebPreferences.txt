@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" date="1197302614" format="1.1" version="$Rev$"}%
+%META:TOPICINFO{author="ProjectContributor" date="1275569295" format="1.1" reprev="2" version="3"}%
 %META:TOPICPARENT{name="WebHome"}%
 ---+!! <nop>%WEB% Web Preferences
 
@@ -6,38 +6,33 @@
 
 ---++ General settings
    * Set SITEMAPLIST = on
-   * Set SITEMAPWHAT = 
-   * Set SITEMAPUSETO = 
+   * Set WEBSUMMARY = 
    * Set NOSEARCHALL = 
 
 ---++ Supplemental topics
-   * WebTopicEditTemplate
-   * WebButtons
-   * WebLinks
-   * WebSideBar
-   * WebCss
-   * WebJavaScript
-   * WebTopicActions
+   * WebTopicEditTemplate: template for new topics
+   * WebMenu: horizontal navitation
+   * WebLinks: sidebar links
+   * WebSideBar: sidebar navigation
 
 ---++ Application settings
-   * Set WEBFORMS = Applications.TWikiTopic, Applications.ClassificationApp.ClassifiedTopic, Applications.ClassificationApp.CategorizedTopic, Applications.ClassificationApp.TaggedTopic
-   * Set CLASSIFICATIONPLUGIN_AUTOREPARENT = 1
+   * Set WEBFORMS = Applications.WikiTopic, Applications.ClassificationApp.ClassifiedTopic, Applications.ClassificationApp.CategorizedTopic, Applications.ClassificationApp.TaggedTopic
+
+---++ !ClassificationPlugin settings
+   * #Set CLASSIFICATIONPLUGIN_AUTOREPARENT = on
 
 ---++ Cache settings
-   * Set WEBDEPENDENCIES = TWikiTopic
+   * Set WEBDEPENDENCIES = WebHome, WebTopicList, WebIndex, WebChanges, CategoryBrowser, WebRss, WebAtom, WebSearch
 
 ---++ Access rights
 *Web*:
    * #Set DENYWEBVIEW = 
-   * Set ALLOWWEBVIEW = %MAINWEB%.TWikiAdminGroupGroup
+   * Set ALLOWWEBVIEW = %USERSWEB%.AdminGroup
    * #Set DENYWEBCHANGE = 
-   * Set ALLOWWEBCHANGE = %MAINWEB%.TWikiAdminGroupGroup
+   * Set ALLOWWEBCHANGE = %USERSWEB%.AdminGroup
    * #Set DENYWEBRENAME = 
-   * Set ALLOWWEBRENAME = %MAINWEB%.TWikiAdminGroupGroup
+   * Set ALLOWWEBRENAME = %USERSWEB%.AdminGroup
 
 *Topic*
-   * Set ALLOWTOPICCHANGE = %MAINWEB%.TWikiAdminGroupGroup
-   * Set ALLOWTOPICRENAME = %MAINWEB%.TWikiAdminGroupGroup
-
----++ Finalization
-   * Set FINALPREFERENCES = NOSEARCHALL, DENYWEBVIEW, ALLOWWEBVIEW, DENYWEBCHANGE, ALLOWWEBCHANGE, DENYWEBRENAME, ALLOWWEBRENAME
+   * Set ALLOWTOPICCHANGE = %USERSWEB%.AdminGroup
+   * Set ALLOWTOPICRENAME = %USERSWEB%.AdminGroup

@@ -1,10 +1,32 @@
-%META:TOPICINFO{author="ProjectContributor" date="1181327336" format="1.1" reprev="1.2" version="$Rev$"}%
+%META:TOPICINFO{author="micha" comment="reprev" date="1277751627" format="1.1" reprev="7" version="9"}%
 %META:TOPICPARENT{name="TopicView"}%
-%TMPL:INCLUDE{"view"}%
-%TMPL:DEF{"beforetext"}%%DBCALL{"Applications.ClassificationApp.RenderClassifiedTopicView"}%<hr class="clsTopicInfoSep" />%TMPL:END%
+%{<verbatim class="tml">}%
+%TMPL:INCLUDE{"Applications.WikiTopicView"}%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"beforetext"}%<div class="foswikiTopicInfo">
+%DBCALL{"Applications.ClassificationApp.RenderClassifiedTopicView" TITLE_EXTRA="%TMPL:P{"titleextra"}%" }%
+</div>%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
 %TMPL:DEF{"form"}%%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"DISbreadcrumbs"}%%CATINFO{
+  topic="%BASEWEB%.%BASETOPIC%"
+  header="$percntBREADCRUMBS{recurse=\"topicoff\" separator=\"%TMPL:P{"sep"}%\"}$percnt%TMPL:P{"sep"}%" 
+  format="$breadcrumb" 
+  separator="%TMPL:P{"sep"}%"
+  null="$percntBREADCRUMBS{separator=\"$percntTMPL:P{\"sep\"}$percnt\"}$percnt"
+}%%TMPL:END%
+
+%{</verbatim>}%
 
 %META:FORM{name="Applications.ApplicationTopic"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="TopicView"}%
-%META:FIELD{name="Summary" attributes="" title="Summary" value="Display a classified topic"}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
+%META:FIELD{name="TopicType" title="TopicType" value="TopicView"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="ClassifiedTopicViewTemplate"}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Display a classified topic"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

@@ -1,7 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" date="1212998697" format="1.1" version="$Rev$"}%
----+ %TOPIC%
-%FORMFIELD{"Summary"}%
-
+%META:TOPICINFO{author="ProjectContributor" date="1246966839" format="1.1" version="1.2"}%
 See also: WebSideBar
 
 <div class="natSideBar">
@@ -9,7 +6,7 @@ See also: WebSideBar
 %STARTINCLUDE% <!-- -->
 %INCLUDE{"%IF{"context can_login" then="%SYSTEMWEB%.WebLeftBarLogin" else="<nop>"}%" warn="off"}%
 <b>Categories</b>
-%DBCALL{"Applications.ClassificationApp.RenderSideBar"}%
+%DBCALL{"Applications.ClassificationApp.RenderSideBar" TOP="TopCategory"}%
 <b>Tools</b>
 %DBCALL{"Applications.RenderSideBar"}%
 
@@ -23,6 +20,7 @@ See also: WebSideBar
 -->
 
 %META:FORM{name="Applications.ApplicationTopic"}%
-%META:FIELD{name="TopicType" attributes="M" title="TopicType" value="WebTool"}%
+%META:FIELD{name="TopicType" title="TopicType" value="WebTool"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="WebLeftBar"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value="WebSideBar used by the System.PatternSkin"}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="TWikiWorkbench"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="WikiWorkbench"}%

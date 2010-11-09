@@ -1,0 +1,109 @@
+%META:TOPICINFO{author="micha" comment="reprev" date="1280420017" format="1.1" reprev="4" version="4"}%
+%META:TOPICPARENT{name="TopicFunction"}%
+%TOC{depth="2"}%
+
+---++ Documentation
+%STARTSECTION{name="documentation" type="section"}%
+%RED%TODO%ENDCOLOR%
+
+---+++++ Parameters
+   * DAYS: number of recent days of changes to take under consideration, defaults to 7
+   * TAG: comma separated list of tags to be searched for in the archive
+   * CAT: restrict tag cloud to this category; displays all tags of all categories if unspecified
+   * KEYWORDS: keywords to filter for
+   * THEWEB: web to restrict search to, defaults to all
+   * TYPE: content type to restrict results to, e.g. "topic", "image", "video", "pdf", "zip", ...
+%ENDSECTION{name="documentation" type="section"}%
+
+---++ Implementation
+<verbatim class="tml">
+%STARTINCLUDE%<!-- solrtagcloud -->
+%SOLRSEARCH{
+  "%IF{"defined KEYWORDS" then="%KEYWORDS"}% "
+  id="solrtagcloud1"
+  sort="date desc"
+  type="dismax"
+  web="%IF{"defined THEWEB" then="%THEWEB%" else="all"}%"
+  filter="%IF{"defined THEWEB and $THEWEB!='all'" 
+            then="web:%THEWEB%"
+          }%
+          %IF{"defined TAG" 
+            then="$percntFORMATLIST{\"%TAG%\" split=\"\*s,\s*\" format=\"tag:$1\" separator=\", \"}$percnt"
+          }%
+          %IF{"defined CAT" 
+            then="$percntFORMATLIST{\"%CAT%\" split=\"\*s,\s*\" format=\"category:$1\" separator=\", \"}$percnt"
+          }%
+          %IF{"defined TYPE"
+            then="type:%TYPE%"
+          }% 
+          date:\"[NOW/DAY-%IF{"defined DAYS" then="%DAYS%" else="14"}%DAY TO NOW]\""
+  facets="tag"
+  rows="100"
+}%
+%TAGCLOUD{
+  terms="%SOLRFORMAT{
+    "solrtagcloud1"
+    format_tag="$key:$count"
+    separator_tag=", "
+  }%"
+  header="<div class='solrTagCloud tagCloud' style='text-align:center'>"
+  format="<span style='font-size:$weightpx;line-height:110%'><a href='#' style='color:$fadeRGB(104,144,184,0,102,255);' class='solrFacetValue' title='$count' name='tag_$term'>$term</a></span>"
+  footer="</div>"
+  group="<strong>$group</strong>"
+  split="\s*,\s*"
+  buckets="20"
+  offset="11"
+  warn="off"
+}%
+%ADDTOZONE{"script" tag="SOLRTAGCLOUD::JS" requires="JQUERYPLUGIN" 
+text="<literal>
+<script>
+jQuery(function($) {
+  $('.solrTagCloud a').click(function() {
+    var $this = $(this);
+    var href = '%SCRIPTURLPATH{"view"}%/%IF{"defined THEWEB and $THEWEB != 'all'" then="%THEWEB%" else="%BASEWEB%"}%/WebSearch?filter='+
+      escape('tag:'+$this.text());
+    href += ';web='+'%IF{"defined THEWEB" then="%THEWEB%" else="all"}%';
+    var tags = '%IF{"defined TAG" then="%TAG%"}%'.split(/\s*,\s*/);
+    for (var i = 0; i < tags.length; i++) {
+      if (tags[i] !='') {
+        href += ';filter='+escape('tag:'+tags[i]);
+      }
+    }
+    var cats = '%IF{"defined CAT" then="%CAT%"}%'.split(/\s*,\s*/);
+    for (var i = 0; i < cats.length; i++) {
+      if (cats[i]!='') {
+        href += ';filter='+escape('category:'+cats[i]);
+      }
+    }
+    if ('%IF{"defined TYPE" then="%TYPE%"}%'!='') {
+      href += ';filter=type:%TYPE%';
+    }
+    href += ';search='+escape('%IF{"defined KEYWORDS" then="%KEYWORDS%"}%');
+    window.location.href = href;
+    return false;
+  });
+});
+</script>
+</literal>"
+}%
+<!-- //solrtagcloud -->%STOPINCLUDE%
+</verbatim>
+
+---++ Test
+%DBCALL{"%TOPIC%"}%
+
+%DBCALL{"Applications.RenderFunctionCallers"}%
+
+---++ Copyright
+&copy; 2006-2010 Michael Daum http://michaeldaumconsulting.com
+
+%DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
+
+
+%META:FORM{name="Applications.ApplicationTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="RenderSolrTagCloud"}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Renders a tag cloud using Solr"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%
+%META:PREFERENCE{name="EDIT_TEMPLATE" title="EDIT_TEMPLATE" type="Set" value="Applications.WikiTopicEdit"}%

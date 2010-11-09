@@ -1,4 +1,5 @@
 %META:TOPICINFO{author="ProjectContributor" date="1205956971" format="1.1" reprev="1.2" version="$Rev$"}%
+%{<verbatim class="tml">}%
 %TMPL:INCLUDE{"search"}% <!-- template: <nop>NatSkinSearchViewTemplate -->
 %TMPL:DEF{"DIScontent"}%<!-- content -->
 <h2>%MAKETEXT{"Search result for [_1]" args="<span class='natSearchString'>\"%URLPARAM{"search"}%\"</span>"}%</h2>
@@ -10,7 +11,7 @@
 ~~~             <div class='natSearchSummary'>$formfield(Summary)</div>
 ~~~             <div class="natSearchRevision">
 ~~~               changed on <a href='%SCRIPTURLPATH{"rdiff"}%/$web/$topic?type=last'>$formatTime(info.date)</a> 
-~~~               by <span class='natSearchAuthor'> [[%MAINWEB%.$expand(info.author)][$expand(info.author)]] </span>
+~~~               by <span class='natSearchAuthor'> [[%USERSWEB%.$expand(info.author)][$expand(info.author)]] </span>
 ~~~             </div>
 ~~~           </div>"
 ~~~ }%
@@ -18,6 +19,7 @@
   %MAKETEXT{"<span>[_1]</span> topics found" args="%NTOPICS%"}%
 </div>%SPLIT%
 <!-- //content -->%TMPL:END%%{
+</verbatim>
 <!--
    * Set STYLESIDEBAR = off
 -->
@@ -28,4 +30,4 @@
 %META:FIELD{name="TopicType" title="TopicType" value="TopicView"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="NatSkinSearchViewTemplate"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value="View for natsearch"}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

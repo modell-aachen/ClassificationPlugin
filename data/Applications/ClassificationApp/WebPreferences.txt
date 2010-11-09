@@ -1,16 +1,10 @@
-%META:TOPICINFO{author="ProjectContributor" date="1212998697" format="1.1" version="$Rev$"}%
----+!! <nop>%WEB% Web Preferences
-
+%META:TOPICINFO{author="ProjectContributor" comment="none" date="1271669066" format="1.1" reprev="1.3" rev="3" version="1.3"}%
 %TOC%
 
 ---+++ Naming
 Text to be displayed on the sitemap and in the headerbar describing this web
 using a kind of tagline:
-   * Set SITEMAPWHAT = Categorization and folksomony application
-   * Set SITEMAPUSETO = Categorization and folksomony application
-
-Name of this blog displayed in the header if you are using the <nop>NatSkin:
-   * Set WEBTOOLNAME =
+   * Set WEBSUMMARY = Categorization and folksomony application
 
 Color to be displayed in the sitemap representing this web:
    * Set WEBBGCOLOR = #D0D0D0
@@ -21,39 +15,22 @@ Flag to enable/disable listing this web on the sitemap:
 ---+++ Access rights
    * Set #DENYWEBVIEW =
    * Set #ALLOWWEBVIEW = 
-   * Set DENYWEBCHANGE = %MAINWEB%.TWikiGuest
-   * Set ALLOWWEBCHANGE = %MAINWEB%.TWikiAdminGroupGroup
-   * Set ALLOWTOPICCHANGE = %MAINWEB%.TWikiAdminGroupGroup
+   * Set #DENYWEBCHANGE = 
+   * Set ALLOWWEBCHANGE = %USERSWEB%.AdminGroup
+   * Set ALLOWTOPICCHANGE = %USERSWEB%.AdminGroup
 
 ---+++ Application Pointer
 <nop>DBCachePlugin settings registering the !WebDB
 implementation for this web (don't change):
-   * Set WEBDB = TWiki::Plugins::DBCachePlugin::WebDB
    * Set CLASSIFICATIONPLUGIN_AUTOREPARENT  = 1
-   * Set THISBREADCRUMBS = %CATINFO{cat="%URLPARAM{"catname" default="%BASEWEB%.%BASETOPIC%"}%" header="$percntBREADCRUMBS{recurse=\"topicoff\" separator=\"<span class='natSep'>&nbsp;&#187; </span>\"}$percnt<span class='natSep'>&nbsp;&#187; </span>" format="$breadcrumb" separator="<span class='natSep'>&nbsp;&#187; </span>"}%
-
-TopicFunctions to generate html page header information:
-<verbatim>
-   * Set HTTP_EQUIV_ON_VIEW = %DBCALL{"Applications.RenderHttpEquivs"}%
-   * Set HTMLTITLE = %DBCALL{"Applications.RenderHtmlTitle"}%
-   * Set DEFAULT_METAKEYWORDS = TWikiWorkbench
-   * Set METAKEYWORDS = %DEFAULT_METAKEYWORDS%
-   * #Set METAAUTHOR =
-   * #Set METADESCRIPTION =
-</verbatim>
 
 ---+++ Misc
-Definition of TWikiForms:
-   * Set WEBFORMS = Applications.ClassificationApp.Category, Applications.ClassificationApp.ClassifiedTopic, Applications.ClassificationApp.CategorizedTopic, Applications.ClassificationApp.TaggedTopic
-   * Set FINALPREFERENCES = ATTACHFILESIZELIMIT, WIKIWEBMASTER, WEBCOPYRIGHT, WEBTOPICLIST, DENYWEBVIEW, ALLOWWEBVIEW, DENYWEBCHANGE, ALLOWWEBCHANGE, WEBDB
+Definition of DataForms:
+   * Set WEBFORMS = Applications.ClassificationApp.Category, Applications.ClassificationApp.ClassifiedTopic, Applications.ClassificationApp.CategorizedTopic, Applications.ClassificationApp.TaggedTopic, Applications.WikiTopic, Applications.ApplicationTopic
 
-__Related Topics__:
-   * [[%LOCALSITEPREFS%]]
-   * [[%SYSTEMWEB%.DefaultPreferences]]
-   * [[%USERSWEB%.SitePreferences]]
 
 %META:FORM{name="Applications.ApplicationTopic"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="WebTool"}%
-%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="TopicType" title="TopicType" value="ApplicationTopic, WebTool"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="WebPreferences"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value="Preferences of the <nop>%25WEB%25 web"}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="WikiWorkbench"}%

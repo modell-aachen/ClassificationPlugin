@@ -1,8 +1,5 @@
-%META:TOPICINFO{author="ProjectContributor" date="1214469810" format="1.1" reprev="1.1" version="$Rev$"}%
+%META:TOPICINFO{author="micha" comment="reprev" date="1286196445" format="1.1" reprev="10" version="10"}%
 %META:TOPICPARENT{name="TopicFunction"}%
----+!! Function: %TOPIC%
-%FORMFIELD{"Summary"}%
-
 %TOC{depth="2"}%
 
 ---++ Documentation
@@ -11,17 +8,14 @@ This function renders an input form to create a new category.
 If you click on the "Show all Categories", all known categories
 in the baseweb will be listed below.
 
----+++++ Parameters
-   * 
-
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
 <verbatim class="tml">
 %STARTINCLUDE%<!-- render category factory -->
----++ Create a new category
+---++ Create a new category in the <span class='foswikiAlert'><nop>%WEBLINK{"%BASEWEB%" format="$name"}%</span> web
 <noautolink>
-<div class="twikiPageForm clsCategoryFactory">
+<div class="foswikiPageForm clsCategoryFactory">
 <form action="%SCRIPTURLPATH{"save"}%/%BASEWEB%/" method="post">
 <input type="hidden" name="refresh" value="on" />
 <input type="hidden" name="web" value="%BASEWEB%" />
@@ -30,85 +24,108 @@ in the baseweb will be listed below.
 <input type="hidden" name="templatetopic" value="Applications.ClassificationApp.CategoryTemplate" />
 <input type="hidden" name="action" value="form" />
 <input type="hidden" name="TopicType" value="Category, CategorizedTopic" />
-<input type="hidden" name="topicparent" value="%BASEWEB%.%BASETOPIC%" />
-<table>
+<input type="hidden" name="topicparent" value="none" />
+<input type="hidden" name="redirectto" value="%BASEWEB%.%BASETOPIC%" />
+<table class="foswikiLayoutTable">
 <tr>
-  <th class="twikiFirstCol">Title:</th>
-  <td><input class="twikiInputField" type="text" id="title" name="TopicTitle" size="60" onblur="wikify('title','topic', 'Category')" onkeyup="wikify('title','topic', 'Category')" value="%URLPARAM{"TopicTitle"}%" /></td>
+  <th>Title:</th>
+  <td><input class="foswikiInputField" type="text" id="cattitle" name="TopicTitle" size="60" value="%URLPARAM{"TopicTitle" encode="entity"}%" /></td>
 </tr>
 <tr>
-  <th class="twikiFirstCol">Topic:</th>
-  <td><input class="twikiInputField" type="text" id="topic" name="topic" size="60" value="%URLPARAM{"topic"}%" /></td>
+  <th>Topic:</th>
+  <td><input class="foswikiInputField" type="text" id="cattopic" name="topic" size="60" value="%URLPARAM{"topic" encode="entity"}%" /></td>
 </tr>
 <tr>
-  <th class="twikiFirstCol">Summary:</th>
-  <td><input class="twikiInputField" type="text" name="Summary" size="60" value="%URLPARAM{"Summary"}%"/></td>
+  <th>Summary:</th>
+  <td><input class="foswikiInputField" type="text" name="Summary" size="60" value="%URLPARAM{"Summary" encode="entity"}%"/></td>
 </tr>
 <tr>
-  <th class="twikiFirstCol" valign="top">Parent:</th>
+  <th valign="top">Parent:</th>
   <td>
-%~~ DBCALL{"Applications.ClassificationApp.RenderEditCategoryBrowser" 
-~~~   NAME="Category" 
-~~~   VALUE="%IFDEFINED{"%VALUE%" then="%VALUE%" else="%URLPARAM{"Category"}%"}%"
-~~~   TOP="%IFDEFINED{"%TOP%" then="%TOP%"}%"
-~~~   BUTTONS="off"
-~~~ }%
+    %DBCALL{"Applications.ClassificationApp.RenderCategoryEditor"}%
   </td>
 </tr>
 <tr>
-  <th class="twikiFirstCol" valign="top">Icon:
-    %TWISTYBUTTON{showimg="%ICONURLPATH{plus}%" hideimg="%ICONURLPATH{minus}%" id="icons" link=""}%
-  </th>
+  <th valign="top">Icon:</th>
   <td>
-    %TWISTYTOGGLE{id="icons"}%
       %DBCALL{"Applications.ClassificationApp.RenderIconSelector" BUTTONS="off" VALUE="%URLPARAM{"Icon"}%" SOURCE="%CLASSIFICATIONPLUGIN_ICONSET%"}%
-    %ENDTWISTYTOGGLE%
   </td>
 </tr>
 <tr style="padding-top:1em">
-  <th class="twikiFirstCol">&nbsp;</th>
+  <th>&nbsp;</th>
   <td style="padding-top:1em">
-    <input type="submit" class="twikiSubmit natOkButton" value="Submit" />&nbsp;
-%IFDEFINEDTHEN{"%URLPARAM{"manage"}%" as="on"}%
-    <input type="button" class="foswikiButton natAltButton" value="Hide all Categories" onclick="window.location.href='%SCRIPTURL{view}%/%BASEWEB%/%BASETOPIC%';"/>
-%ELSEDEFINED%
-    <input type="button" class="foswikiButton natAltButton" value="Show all Categories" onclick="window.location.href='%SCRIPTURL{view}%/%BASEWEB%/%BASETOPIC%?manage=on';"/>
-%FIDEFINED%
-    &nbsp;<input type="button" class="twikiButtonCancel natCancelButton" value="Reset" onclick="window.location.href='%SCRIPTURL{view}%/%BASEWEB%/%BASETOPIC%';"/>
+    %BUTTON{"%MAKETEXT{"Submit"}%" type="save" icon="add"}%
+    %CLEAR%
   </td>
 </tr>
 </table>
 </form>
 </div>
-<script type="text/javascript" src="%PUBURLPATH%/Applications/twb.js"></script>
+
+%BUTTON{"%MAKETEXT{"Show all Categories"}%" icon="application_cascade" id="catoggle"}%
+%BR%
+%CLEAR%
+
+%JQREQUIRE{"wikiword"}%
+%ADDTOZONE{"script" topic="%WEB%.%TOPIC%" section="init" requires="JQUERYPLUGIN::WIKIWORD"}%
 </noautolink>
 
-%IFDEFINEDTHEN{"%URLPARAM{"manage"}%" as="on"}%
-%$nopDBCALL{"Applications.ClassificationApp.RenderAllCategories"}%
-%FIDEFINED%
+<div id="catainer">
+</div>
 <!-- //render category factory -->%STOPINCLUDE%
 </verbatim>
 
-<!-- interrupt glue -->
+---++ !JavaScript initialisation
+<verbatim class="tml">
+%STARTSECTION{"init"}%
+<literal>
+<script>
+jQuery(function($) {
+  var toggleState = 0;
+
+  $("#cattopic").wikiword("#cattitle", {suffix: 'Category', initial:'...Category'});
+  $("#catoggle").click(function() {
+    var $this = $(this);
+    var $icon = $this.find(".jqButtonIcon");
+    var $catainer = $("#catainer");
+    if (toggleState == 0) {
+      toggleState = 1;
+      var bgImg = $icon.css('background-image');
+      $icon.css('background-image', 'url(%PUBURLPATH%/%SYSTEMWEB%/JQueryPlugin/images/spinner.gif)');
+      $catainer.load("%SCRIPTURL{"rest"}%/RenderPlugin/tag?topic=%BASEWEB%.%BASETOPIC%;name=DBCALL;param=Applications.ClassificationApp.RenderAllCategories", '', function() {
+        $this.find("span span").text("%MAKETEXT{"Hide all Categories"}%");
+        $icon.css('background-image', bgImg);
+      });
+    } else if (toggleState == 1) {
+      toggleState = 2;
+      $this.find("span span").text("%MAKETEXT{"Show all Categories"}%");
+      $catainer.hide();
+    } else {
+      toggleState = 1;
+      $this.find("span span").text("%MAKETEXT{"Hide all Categories"}%");
+      $catainer.show();
+    }
+    return false;
+  });
+});
+</script>
+</literal>
+%ENDSECTION{"init"}%
+</verbatim>
 
 ---++ Test
-<div class="alt">
 %DBCALL{"%TOPIC%"}%
-</div>
 
 %DBCALL{"Applications.RenderFunctionCallers"}%
 
 ---++ Copyright
-<div style="text-align:justify;margin:1em;">
-&copy; 2008 Michael Daum info@michaeldaumconsulting.com
+&copy; 2008-2010 Michael Daum http://michaeldaumconsulting.com
 
 %DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
-</div>
-
 
 
 %META:FORM{name="Applications.ApplicationTopic"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="DocuTopic, TopicFunction"}%
+%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="RenderCategoryFactory"}%
-%META:FIELD{name="Summary" attributes="" title="Summary" value="Renders a factory for Categories"}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Renders a factory for Categories"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

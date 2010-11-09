@@ -1,8 +1,5 @@
-%META:TOPICINFO{author="ProjectContributor" date="1213446905" format="1.1" version="$Rev$"}%
+%META:TOPICINFO{author="mdaum" date="1288798170" format="1.1" reprev="1.2" version="1.2"}%
 %META:TOPICPARENT{name="TopicFunction"}%
----+!! Function: %TOPIC%
-%FORMFIELD{"Summary"}%
-
 %TOC{depth="2"}%
 
 ---++ Documentation
@@ -12,6 +9,7 @@ a summary for an object of type ClassifiedTopic.
 
 ---+++++ Parameters
    * OBJECT
+   * TITLE
 
 %ENDSECTION{name="documentation" type="section"}%
 
@@ -24,9 +22,9 @@ a summary for an object of type ClassifiedTopic.
 ~~~   morechildren="<a href='$url' title='%MAKETEXT{"more"}%'>...</a>"
 ~~~   format="
 *~~     <div class='clsIndexItem clsCategoryItem' style='background-image:url($icon)'>
-~~~       $link
-~~~       $percntIFDEFINED{\"$leafs\" as=\"0\" then=\"\" else=\"&nbsp;($leafs)\"}$percnt
-~~~       <div class='clsTopicInfo'>$summary</div>
+~~~       <a href='$url'><noautolink>%IF{"defined TITLE" then="%TITLE%" else="$title"}%</noautolink></a>
+~~~       $percntIF{\"'$count'>'0'\" then=\"&nbsp;($count)\"}$percnt
+~~~       <div class='foswikiTopicInfo'><noautolink>$summary</noautolink></div>
 ~~~       <div class='clsSubCategories'>$children $more</div>
 *~~     </div>
 ~~~  "
@@ -38,22 +36,19 @@ a summary for an object of type ClassifiedTopic.
 
 ---++ Test
 <div class="alt">
-%DBCALL{"%TOPIC%"}%
+%DBCALL{"%TOPIC%" OBJECT="IntranetDirectory"}%
 </div>
 
 %DBCALL{"Applications.RenderFunctionCallers"}%
 
 ---++ Copyright
-<div style="text-align:justify;margin:1em;">
-&copy; 2007 MichaelDaum info@michaeldaumconsulting.com
+&copy; 2007-2010 Michael Daum http://michaeldaumconsulting.com
 
 %DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
-</div>
-
 
 
 %META:FORM{name="Applications.ApplicationTopic"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="DocuTopic, TopicFunction"}%
-%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="CategoryRenderIndexItem"}%
-%META:FIELD{name="Summary" attributes="" title="Summary" value="Render a summary for a Category in a category index"}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
+%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Render a summary for a Category in a category index"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

@@ -1,8 +1,5 @@
-%META:TOPICINFO{author="ProjectContributor" date="1219136768" format="1.1" version="$Rev$"}%
+%META:TOPICINFO{author="ProjectContributor" date="1271175261" format="1.1" version="1.10"}%
 %META:TOPICPARENT{name="TopicFunction"}%
----+!! Function: %TOPIC%
-%FORMFIELD{"Summary"}%
-
 %TOC{depth="2"}%
 
 ---++ Documentation
@@ -21,73 +18,93 @@ TODO: what do we display for topics that are not categorized?
 ~~~ <div class="clsSideBar clsBrowser" id="clsSideBarCategoryBrowser" style="display:none">
 %~~ HIERARCHY{
 ~~~   web="%BASEWEB%"
-~~~   open="%IFDEFINED{
-~~~     "%CATINFO{"%BASETOPIC%" format="$topic"}%" 
-~~~     then="$test" 
-~~~     else="TopCategory"
-~~~   }%, %BASETOPIC%, %URLPARAM{"catname"}%"
+~~~   open="
+~~~     $percntIF{
+~~~       \"
+~~~         $percntDISTANCE{
+~~~           from=\"$name\"
+~~~           to=\"%URLPARAM{"catname" default="%BASETOPIC%"}%\"
+~~~           undef=\"-1\"
+~~~         }$percnt >= 0
+~~~       \"
+~~~       then=\"$name\" 
+~~~     }$percnt, %TOP%"
 ~~~   placeholder="<li><span class='placeholder'>&nbsp;</span></li>"
-~~~   exclude="TopCategory"
+~~~   top="%TOP%"
+~~~   exclude="%TOP%"
 ~~~   header="<ul>"
 ~~~   footer="</ul>"
 ~~~   format="<li 
 ~~~     id=\"$name\"
-~~~     class=\"
-~~~       $percntIFDEFINED{\"$subcats\" as=\"0\" 
-~~~         then=\"\" else=\"hasChildren\"
-~~~       }$percnt
-~~~     \">
-*~~     <table cellspacing='0' cellpadding='0' width='100%'><tr>
-*~~     <td valign='top'><img class='clsCategoryIcon' src='$icon' alt='$percntENCODE{$title}$percnt'/></td>
-*~~     <td valign='top' width='100%'><a 
-~~~       $percntIFDEFINED{
-~~~         \"$name\" 
-~~~         as=\"%BASETOPIC%|%URLPARAM{catname}%\" 
-~~~         then=\" class='current' \"
-~~~         glue=\"off\"
-~~~       }$percnt
-~~~       href=\"$url\" title=\"$percntENCODE{$summary}$percnt\"><noautolink>$title</noautolink></a></td>
-~~~     </tr></table>
+~~~     class=\"$percntIF{\"'$subcats'!='0'\" then=\"hasChildren\"}$percnt\">
+~~~     <a 
+~~~       style='background-image:url($icon);'
+~~~       class='clsCategoryLink
+~~~         $percntIF{
+~~~         \"
+~~~           ( $percntISA{
+~~~               \"%BASETOPIC%\"
+~~~               cat=\"$name\"
+~~~             }$percnt = 1 
+~~~             and
+~~~             $percntDISTANCE{
+~~~               from=\"$name\"
+~~~               to=\"%BASETOPIC%\"
+~~~               undef=\"-1\"
+~~~             }$percnt = 1
+~~~           )  
+~~~           or 
+~~~           $percntDISTANCE{
+~~~             from=\"$name\"
+~~~             to=\"%URLPARAM{"catname" default="%BASETOPIC%"}%\"
+~~~             undef=\"-1\"
+~~~           }$percnt = 0
+~~~         \"
+~~~         then=\"current\"
+~~~       }$percnt'
+~~~       href=\"$url\"
+~~~       title=\"$percntENCODE{$summary}$percnt\"><noautolink>$title</noautolink>
+~~~     </a>
 ~~~     $children</li>"
 ~~~ }%
 ~~~ </div>
-~~~ <script type="text/javascript">
-~~~ $(function () {
-~~~     $("#clsSideBarCategoryBrowser > ul").each(function() {
-~~~       var $this = $(this);
-~~~       $this.find("li ul").parent().addClass("open");
-~~~       $this.find(".placeholder").parent().parent().parent().removeClass("open");
+%JQREQUIRE{"treeview"}%
+~~~ <script>
+~~~ jQuery(function () {
+~~~     jQuery("#clsSideBarCategoryBrowser > ul").each(function() {
+~~~       var $this = jQuery(this);
+~~~       $this.find("li ul").parent().addClass("open collapsable");
+~~~       $this.find(".placeholder").parent().parent().parent().removeClass("open collapsable");
 ~~~       $this.find(".hasChildren.open").removeClass("hasChildren");
 ~~~       $this.treeview({
 ~~~         url: "%SCRIPTURLPATH{"rest"}%/RenderPlugin/tag?
 *~~                 name=DBCALL;
 *~~                 param=Applications.ClassificationApp.RenderHierarchyAsJSON;
+*~~                 t=%GMTIME{"$epoch"}%;
 *~~                 depth=2;
 *~~                 format=sidebar;
-*~~                 web=%BASEWEB%
+*~~                 topic=%BASEWEB%.%BASETOPIC%
 *~~              ",
 ~~~         animated: 'fast'
 ~~~       }).parent().show();
+~~~       $this.find(".open").removeClass("expandable").
+~~~       find(".open-hitarea.expandable-hitarea").removeClass("expandable-hitarea").addClass("collapsable-hitarea");
 ~~~    });
 ~~~ });
 ~~~ </script>
 <!-- //rendersidebar -->%STOPINCLUDE%
 </verbatim>
 
-
 %DBCALL{"Applications.RenderFunctionCallers"}%
 
 ---++ Copyright
-<div style="text-align:justify;margin:1em;">
-&copy; 2008 Michael Daum info@michaeldaumconsulting.com
+&copy; 2008-2010 Michael Daum http://michaeldaumconsulting.com
 
 %DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
-</div>
-
 
 
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="RenderSideBar"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value="Render tools to handle categories"}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

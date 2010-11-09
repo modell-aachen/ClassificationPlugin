@@ -1,0 +1,145 @@
+%META:TOPICINFO{author="ProjectContributor" comment="save topic" date="1250861344" format="1.1" reprev="1.2" version="1.2"}%
+---+!! ClassificationPlugin
+%TOC%
+<div class="foswikiRight" style="padding:10px 10px 10px 50px;background:0% 50% url(%ATTACHURLPATH%/wikiringlogo40x40.png) no-repeat;">
+<a href="http://wikiring.com" title="Make your Wiki ring!" style="text-decoration:none">
+   Powered by <br /> <nop>WikiRing Consultants </a>
+</div>
+
+---++ Description
+The ClassificationPlugin is a taxonomy and folksonomy extension for Foswiki that allows you to 
+manage knowledge assets stored in your wiki. Users can organize their content by filing 
+topics into categories and by adding offhand tags. Classifying content using categories and tags
+are the key factors to foster sustainable knowledge management. This becomes even more important
+in a wiki environment where content is created quickly but has to be made available for a longer period of time.
+
+Categories become the backbone spanning all of your content. Content can then be retrieved by browsing
+categories narrowing down search results interactively in addition to the normal full-text search.
+
+---++ Key features 
+   * *Multilevel facet navigation*: Wiki content is displayed dynamically by browsing a category tree or 
+     by means of interactive tag clouds. 
+
+   * *Managing taxonomies the wiki way*: Categories in a taxonomy are first-class wiki citizens that can be created,
+     renamed, managed and reused as easily as normal wiki topics.
+
+   * *Expressive knowledge models*: Categories may form poly-hierarchies
+     where categories can have multiple parent categories. Wiki documents can be filed into multiple
+     categories at the same time.
+
+   * *Multidimensional classification*: A wiki document may participate in multiple taxonomies and folksonomies
+     at the same time. That way different facets of a document can be separated in a clean way.
+
+   * *Reusing and merging taxonomies*: A category tree once defined in one web space can be imported into another
+     web space effortless. You are free to chose which part of a tree you want to import. Multiple category trees
+     from a number of web spaces can be merged and reassembled differently in a new web. That way predefined
+     taxonomies can be managed in a centralized way and reused as needed in different webs. Any change to a taxonomy
+     in one place will automatically show up in all webs that imported it.
+
+   * *Tagging for corporate intranets*: While categories establish a predefined vocabulary, tags are a way to
+     assign keywords to wiki content in an ad hoc fashion. This completes category knowledge management in
+     a natural and fruitful way.
+
+   * *Standardized <nop>WikiApplicatons*: <nop>ClassificationPlugin conforms to the <nop>WikiWorkbench application
+     framework that grants for scalable and long-term maintainable <nop>WikiApplications.
+
+   * *Extensibility*: <nop>ClassificationPlugin serves as a building block for further <nop>WikiApplications
+     to be integrated in an overall knowledge management infrastructure. It serves as a middleware for a couple
+     of higher order applications, like blogging, forums and skills management available separately.
+
+   * *Document types*: <nop>ClassificationPlugin adds a couple of document types to the standard set that come with
+     the <nop>WikiWorkbench. This gives you maximum flexibility in your knowledge management initiative. Further
+     document types can be derived with ease. These will automatically participate in the overall knowledge management
+     framework.
+
+---++ Screenshots
+<verbatim class="foswikiHidden">
+%IMAGE{"ClassificationPluginSnap1.png|500px" caption="Frontpage showing top categories and recently used tags" type="frame"}%
+
+%IMAGE{"ClassificationPluginSnap10.png|500px" caption="Assigning tags to a topic using autocompletion and a tag cloud" type="frame"}%
+
+%IMAGE{"ClassificationPluginSnap12.png|500px" caption="Tag search drill down" type="frame"}%
+
+%IMAGE{"ClassificationPluginSnap13.png|500px" caption="Use category trees explore your content" type="frame"}%
+
+%IMAGE{"ClassificationPluginSnap14.png|500px" caption="Display document types in category overviews" type="frame"}%
+
+%IMAGE{"ClassificationPluginSnap4.png|500px" caption="Display documents as filed into categories and tags" type="frame"}%
+
+%IMAGE{"ClassificationPluginSnap5.png|500px" caption="Filing a topic into a set of categories" type="frame"}%
+
+%IMAGE{"ClassificationPluginSnap8.png|500px" caption="Provide similar content dynamically" type="frame"}%
+</verbatim>
+
+
+---++ Syntax Rules
+=%<nop>HIERARCHY{...}%=
+
+Format strings may contain the following:
+   * =$time= expands to the calculated time difference
+   * =%$= expands to a =%= char
+   * =$$= expands to a =$= char
+   * =
+= expands to a linefeed
+   * =$t= expands to a tab space
+   * == expands to the empty string
+
+---++ ISA
+Predicate that checks if a topic is filed in a specific category or one of its subcategories
+Also available in <nop>DBCacheContrib search expressions.
+
+---++ SUBSUMES
+Predicate that checks if a category is a parent category of another. 
+Also available in <nop>DBCacheContrib search expressions.
+
+---++ SIMILARTOPICS
+Returns a list of topics that are similar to the current one. Similarity between two
+topics is a value expressed in percentage, where 100% means that the topics are extremely
+similar and 0% means that the compared topics aren't corelated at all. The similarity
+is computed on the base of the categorization and tagging information using a
+weighted matching coefficient.
+
+---++ Plugin Installation Instructions
+%$INSTALL_INSTRUCTIONS%
+
+---++ Plugin Info
+<!-- provided for compatibility only
+   * Set SHORTDESCRIPTION = A topic classification plugin and application
+-->
+
+|  Plugin Author: | Michael Daum |
+|  Copyright &copy;: | 2006-2010, Michael Daum http://michaeldaumconsulting.com |
+|  License: | GPL ([[http://www.gnu.org/copyleft/gpl.html][GNU General Public License]]) |
+|  Release: | %$RELEASE% |
+|  Version: | %$VERSION% |
+|  Change History: | <!-- versions below in reverse order -->&nbsp; |
+|  10 May 2009: | improved tagging widget using jquery.textboxlist |
+|  26 Mar 2009: | renamed TAGRELATEDTOPICS to SIMILARTOPICS; \
+                  improved algorithm to compute similarity; \
+                  various performance optimizations |
+|  12 Dec 2008: | disable memory cache by default |
+|  17 Jan 2008: | new TAGCOOCURRENCE; \
+                  new HIERARCHY tag; \
+                  Top category can be mapped onto a real topic now; \
+                  new jquery.tagselector plugin; \
+                  reworked view for topictypes making use of new MAKEINDEX of \
+                  Foswiki:Extensions/FilterPlugin; \
+                  added category and tag search; \
+                  speedup for tag clouds |
+|  13 Nov 2007: | added semantic predicates ISA, SUBSUMES, COMPATIBLE to DBQUERY, \
+                  fixed exclude parameter to cat formfield, \
+                  fixed registering topics to Top category, \
+                  rewrite of detecting which categories a <nop>TopicType has, \
+                  normalized topic documentation according to <nop>WikiWorkbench standards, \
+                  removed pagination in tag cloud selections, \
+                  added support for displaying "recent" tags |
+|  30 Oct 2007: | first check-in to svn |
+|  30 Oct 2006: | Initial version |
+|  Dependency: | $Foswiki::Plugins::VERSION 1.1 |
+|  CPAN Dependencies: |  |
+|  Other Dependencies: | none |
+|  Perl Version: | 5.005 |
+|  Plugin Home: | Foswiki:Extensions/%TOPIC% |
+|  Feedback: | Foswiki:Support/%TOPIC% |
+
+%META:FILEATTACHMENT{name="wikiringlogo40x40.png" attachment="wikiringlogo40x40.png" attr="h" comment="" date="1189787359" path="wikiringlogo40x40.png" size="2571" stream="wikiringlogo40x40.png" tmpFilename="" user="ProjectContributor" version="1"}%

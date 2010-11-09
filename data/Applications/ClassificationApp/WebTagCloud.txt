@@ -1,18 +1,41 @@
-%META:TOPICINFO{author="ProjectContributor" date="1194448253" format="1.1" version="$Rev$"}%
+%META:TOPICINFO{author="ProjectContributor" date="1252052464" format="1.1" version="1.7"}%
 %META:TOPICPARENT{name="ApplicationTopic"}%
----+!! WebTagCloud Factory
-
 See also: RenderWebTagCloud
 
----++ Installation
 %DBCALL{"Applications.RenderTopicInstaller"}%
 
----++ Implementation
 %STARTINCLUDE%<!-- applications.classificationapp.webtagcloud -->
+<div class="foswikiFormSteps">
+  <form name="tagcloudsearch" action="%SCRIPTURLPATH{"view"}%/%BASEWEB%/%BASETOPIC%">
+  <input type="hidden" name="tag" value="%URLPARAM{"tag"}%" />
+  <input type="hidden" name="cat" value="%URLPARAM{"cat"}%" />
+  <input type="hidden" name="topictype" value="%URLPARAM{"topictype"}%" />
+  <input type="hidden" name="topcat" value="%URLPARAM{"topcat"}%" />
+  <input type="hidden" name="excludecat" value="%URLPARAM{"excludecat"}%" />
+  <input type="hidden" name="recency" value="%URLPARAM{"recency"}%" />
+  <input type="hidden" name="min" value="%URLPARAM{"min"}%" />
+  <div class="foswikiFormStep foswikiFormLast">
+    <table class="foswikiLayoutTable">
+      <tr>
+        <th>%MAKETEXT{"Search"}%:</th>
+        <td>
+          <input type="text" size="40" name="search" value="%URLPARAM{"search"}%" class="jqFocus foswikiInputField" />
+        </td>
+        <td>
+          %BUTTON{"%MAKETEXT{"Submit"}%" icon="find" type="submit"}% 
+          %CLEAR%
+        </td>
+      </tr>
+    </table>
+  </div>
+  </form>
+</div>
+%JQREQUIRE{"focus"}%
 %~~ DBCALL{"Applications.ClassificationApp.RenderWebTagCloud" 
 ~~~   KEYWORDS="%URLPARAM{"search"}%" 
 ~~~   TAG="%URLPARAM{"tag"}%" 
 ~~~   CAT="%URLPARAM{"cat"}%" 
+~~~   TOPICTYPE="%URLPARAM{"topictype"}%" 
 ~~~   TOPCAT="%URLPARAM{"topcat" default="%TOPCAT%"}%"
 ~~~   EXCLUDECAT="%URLPARAM{"excludecat" default="%EXCLUDECAT%"}%"
 ~~~   RECENCY="%URLPARAM{"recency"}%"
@@ -24,6 +47,7 @@ See also: RenderWebTagCloud
 
 
 %META:FORM{name="Applications.ApplicationTopic"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="ApplicationFactory, ApplicationTopic, WebTool"}%
-%META:FIELD{name="Summary" attributes="" title="Summary" value="Access topics based on their tags"}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
+%META:FIELD{name="TopicType" title="TopicType" value="ApplicationTopic, WebTool"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="WebTagCloud"}%
+%META:FIELD{name="Summary" attributes="" title="Summary" value="Faceted navigation, main facet tags"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

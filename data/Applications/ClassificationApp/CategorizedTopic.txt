@@ -1,9 +1,8 @@
-%META:TOPICINFO{author="ProjectContributor" date="1228410891" format="1.1" reprev="1.2" version="$Rev$"}%
+%META:TOPICINFO{author="micha" comment="reprev" date="1277732398" format="1.1" reprev="6" version="7"}%
 %META:TOPICPARENT{name="TopicType"}%
----+!! %TOPIC%
-%FORMFIELD{"Summary"}%
-
 %TOC{depth="2"}%
+
+%DBCALL{"Applications.RenderTopicInstaller" TYPE="TopicType" PARENT="TopicType"}%
 
 ---++ Documentation
 %STARTSECTION{name="documentation" type="section"}%
@@ -12,51 +11,55 @@ This is a TopicType for categorization only.
 See also: CategorizedTopicTemplate, ClassifiedTopic, TaggedTopic
 %ENDSECTION{name="documentation" type="section"}%
 
----++ Installation
-%DBCALL{"Applications.RenderTopicInstaller" TEXT="Install '%TOPIC%' TopicType in" TYPE="TopicType"}%
+---++ Topics of type '%TOPIC%'
+%STARTINCLUDE%<!-- -->
+%TWISTY{link="%BUTTON{
+  "%IF{"defined 'LABEL'"
+    then="%LABEL%"
+    else="%MAKETEXT{"New"}%"
+  }%" 
+  icon="add"
+}%%CLEAR%"}%
 
-
-%STARTINCLUDE% 
----++ Create a new topic %IFDEFINED{"%CAT%" then="in <nop>%CAT%'" glue="off"}%
-%STARTSECTION{"factory"}%
-%TWISTY{link="%BUTTON{"%IF{"defined 'LABEL'" then="%LABEL%" else="Create topic"}%" icon="add"}%%CLEAR%"}%
-
-<div class="twikiFormSteps">
+<div class="foswikiFormSteps">
 <form action="%SCRIPTURLPATH{"edit"}%/%BASEWEB%/" method="post">
 <input type="hidden" name="topicparent" value="%BASEWEB%.%BASETOPIC%" />
 <input type="hidden" name="web" value="%BASEWEB%" />
 <input type="hidden" name="onlynewtopic" value="on" />
 <input type="hidden" name="formtemplate" value="Applications.ClassificationApp.CategorizedTopic" />
 <input type="hidden" name="templatetopic" value="Applications.ClassificationApp.CategorizedTopicTemplate" />
+<input type="hidden" name="template" value="Applications.ClassificationApp.CategorizedTopicEdit" />
 <input type="hidden" name="TopicType" value="CategorizedTopic" />
 <input type="hidden" name="Summary" value="" />
-<input type="hidden" name="Category" value="%IFDEFINED{"%CAT%" then="%CAT%" else="TopCategory"}%" />
-<div class="twikiFormStep">
+<input type="hidden" name="Category" value="%IF{"defined CAT" then="%CAT%" else="TopCategory"}%" />
+<div class="foswikiFormStep">
   <h3>Name:</h3>
-  <input class="twikiInputField" type="text" name="topic" size="40" />
+  <input class="foswikiInputField" type="text" name="topic" size="40" />
 </div>
-<div class="twikiFormStep twikiFormButtons twikiFormLast">
+<div class="foswikiFormStep foswikiFormButtons foswikiFormLast">
     %BUTTON{"%MAKETEXT{"Submit"}%" type="submit" icon="tick"}%
     %CLEAR%
 </div>
 </form>
 </div>
 %ENDTWISTY%
-%ENDSECTION{"factory"}%
+
+%DBCALL{"Applications.RenderTopicsOfType"
+  FIELDS="Topic, Summary, Category"
+}%
 %STOPINCLUDE%
 
----++ %TOPIC% form
-| *Name:*| *Type:* | *Size:* | *Values:* | *Tooltip message:* | *Attributes:* |
+---++ <nop>%TOPIC% form
+| *Name:*| *Type:* | *Size:* | *Values:* | *Description:* | *Attributes:* |
 | TopicType | label | 1 | CategorizedTopic | Document type  | |
 | <nop>TopicTitle | text | 75 | | Title of this topic | |
 | Summary | text | 75 | | Short description of the role of this topic | |
 | Category | cat | 1 | | categories |  |
 
 
-
 %META:FORM{name="Applications.TopicType"}%
-%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicType, TWikiForm"}%
-%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="TopicType" title="TopicType" value="TopicType, DataForm, DocuTopic"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="CategorizedTopic"}%
 %META:FIELD{name="Inheritance" attributes="" title="Inheritance" value="ApplicationTopic"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value="Categorized topics"}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

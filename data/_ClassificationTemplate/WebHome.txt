@@ -1,8 +1,21 @@
-%META:TOPICINFO{author="ProjectContributor" date="1185723201" format="1.1" version="$Rev$"}%
----+!! %MAKETEXT{"Welcome to the [_1] web" args="<nop>%WEB%"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1275569240" format="1.1" reprev="3" version="3"}%
+---+!! %WEB%
 
----++ %MAKETEXT{"Available Information"}%
-   * ...
-   * ...
-   * ...
- 
+<h2 >What's new?</h2>
+<div class="clsMakeIndexWrapper">
+%MAKEINDEX{
+  "%DBQUERY{
+    order="modified"
+    reverse="on"
+    limit="16"
+    exclude="^(WebChanges|WebPreferences|WebTopicLinks|WebIndex|WebNotify|WebHome|WebRss|WebAtom|WebStatistics|WebLinks)"
+    format="$expand(topictitle);$web;$topic$n"
+  }%"
+  pattern="(.*);(.*);(.*)"
+  split="\n"
+  format="$percntDBCALL{\"$2.$3->RenderIndexItem\"}$percnt"
+  group=""
+  cols="2"
+  sort="off"
+}%
+</div>

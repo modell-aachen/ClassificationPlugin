@@ -1,8 +1,5 @@
-%META:TOPICINFO{author="ProjectContributor" date="1212400494" format="1.1" reprev="1.2" version="$Rev$"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1276601691" format="1.1" reprev="7" version="8"}%
 %META:TOPICPARENT{name="TopicFunction"}%
----+!! Function: %TOPIC%
-%FORMFIELD{"Summary"}%
-
 %TOC{depth="2"}%
 
 ---++ Documentation
@@ -14,66 +11,41 @@ See the CategoryTemplate.
    * CAT: category to be rendered, defaults to BASETOPIC
    * KEYWORDS: keywords to filter for
    * TAG: tags to be searching for in this category
-   * FORM: display the search form on or of, defaults to on
+   * SHOWHEADER: display anchors, defaults to off
 
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
 <verbatim class="tml">
 %STARTINCLUDE%<!-- rendercategory -->
-<noautolink>
-~~~ <form id="filterForm" action="%SCRIPTURLPATH{"view"}%/%BASEWEB%/%BASETOPIC%" 
-~~~   style="%IFDEFINED{"%FORM%" as="off" then="display:none"}%">
-~~~ <input type="hidden" name="catname" value="%URLPARAM{"catname"}%" />
-~~~ <div class="clsFilterForm twikiFormSteps"> 
-~~~   <div class="twikiFormStep">
-~~~     <h4>Search</h4>
-~~~     <input type="text" name="search" value="%URLPARAM{"search" default="%IFDEFINED{"%KEYWORDS%"}%"}%" size="20" class="twikiInputField" />
-~~~   </div>
-~~~   <div class="twikiFormStep">
-~~~     <h4>Tag</h4>
-~~~     <select name="tag" style="max-width:20em" onchange="this.form.submit()">
-~~~       <option value='' %URLPARAM{"tag" default="%IFDEFINED{"%TAG%"}%" as="" then=" selected"}%>ALL</option>
-%~~       CATINFO{cat="%IFDEFINED{"%CAT%" then="%CAT%" else="%BASETOPIC%"}%"
-~~~         format="
-*~~           $percntFORMATLIST{\"$tags\"
-~~~             format=\"<option$dollarmarker>$1</option>\"
-~~~             selection=\"%URLPARAM{"tag" default="%IFDEFINED{"%TAG%"}%"}%\"
-~~~           }$percnt"
-~~~       }%
-~~~     </select> 
-~~~   </div>
-~~~   <input type="submit" style="display:none" />
-~~~   <br clear="both" />
-~~~ </div>
-~~~ </form>
+<noautolink><div class='clsMakeIndexWrapper'>
 %~~ MAKEINDEX{"
 *~~
 %~~     HIERARCHY{
 ~~~       web="%BASEWEB%"
-~~~       top="%IFDEFINED{"%CAT%" then="%CAT%" else="%BASETOPIC%"}%"
-~~~       exclude="%IFDEFINED{"%CAT%" then="%CAT%" else="%BASETOPIC%"}%"
+~~~       top="%IF{"defined CAT" then="%CAT%" else="%BASETOPIC%"}%"
+~~~       exclude="%IF{"defined CAT" then="%CAT%" else="%BASETOPIC%"}%"
 ~~~       depth="2"
-~~~       format="$title;$topic;$origweb$n"
+~~~       format="$trunctitle;$topic;$origweb$n"
 ~~~     }%
 *~~   "
-~~~   cols="%IFDEFINED{"%CLASSIFICATIONPLUGIN_NRCOLS%" then="$test" else="3"}%"
+~~~   cols="%IF{"defined CLASSIFICATIONPLUGIN_NRCOLS" then="%CLASSIFICATIONPLUGIN_NRCOLS%" else="3"}%"
 ~~~   split="\n"
 ~~~   pattern="(.*);(.*);(.*)"
 ~~~   sort="nocase"
-~~~   format="$percntDBCALL{\"$3.$2->RenderIndexItem\"}$percnt"
+~~~   format="$percntDBCALL{\"$3.$2->RenderIndexItem\" TITLE=\"$1\"}$percnt"
 ~~~ }%
 %~~ MAKEINDEX{"
-*~~
+*~~ 
 %~~    DBQUERY{
 ~~~      "!(TopicType=~'\bCategory\b') AND 
-~~~        ('%IFDEFINED{"%CAT%" then="%CAT%" else="%BASETOPIC%"}%' DISTANCE topic) = 1
-~~~        %FORMATLIST{"%URLPARAM{"tag" default="%IFDEFINED{"%TAG%"}%"}%" 
+~~~        ('%IF{"defined CAT" then="%CAT%" else="%BASETOPIC%"}%' DISTANCE topic) = 1
+%~~        FORMATLIST{"%URLPARAM{"tag" default="%IF{"defined TAG" then="%TAG%"}%"}%" 
 ~~~          header="AND" 
 ~~~          format=" Tag=~'\b$1\b' "
 ~~~          separator="AND"
 ~~~        }%
-~~~        %FORMATLIST{"%URLPARAM{"search" default="%IFDEFINED{"%KEYWORDS%"}%"}%"
+%~~        FORMATLIST{"%URLPARAM{"search" default="%IF{"defined KEYWORDS" then="%KEYWORDS%"}%"}%"
 ~~~          header="AND" 
 ~~~          format=" uc(all) =~ uc('$1') "
 ~~~          separator="AND"
@@ -85,13 +57,14 @@ See the CategoryTemplate.
 ~~~      separator="$n"
 ~~~    }%
 *~~   "
-~~~   cols="%IFDEFINED{"%CLASSIFICATIONPLUGIN_NRCOLS%" then="$test" else="3"}%"
+~~~   cols="%IF{"defined CLASSIFICATIONPLUGIN_NRCOLS" then="%CLASSIFICATIONPLUGIN_NRCOLS%" else="3"}%"
 ~~~   split="\n"
 ~~~   pattern="(.*);(.*);(.*)"
 ~~~   sort="nocase"
+%~~   IF{"'%SHOWHEADER%'='on'" then="header=\"$anchors\""}%
 ~~~   format="$percntDBCALL{\"$3.$2->RenderIndexItem\"}$percnt"
 ~~~ }%
-</noautolink>
+</div></noautolink>
 <!-- //rendercategory -->%STOPINCLUDE%
 </verbatim>
 
@@ -101,8 +74,8 @@ See the CategoryTemplate.
 <div class="toolbar">
 %~~ BUTTON{"New Topic" href="%SCRIPTURLPATH{view}%/%BASEWEB%/ClassifiedTopic?cat=%BASETOPIC%
 *~~
-%~~   IFDEFINED{"%TEMPLATE%" 
-~~~     then=";tmpl=$test" 
+%~~   IF{"defined TEMPLATE" 
+~~~     then=";tmpl=%TEMPLATE%" 
 ~~~     else="$percntIFEXISTS{\"%BASEWEB%.%BASETOPIC%Template\" 
 ~~~         then=\";tmpl=%BASEWEB%.%BASETOPIC%Template\"
 ~~~         else=\"\"
@@ -110,17 +83,15 @@ See the CategoryTemplate.
 ~~~   }%" 
 ~~~   title="Create a new topic in %CATINFO{cat="%BASEWEB%.%BASETOPIC%" format="<nop>$title"}%"
 ~~~ }%  
-%IFDEFINEDTHEN{"%IFACCESS{"%MAINWEB%.TWikiAdminGroupGroup" type="change"}%" as="1"}%
-%BUTTON{"Manage" href="%SCRIPTURLPATH{view}%/%BASEWEB%/Category" title="Manage categories"}%  
-%BUTTON{"Browse" href="%SCRIPTURLPATH{view}%/%BASEWEB%/CategoryBrowser" title="Browse the hierarchy"}%  
-%FIDEFINED%
+%IF'%USERSWEB%.AdminGroup' allows 'change'"
+  then="%BUTTON{"Manage" href="%SCRIPTURLPATH{view}%/%BASEWEB%/Category" title="Manage categories"}%  
+        %BUTTON{"Browse" href="%SCRIPTURLPATH{view}%/%BASEWEB%/CategoryBrowser" title="Browse the hierarchy"}%"
+}%
 </div>
 <br clear='both' />
 <!-- //toolbar -->%ENDSECTION{"toolbar"}%
 </verbatim>
 
-
-<!-- interrupt glue -->
 ---++ Test
 <div class="alt">
 %DBCALL{"%TOPIC%"}%
@@ -129,15 +100,13 @@ See the CategoryTemplate.
 %DBCALL{"Applications.RenderFunctionCallers"}%
 
 ---++ Copyright
-<div style="text-align:justify;margin:1em;">
-&copy; 2006-2007 Michael Daum http://wikiring.de
+&copy; 2006-2010 Michael Daum http://michaeldaumconsulting.com
 
 %DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
-</div>
 
 
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="RenderCategory"}%
-%META:FIELD{name="Summary" attributes="" title="Summary" value="Render tools to handle categories"}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Render tools to handle categories"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

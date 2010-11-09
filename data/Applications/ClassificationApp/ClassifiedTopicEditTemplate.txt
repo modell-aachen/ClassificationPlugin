@@ -1,47 +1,86 @@
-%META:TOPICINFO{author="ProjectContributor" date="1199824438" format="1.1" reprev="1.1" version="$Rev$"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1273502256" format="1.1" reprev="12" version="12"}%
 %META:TOPICPARENT{name="TopicView"}%
-%TMPL:INCLUDE{"edit"}%
-%TMPL:DEF{"title"}%%TOPICTITLE% - (%MAKETEXT{"edit classified topic"}%) - %WIKITOOLNAME%%TMPL:END%
-%TMPL:DEF{"contenttitle"}%<!-- contenttitle -->
-%IFDEFINEDTHEN{"%IFEXISTS{"%WEB%.%TOPIC%"}%" as="1"}%
-<h1 class="patternTemplateTitle">%TOPIC% (%MAKETEXT{"edit classified topic"}%)</h1>
-%ELSEDEFINED%
-<h1 class="patternTemplateTitle"><nop>%TOPIC% (%MAKETEXT{"new classified topic"}%)</h1>
-%FIDEFINED%
-<!-- //contenttitle -->%TMPL:END%
-%TMPL:DEF{"topicmeta"}%<!-- topicmeta -->
-<literal>
-  <table>
-  <tr>
-    <th class="twikiFirstCol">Title:</th>
-    <td><input class="twikiInputField" type="text" name="TopicTitle" size="80" value="%URLPARAM{"TopicTitle" default="%TOPICTITLE%"}%"/></td>
-  </tr>
-  <tr>
-    <th class="twikiFirstCol">Summary:</th>
-    <td><input class="twikiInputField" type="text" name="Summary" size="80" value="%URLPARAM{"Summary" default="%FORMFIELD{topic="%BASEWEB%.%BASETOPIC%" "Summary"}%"}%" /></td>
-  </tr>
-  </table>
-</literal>
-<!-- //topicmeta -->%TMPL:END%
+%{<verbatim class="tml">}%
+%TMPL:INCLUDE{"Applications.WikiTopicEdit"}%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"topictype"}%%MAKETEXT{"classified topic"}%%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"catfield"}%Category%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"formdefinition"}%Applications.ClassificationApp.ClassifiedTopic%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"categorieslabel"}%%MAKETEXT{"Categories"}%%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"tagslabel"}%%MAKETEXT{"Tags"}%%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"categoriestab"}%<!-- categoriestab -->
+%~~ TAB{"%TMPL:P{"categorieslabel"}%"
+~~~   url="%SCRIPTURLPATH{"rest"}%/RenderPlugin/tag?
+*~~     topic=%BASEWEB%.%BASETOPIC%;
+*~~     name=RENDERFOREDIT;
+*~~     field=%TMPL:P{"catfield"}%;
+*~~     form=%TMPL:P{"formdefinition"}%;
+*~~
+%~~     IF{"defined '%TMPL:P{"catfield"}%'" then="value=%URLPARAM{"%TMPL:P{"catfield"}%"}%;"}%
+*~~     render=on"
+~~~ }%
+<span class="jqAjaxLoader">&nbsp;</span>
+<noautolink>
+<input type="hidden" name="%TMPL:P{"catfield"}%" value="%URLPARAM{"%TMPL:P{"catfield"}%" default="%ENCODE{"%FORMFIELD{"%TMPL:P{"catfield"}%"}%" type="entity"}%"}%" />
+</noautolink>
+%ENDTAB%
+<!-- //categoriestab -->%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"tagstab"}%<!-- tagstab -->
+%~~ TAB{"%TMPL:P{"tagslabel"}%" 
+~~~   url="%SCRIPTURLPATH{"rest"}%/RenderPlugin/tag?
+*~~     topic=%BASEWEB%.%BASETOPIC%;
+*~~     name=RENDERFOREDIT;
+*~~     field=Tag;
+*~~     form=%TMPL:P{"formdefinition"}%;
+*~~
+%~~     IF{"defined 'Tag'" then="value=%URLPARAM{"Tag"}%;"}%
+*~~     render=on"
+~~~ }%
+<span class="jqAjaxLoader">&nbsp;</span>
+%JQREQUIRE{"autocomplete"}%<!-- jqrequire autocomplete -->
+%ADDTOZONE{
+  "script"
+  tag="tagsuggestion"
+  text="<script src='%PUBURLPATH%/%SYSTEMWEB%/ClassificationPlugin/jquery.tagsuggestion.js'></script>"
+  requires="JQUERYPLUGIN::AUTOCOMPLETE"
+}%<!-- addtozone tagselector -->
+<noautolink>
+<input type="hidden" name="Tag" value="%URLPARAM{"Tag" default="%ENCODE{"%FORMFIELD{"Tag"}%" type="entity"}%"}%" />
+</noautolink>
+%ENDTAB%
+<!-- //tagstab  -->%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
 %TMPL:DEF{"formfields"}%<!-- formfields -->
-%TAB{"Categories" after="fixHeightOfPane()"}%
-<input type="hidden" name="TopicType" value="<nop>ClassifiedTopic, <nop>CategorizedTopic, <nop>TaggedTopic" />
-%DBCALL{"Applications.ClassificationApp.RenderEditCategoryBrowser"
-  NAME="Category"
-  VALUE="%URLPARAM{"Category" default="%FORMFIELD{topic="%BASEWEB%.%BASETOPIC%" "Category"}%"}%"
-}%
-%ENDTAB%
-%TAB{"Tags" after="fixHeightOfPane()"}%
-%DBCALL{"Applications.ClassificationApp.RenderEditTagCloud"
-  NAME="Tag"
-  TITLE="Tags: "
-  VALUE="%URLPARAM{"Tag" default="%FORMFIELD{topic="%BASEWEB%.%BASETOPIC%" "Tag"}%"}%"
-}%
-%ENDTAB%
+<input type="hidden" name="action" value="text" />
+%TMPL:P{"categoriestab"}%
+%TMPL:P{"tagstab"}%
 <!-- //formfields -->%TMPL:END%
+%{</verbatim>}%
 
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="TopicView"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="ClassifiedTopicEditTemplate"}%
-%META:FIELD{name="Summary" attributes="" title="Summary" value="Editor for classified topics, <nop>NatSkin version"}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Editor for ClassifiedTopics, <nop>NatSkin version"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

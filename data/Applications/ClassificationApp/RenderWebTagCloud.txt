@@ -1,8 +1,5 @@
-%META:TOPICINFO{author="ProjectContributor" date="1194455876" format="1.1" reprev="1.11" version="$Rev$"}%
+%META:TOPICINFO{author="ProjectContributor" date="1271176151" format="1.1" version="1.12"}%
 %META:TOPICPARENT{name="TopicFunction"}%
----+!! Function: %TOPIC%
-%FORMFIELD{"Summary"}%
-
 %TOC{depth="2"}%
 ---++ Documentation
 %STARTSECTION{name="documentation" type="section"}%
@@ -14,10 +11,10 @@
    * MIN: minimum frequency of a tags to be shown
    * TAGCLOUDTOPIC: topic where to jump to when a tag is clicked, defaults to BASETOPIC
    * RECENCY: limit search for tags on most recently changed topics
+   * TOPICTYPE: limit search for tags of topics of the given type
    * CATTITLE: title of the category filter, defaults to 'Category'
    * TOPCAT: optional top category to display the category filter for
    * EXCLUDECAT: optionally exclude a category category from filter, defaults to <nop>TopCategory
-   * SHOWFILTER: toggle the filter form, defaults to hidden
    * FROMCOLOR: start color for most significant tags, this must be a set of three integers specifying RGB,
                 fades over to TOCOLOR, defaults to "194,199,204"
    * TOCOLOR: end color for least significant tags, defaults to "0,102,204"
@@ -27,125 +24,103 @@
 ---++ Implementation
 <verbatim class="tml">
 %STARTINCLUDE%<!-- renderwebtagcloud -->
+%JQREQUIRE{"form"}%<!-- jqrequire form -->
+%ADDTOZONE{
+  "script"
+  tag="TAGCLOUD" 
+  text="<script src='%PUBURLPATH%/%SYSTEMWEB%/ClassificationPlugin/jquery.tagcloud.js'></script>" 
+  requires="JQUERYPLUGIN::FOSWIKI"
+}%<!-- add to zone tagcloud -->
 <noautolink>
-<script type="text/javascript">
-function submitTagCloud(clickedTag) {
-  var form = document.getElementById('tagCloudForm');
-  var newTags = new Array();
-  var allTags = form.tag.value.split(/\s*,\s*/);
-  var found = 0;
-  for (var i = 0; i < allTags.length; i++) {
-    var tag = allTags[i];
-    if (tag.match(clickedTag)) {
-      found = 1;
-    } else {
-      if (tag) {
-        newTags.push(tag);
-      }
-    }
-  }
-  if (!found && clickedTag) {
-    newTags.push(clickedTag);
-  }
-  form.tag.value = newTags.join(", ");
-  form.submit();
-}
-</script>
-~~~ <form id="tagCloudForm" action="%SCRIPTURLPATH{"view"}%/%BASEWEB%/%IFDEFINED{"%TAGCLOUDTOPIC%" then="$test" else="%BASETOPIC%"}%">
-~~~   <input type="hidden" name="tag" value="%IFDEFINED{"%TAG%"}%" />
-%~~ IFDEFINEDTHEN{"%SHOWFILTER%" as="on"}%
-~~~ <div class="clsFilterForm twikiFormSteps"> 
-~~~   <div class="twikiFormStep">
-~~~     <h4>Search</h4>
-~~~     <input type="text" name="search" value="%KEYWORDS%" size="20" class="twikiInputField" />
-~~~   </div>
-~~~   <div class="twikiFormStep">
-~~~     <h4>Category</h4>
-~~~     <select name="cat" style="max-width:20em" onchange="submitTagCloud()">
-~~~       <option value='' %IFDEFINED{"%CAT%" as="" then=" selected"}%>ALL</option>
-%~~       HIERARCHY$nop{
-~~~         web="%BASEWEB%"
-~~~         top="%IFDEFINED{"%TOPCAT%" then="%TOPCAT%" else="TopCategory"}%"
-~~~         exclude="%IFDEFINED{"%EXCLUDECAT%" then="%EXCLUDECAT%" else="TopCategory"}%"
-~~~         tags="%IFDEFINED{"%TAG%"}%"
-~~~         unique="on"
-~~~         format="<option value='$topic' 
-~~~           $percntIFDEFINED{\"%CAT%\" as=\"$topic\" 
-~~~             then=\" selected\"
-~~~           }$percnt>$indent $title</option>$n$children"
-~~~       }%
-~~~     </select> 
-~~~   </div>
-~~~   <input type="submit" style="display:none" />
-~~~   <br clear="both" />
-~~~ </div>
-%~~ FIDEFINED%
+<form class="tagCloudForm" action="%SCRIPTURLPATH{"view"}%/%BASEWEB%/%IF{"not isempty 'TAGCLOUDTOPIC'" then="%TAGCLOUDTOPIC%" else="%BASETOPIC%"}%">
+<input type="hidden" name="tag" value="%IF{"not isempty 'TAG'" then="%TAG%"}%" />
+<input type="hidden" name="cat" value="%IF{"not isempty 'CAT'" then="%CAT%"}%" />
+<input type="hidden" name="search" value="%IF{"not isempty 'KEYWORDS'" then="%KEYWORDS%"}%" />
+<input type="hidden" name="recency" value="%IF{"not isempty 'RECENCY'" then="%RECENCY%"}%" />
+<input type="hidden" name="min" value="%IF{"not isempty 'MIN'" then="%MIN%"}%" />
+<input type="hidden" name="topictype" value="%IF{"not isempty 'TOPICTYPE'" then="%TOPICTYPE%"}%" />
+<input type="submit" style="display:none" />
 %~~ TAGCLOUD{
-~~~   "$percntDBQUERY{
-~~~     \"TopicType=~'\b(Tagged|Classified)Topic\b'
-~~~       %FORMATLIST{"%IFDEFINED{"%TAG%"}%" 
-~~~         header="AND" 
-~~~         format=" Tag=~'\b$1\b' "
-~~~         separator="AND"
-~~~       }%
-~~~       %FORMATLIST{"%IFDEFINED{"%KEYWORDS%"}%" 
-~~~         header="AND" 
-~~~         format=" lc(all)=~ lc('$1') "
-~~~         separator="AND"
-~~~       }%
-~~~       %IFDEFINED{"%CAT%" then=" AND topic ISA '%CAT%'"}%
-~~~     \"
-~~~     order=\"modified\"
-~~~     reverse=\"on\"
-~~~     limit=\"%IFDEFINED{"%RECENCY%"}%\"
-~~~     web=\"%BASEWEB%\"
-~~~     format=\"$formfield(Tag)\" separator=\", \"
-~~~   }$percnt"
-~~~   buckets="200"
-~~~   offset="100"
-~~~   split=","
-~~~   min="%IFDEFINED{"%MIN%" then="$test" else="0"}%"
-~~~   header="<div class=\"clsTagCloud\">"
-~~~   group="<strong>$group</strong>"
-~~~   format="<a rel=\"nofollow\" name=\"$term\"
-~~~        style=\"font-size:$weight%;
-~~~                color:$fadeRGB(
-*~~                  %IFDEFINED{"%FROMCOLOR%" then="$test" else="194,199,204"}%,
-*~~                  %IFDEFINED{"%TOCOLOR%" then="$test" else="0,102,204"}%
-*~~                );\"
-~~~        href=\"javascript:submitTagCloud('$term')\"
-~~~        $percntIFDEFINED{\"%TAG%\"
-~~~          as=\".*\b$term\b.*\"
-~~~          then=\"class=\\"current\\"\"
-~~~          glue=\"off\"
-~~~        }$percnt
-~~~        title=\"found $count time(s)\"
-~~~     >$term</a>"
-~~~   footer="</ul></div>"
-~~~ }%
-~~~ </form>
-%IFDEFINEDTHEN{"%TAG%%KEYWORDS%"}%
+   "$percntDBQUERY{
+     \"TopicType=~'.*\b(Tagged|Classified)Topic\b.*'
+       %FORMATLIST{"%IF{"not isempty 'TOPICTYPE'" then=", %TOPICTYPE%"}%" 
+         split="\s*,\s*"
+         header="AND" 
+         format=" TopicType=~'\b$1\b' "
+         separator="AND"
+       }% %FORMATLIST{"%IF{"not isempty 'TAG'" then="%TAG%"}%" 
+         split="\s*, \s*"
+         header="AND" 
+         format=" Tag=~'\b$1\b' "
+         separator="AND"
+       }% %FORMATLIST{"%IF{"not isempty 'KEYWORDS'" then="%KEYWORDS%"}%" 
+         split="\s"
+         header="AND" 
+         format=" (lc(all) =~ lc('$1') OR lc(topic)=~lc('$1')"
+         separator="AND"
+       }% %FORMATLIST{"%IF{"not isempty 'CAT'" then="%CAT%"}%" 
+         split="\s*,\s*" 
+         header="AND" 
+         format=" topic ISA '$1'" 
+         separator="AND"
+       }%
+     \"
+     order=\"modified\"
+     reverse=\"on\"
+     limit=\"%IF{"not isempty 'RECENCY'" then="%RECENCY%"}%\"
+     web=\"%BASEWEB%\"
+     format=\"$formfield(Tag)\" separator=\", \"
+   }$percnt"
+   buckets="200"
+   warn="off"
+   offset="100"
+   split=","
+   min="%IF{"not isempty 'MIN'" then="%MIN%" else="0"}%"
+   header="<div class='clsTagCloud'>"
+   group="<strong>$group</strong>"
+   format="<a rel='nofollow' name='$term'
+~~~   style='font-size:$weight%;
+~~~           color:$fadeRGB(
+~~~                 %IF{"not isempty 'FROMCOLOR'" then="%FROMCOLOR%" else="194,199,204"}%,
+~~~                 %IF{"not isempty 'TOCOLOR'" then="%TOCOLOR%" else="0,102,204"}%);'
+~~~   href='#'
+~~~   $percntIF{\"'$percntENCODE{\"%TAG%\"}$percnt' =~ '\b$percntENCODE{\"$term\"}$percnt\b'\" then=\"class='current'\"}$percnt
+~~~   title='found $count time(s)'
+~~~  >$term</a>"
+   footer="</ul></div>"
+}%<!-- tagcloud -->
+</form>
 <a name="results"></a>
-%~~   $nopDBCALL{"Applications.ClassificationApp.RenderWebTagCloudHitList"
-~~~     QUERY="
-*~~       %$nopFORMATLIST{"%TAG%" 
-~~~         header="AND" 
-~~~         format=" Tag=~'\b$1\b' "
-~~~         separator="AND"
-~~~       }%
-~~~     %IFDEFINED{"%CAT%" then=" AND topic ISA '%CAT%'"}%
-~~~     %FORMATLIST{"%IFDEFINED{"%KEYWORDS%"}%" 
-~~~       header="AND" 
-~~~       format=" lc(all)=~ lc('$1') "
-~~~       separator="AND"
-~~~     }%
-~~~     "
-~~~   }%
-%FIDEFINED%
-~~~ </noautolink>
+%IF{"not isempty 'TAG' or not isempty 'KEYWORDS' or not isempty 'TOPICTYPE'" DIS="or not isempty 'CAT' "
+  then="$percntDBCALL{
+          \"Applications.ClassificationApp.RenderWebTagCloudHitList\"
+          THEQUERY=\"TopicType='.*' 
+             %FORMATLIST{"%IF{"not isempty 'TOPICTYPE'" then=", %TOPICTYPE%"}%" 
+               split="\s*,\s*"
+               format=" TopicType=~'\b$1\b' "
+               header="AND" 
+               separator="AND"
+             }% %FORMATLIST{"%IF{"not isempty 'TAG'" then="%TAG%"}%" 
+               split="\s*, \s*"
+               header="AND" 
+               format=" Tag=~'\b$1\b' "
+               separator="AND"
+             }% %FORMATLIST{"%IF{"not isempty 'KEYWORDS'" then="%KEYWORDS%"}%" 
+               split="\s"
+               header="AND" 
+               format=" (lc(all) =~ lc('$1') OR lc(topic)=~lc('$1'))"
+               separator="AND"
+             }% %FORMATLIST{"%IF{"not isempty 'CAT'" then="%CAT%"}%" 
+               split="\s*,\s*" 
+               header="AND" 
+               format=" topic ISA '$1'" 
+               separator="AND"
+             }%\"
+        }$percnt"
+}%<!-- results -->
+</noautolink>
 <!-- //renderwebtagcloud -->%STOPINCLUDE%
 </verbatim>
-
 
 ---++ Test
 <div class="alt">
@@ -163,16 +138,13 @@ function submitTagCloud(clickedTag) {
 %DBCALL{"Applications.RenderFunctionCallers"}%
 
 ---++ Copyright
-<div style="text-align:justify;margin:1em;">
-&copy; 20072-2008 Michael Daum http://michaeldaumconsulting.com
+&copy; 2007-2010 Michael Daum http://michaeldaumconsulting.com
 
 %DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
-</div>
-
 
 
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="RenderWebTagCloud"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value="Render a tool to list all classified topics in this web"}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

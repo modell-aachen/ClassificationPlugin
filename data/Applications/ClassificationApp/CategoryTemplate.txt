@@ -2,13 +2,7 @@
 %META:TOPICPARENT{name="TopicTemplate"}%
 %DBCALL{"Applications.ClassificationApp.RenderCategory"}%
 
-%STARTSECTION{type="templateonly"}%
-%RED%Note, this is only a template.%ENDCOLOR%
-
-See also: [[Category]], RenderCategory
-%ENDSECTION{type="templateonly"}%
-
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" attributes="" title="TopicType" value="TopicTemplate"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value="Template for categories and sub-categories"}%
-%META:FIELD{name="TWikiApplication" attributes="" title="TWikiApplication" value="ClassificationApp"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

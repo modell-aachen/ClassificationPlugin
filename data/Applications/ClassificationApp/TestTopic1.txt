@@ -1,5 +1,5 @@
-%META:TOPICINFO{author="ProjectContributor" date="1214239169" format="1.1" version="$Rev$"}%
-%META:TOPICPARENT{name="CorporateCategory"}%
+%META:TOPICINFO{author="ProjectContributor" date="1271175599" format="1.1" version="1.10"}%
+%META:TOPICPARENT{name="WebHome"}%
 <verbatim>
    * ISA{IntranetDirectory}: %ISA{cat="IntranetDirectory"}%
    * ISA{CorporateCategory}: %ISA{cat="CorporateCategory"}%
@@ -13,13 +13,13 @@
    * DISTANCE{from="FinanceAndPlaning" to="TestCategory8"}: %DISTANCE{from="FinanceAndPlaning" to="TestCategory8" abs="off"}%
 </verbatim>
 
-
--- Main.MichaelDaum - 25 Oct 2006
-
-
 %META:FORM{name="Applications.ClassificationApp.ClassifiedTopic"}%
-%META:FIELD{name="TopicType" title="TopicType" value="ClassifiedTopic, CategorizedTopic, TaggedTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="ClassifiedTopic, CategorizedTopic, TaggedTopic, WikiTopic"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="TestTopic1"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value=""}%
-%META:FIELD{name="Tag" attributes="" title="Tag" value="test, topic"}%
-%META:FIELD{name="Category" attributes="" title="Category" value="CorporateCategory"}%
+%META:FIELD{name="Tag" attributes="" title="Tag" value="FooBar, BarBaz"}%
+%META:FIELD{name="Category" attributes="" title="Category" value=""}%
+%META:PREFERENCE{name="COMMENTSTATE" title="COMMENTSTATE" type="Local" value="closed"}%
+%META:PREFERENCE{name="COMMENTSTRUCTURE" title="COMMENTSTRUCTURE" type="Local" value="threaded"}%
+%META:PREFERENCE{name="PERMSET_VIEW" title="PERMSET_VIEW" type="Local" value="justauthor"}%
+%META:PREFERENCE{name="PERMSET_CHANGE" title="PERMSET_CHANGE" type="Local" value="nobody"}%

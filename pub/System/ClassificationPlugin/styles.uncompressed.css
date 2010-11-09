@@ -1,0 +1,279 @@
+h1 .foswikiTopicSummary {
+  font-style:normal;
+}
+.clsBrowserControl {
+  margin:0em 0em 0.5em;
+  float:right;
+}
+.clsBrowserControl .sep {
+  padding:0px 5px;
+  visibility:hidden;
+}
+.clsBrowserControlExpand,
+.clsBrowserControlCollapse {
+  padding:1px 0px 1px 21px;
+  background-position:middle left !important;
+  background-repeat:no-repeat !important;
+}
+.clsBrowserControlExpand {
+  background-image:url(../../System/FamFamFamSilkIcons/add.png) !important;
+}
+.clsBrowserControlCollapse {
+  background-image:url(../../System/FamFamFamSilkIcons/delete.png) !important;
+}
+.clsCatSelector h3 a {
+  color:inherit;
+}
+.clsCatSelector h3 a:hover {
+  color:#fff;
+}
+.clsBrowser a {
+  text-decoration:none !important;
+}
+.clsBrowser a.foswikiCurrentTopicLink {
+  color:red;
+}
+.clsBrowser .treeview li { 
+  padding: 1px 0px 1px 20px;
+}
+.clsTag {
+  padding:1px 15px 2px 5px;
+  border:1px solid #CAD8F3;
+  margin:0px 5px 5px 0px;
+  background:#DEE7F8;
+  float:left;
+  position:relative;
+}
+.clsTagClose {
+  background-color:inherit;
+  background-image:url(close.gif);
+  background-repeat:no-repeat;
+  margin:0px;
+  height:7px;
+  width:7px;
+  position:absolute;
+  right:4px;
+  top:35%;
+  display:block;
+  overflow:hidden;
+  font-size:1px;
+}
+a.clsTagClose:hover {
+  background-color:transparent;
+  background-position:0px -7px;
+  background-image:url(close.gif);
+  background-repeat:no-repeat;
+}
+.clsTagCloud {
+  margin:10px 0px;
+  text-align:center;
+  line-height:normal;
+}
+.clsTagCloud strong {
+  /*
+  font-size:160%;
+  margin:0px 5px 0px 2px;
+  */
+}
+.clsTagCloud a {
+  padding:0px 5px;
+  text-decoration:none;
+}
+.clsTagSelector .jqButton {
+  margin:0px 0px 0px 8px;
+}
+.tagCloud a:hover,
+.clsBrowser .current,
+.clsTagCloud a:hover,
+.clsTagCloud .hilite,
+.clsTagCloud .current {
+  background-color:#06c !important;
+  color:white !important;
+  text-decoration:none;
+  _display:inline; /* convince IE6 that this is inline */
+}
+.clsIconSelector,
+.clsBrowser,
+#clsTagSelector .clsTagCloud {
+  padding:5px;
+  border:1px solid #ddd;
+}
+.clsBrowser ul li {
+  list-style-image:none;
+}
+.clsBrowser ul li a:hover,
+.clsBrowser ul li a {
+  background-image:none;
+  padding:0px;
+}
+.clsSideBar.clsBrowser {
+  border:0px;
+  padding:0px;
+  margin-bottom:0px;
+}
+
+.foswikiFormSteps .clsTagCloudInput {
+  margin:0px;
+}
+
+.clsSideBar ul ul {
+  border:0px;
+  margin-bottom:0.5em;
+}
+
+.clsSideBar ul ul li {
+  border:0px;
+  margin:0em 0em 0em 1.5em;
+}
+.clsSideBar ul ul li a:hover,
+.clsSideBar ul ul li a {
+  padding:0px;
+  margin:0px;
+  display:inline;
+}
+#clsByCategory ul li a:hover,
+#clsByCategory ul li a {
+  padding-left:2.5em;
+  background-position:1em 50%;
+  background-repeat:no-repeat;
+  font-weight:bold;
+}
+#clsByCategory ul ul li a:hover,
+#clsByCategory ul ul li a {
+  font-weight:normal;
+  background-image:none !important;
+  padding-left:0em;
+}
+#clsByTopicType ul {
+  list-style-type:inherit;
+  margin:0.5em 0em;
+  border:0px;
+}
+#clsByTopicType ul li {
+  border:0px;
+  margin:0em 0em 0em 1.5em;
+  padding:0px;
+}
+#clsByTopicType ul li a {
+  display:inline;
+  margin:0px;
+  padding:0px;
+}
+
+.clsIconSelector label {
+  padding:0px;
+  margin:0px;
+}
+.clsButtonBox {
+  margin:5px 0px;
+}
+.clsTagSelector table td.clsButtonBox {
+  width:10em;
+}
+.clsTagSelector table td.clsTagContainer {
+  width:99%;
+  _width:auto; /* fix for IE6 */
+}
+.clsTagSelector table td {
+  padding:0em;
+  width:5em;
+}
+.clsTagSelector table th {
+  padding:1px 5px 2px 0px;
+  _width:3em; /* fix for IE6 */
+}
+.clsTagSelector table {
+  margin:5px 0px;
+  font-size:13px;
+}
+#clsNewCategory, #clsNewTopic {
+  margin-bottom:0.5em;
+}
+#clsNewCategory table,
+#clsNewTopic table {
+  margin:0px;
+}
+.clsTagCloud .typed {
+  background:pink;
+}
+/* indexes */
+.clsIndexItem {
+  min-height:16px;
+}
+
+.clsTopicItem {
+  padding-left:20px;
+  background-image:url(../../Applications/ClassificationApp/IconSet/text.png); 
+  background-repeat:no-repeat;
+}
+
+.clsTopicItem .imageSimple,
+.clsTopicItem .imagePlain {
+  background:white;
+}
+.clsTopicItem .imageSimple_left,
+.clsTopicItem .imagePlain_left {
+  margin:0px 7px 7px -20px;
+}
+.clsTopicItem .imageSimple_right,
+.clsTopicItem .imagePlain_right {
+  margin:0px 0px 7px 7px;
+}
+.clsCategoryItem {
+  padding-left:20px;
+  background-image:url(../../Applications/ClassificationApp/IconSet/folder.gif);
+  background-repeat:no-repeat;
+}
+
+/* icon selector */
+.clsIconContainer {
+  margin:0px 5px 5px 0px;
+  border:2px solid white;
+  padding:1px;
+  display:block;
+  float:left;
+}
+.clsIconContainer.selected {
+  border:2px solid red;
+  background:#eee;
+}
+.clsIconSelector input {
+  display:none;
+}
+
+.clsCategoryLink:hover,
+.clsCategoryLink {
+  padding:1px 0px 1px 20px !important;
+  background-position:0 0 !important;
+  background-repeat:no-repeat !important;
+}
+.clsFilterForm .foswikiFormSteps {
+  border-width:1px 0px;
+  margin:1.5em 0em 0em;
+}
+.clsFilterForm .foswikiFormStep {
+  float:left;
+  margin:0.5em 2em 0.5em 0.5em;
+}
+.clsFilterForm .foswikiFormStep h3,
+.clsFilterForm .foswikiFormStep h4 {
+  display:inline;
+  font-weight:bold;
+  text-decoration:none;
+  border:0px;
+  font-style:normal;
+}
+/* pattern skin tweaks */
+#patternMainContents h1 a,
+#patternMainContents h2 a,
+#patternMainContents h3 a,
+#patternMainContents h4 a,
+#patternMainContents h5 a,
+#patternMainContents h6 a {
+  text-decoration:none !important;
+}
+
+.clsHilight {
+  background-color:#FFFFC0;
+  color:black;
+}
