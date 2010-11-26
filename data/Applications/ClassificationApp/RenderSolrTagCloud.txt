@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="micha" comment="reprev" date="1280420017" format="1.1" reprev="4" version="4"}%
+%META:TOPICINFO{author="micha" comment="reprev" date="1290602857" format="1.1" reprev="4" version="5"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -8,6 +8,7 @@
 
 ---+++++ Parameters
    * DAYS: number of recent days of changes to take under consideration, defaults to 7
+   * LIMIT: maximum number of topics to harvest tags from, defaults to 100
    * TAG: comma separated list of tags to be searched for in the archive
    * CAT: restrict tag cloud to this category; displays all tags of all categories if unspecified
    * KEYWORDS: keywords to filter for
@@ -38,7 +39,7 @@
           }% 
           date:\"[NOW/DAY-%IF{"defined DAYS" then="%DAYS%" else="14"}%DAY TO NOW]\""
   facets="tag"
-  rows="100"
+  rows="%IF{"defined LIMIT" then="%LIMIT%" else="100"}%"
 }%
 %TAGCLOUD{
   terms="%SOLRFORMAT{
@@ -103,7 +104,7 @@ jQuery(function($) {
 
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
-%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="RenderSolrTagCloud"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
 %META:FIELD{name="Summary" attributes="c" title="Summary" value="Renders a tag cloud using Solr"}%
 %META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%
 %META:PREFERENCE{name="EDIT_TEMPLATE" title="EDIT_TEMPLATE" type="Set" value="Applications.WikiTopicEdit"}%

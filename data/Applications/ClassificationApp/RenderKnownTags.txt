@@ -1,0 +1,55 @@
+%META:TOPICINFO{author="micha" comment="save topic" date="1289660971" format="1.1" reprev="2" version="2"}%
+%META:TOPICPARENT{name="TopicFunction"}%
+%TOC{depth="2"}%
+
+---++ Documentation
+%STARTSECTION{name="documentation" type="section"}%
+This function is used in the tag editor's autocompletion textboxlist to return
+a set of matching tags given the prefix in the url param =q=. See the =classificationplugin.tmpl= template
+file.
+
+---+++++ Parameters
+   * TAG: pattern of tags to include, defaults to a neutral filter; this pattern is to match the prefix of the tag name
+   * LIMIT: maximum number of categories to return, defaults to 10
+   * THEWEB: web from which to extract category information, defaults to BASEWEB 
+
+%ENDSECTION{name="documentation" type="section"}%
+
+---++ Implementation
+<verbatim class="tml">
+%STARTINCLUDE%%DBSTATS{
+  "TopicType=~'\b(TaggedTopic|ClassifiedTopic)\b'"
+  %IF{"defined TAG" then="include=\"^%TAG%\""}%
+  field="Tag"
+  format="$key"
+  web="%IF{"defined THEWEB" then="%THEWEB%" else="%BASEWEB%"}%"
+  separator="$n"
+  limit="%IF{"defined LIMIT" then="%LIMIT%" else="10"}%"
+  pattern="^(.*)$" 
+}%%STOPINCLUDE%
+</verbatim>
+
+<!-- interrupt glue -->
+
+---++ Test
+<div class="alt">
+<noautolink>
+<pre>
+%DBCALL{"%TOPIC%" TAG="f"}%
+</pre>
+</noautolink>
+</div>
+
+%DBCALL{"Applications.RenderFunctionCallers"}%
+
+---++ Copyright
+&copy; 2006-2010 Michael Daum http://michaeldaumconsulting.com
+
+%DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
+
+
+%META:FORM{name="Applications.ApplicationTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Returns a list of tags"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

@@ -18,14 +18,14 @@
 %TMPL:DEF{"querytags"}%%DBCALL{
   "Applications.ClassificationApp.RenderKnownTags"
   TAG="%URLPARAM{"q"}%"
-  LIMIT="%URLPARAM{"limit" default="10"}%"
+  LIMIT="%URLPARAM{"limit"}%"
   THEWEB="%URLPARAM{"web" default="%BASEWEB%"}%"
 }%%TMPL:END%
 
 %TMPL:DEF{"querycats"}%%DBCALL{
   "Applications.ClassificationApp.RenderKnownCats"
-  CAT=".*%URLPARAM{"q"}%.*"
-  DISLIMIT="%URLPARAM{"limit" default="10"}%"
+  CAT="%URLPARAM{"q"}%"
+  LIMIT="%URLPARAM{"limit"}%"
   THEWEB="%URLPARAM{"web" default="%BASEWEB%"}%"
 }%%TMPL:END%
 
