@@ -23,13 +23,10 @@ jQuery(function($) {
    * plugin defaults
    */
   var defaults = {
-    web: foswiki.web,
-    topic: foswiki.web+'.'+foswiki.topic,
     fieldname: 'Category',
     root: 'TopCategory',
     hidenull: 'off',
     nrleafs: '',
-    url: foswiki.scriptUrlPath+'/rest/RenderPlugin/tag',
     format:'editor',
     data: {
       name:'DBCALL',
@@ -271,6 +268,10 @@ jQuery(function($) {
    * initialisation
    */
   $(function() {
+    defaults.web = foswiki.getPreference("WEB");
+    defaults.topic = defaults.web+'.'+foswiki.getPreference("TOPIC");
+    defaults.url = foswiki.getPreference("SCRIPTURLPATH")+"/rest/RenderPlugin/tag";
+
     $(".clsCatSelector:not(.clsInitedCatSelector)").livequery(function() {
       var $this = $(this);
       $this.addClass("clsInitedCatSelector");
