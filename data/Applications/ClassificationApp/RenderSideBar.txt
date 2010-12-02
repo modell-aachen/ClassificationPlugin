@@ -77,7 +77,7 @@ TODO: what do we display for topics that are not categorized?
 ~~~       $this.find(".placeholder").parent().parent().parent().removeClass("open collapsable");
 ~~~       $this.find(".hasChildren.open").removeClass("hasChildren");
 ~~~       $this.treeview({
-~~~         url: "%SCRIPTURLPATH{"rest"}%/RenderPlugin/tag?
+~~~         url: "%SCRIPTURL{"rest"}%/RenderPlugin/tag?
 *~~                 name=DBCALL;
 *~~                 param=Applications.ClassificationApp.RenderHierarchyAsJSON;
 *~~                 t=%GMTIME{"$epoch"}%;

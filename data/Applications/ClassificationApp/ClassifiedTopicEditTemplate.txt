@@ -31,7 +31,7 @@
 %{<verbatim class="tml">}%
 %TMPL:DEF{"categoriestab"}%<!-- categoriestab -->
 %~~ TAB{"%TMPL:P{"categorieslabel"}%"
-~~~   url="%SCRIPTURLPATH{"rest"}%/RenderPlugin/tag?
+~~~   url="%SCRIPTURL{"rest"}%/RenderPlugin/tag?
 *~~     topic=%BASEWEB%.%BASETOPIC%;
 *~~     name=RENDERFOREDIT;
 *~~     field=%TMPL:P{"catfield"}%;
@@ -51,7 +51,7 @@
 %{<verbatim class="tml">}%
 %TMPL:DEF{"tagstab"}%<!-- tagstab -->
 %~~ TAB{"%TMPL:P{"tagslabel"}%" 
-~~~   url="%SCRIPTURLPATH{"rest"}%/RenderPlugin/tag?
+~~~   url="%SCRIPTURL{"rest"}%/RenderPlugin/tag?
 *~~     topic=%BASEWEB%.%BASETOPIC%;
 *~~     name=RENDERFOREDIT;
 *~~     field=Tag;

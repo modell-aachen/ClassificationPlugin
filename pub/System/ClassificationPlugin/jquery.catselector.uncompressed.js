@@ -270,7 +270,7 @@ jQuery(function($) {
   $(function() {
     defaults.web = foswiki.getPreference("WEB");
     defaults.topic = defaults.web+'.'+foswiki.getPreference("TOPIC");
-    defaults.url = foswiki.getPreference("SCRIPTURLPATH")+"/rest/RenderPlugin/tag";
+    defaults.url = foswiki.getPreference("SCRIPTURL")+"/rest/RenderPlugin/tag";
 
     $(".clsCatSelector:not(.clsInitedCatSelector)").livequery(function() {
       var $this = $(this);
