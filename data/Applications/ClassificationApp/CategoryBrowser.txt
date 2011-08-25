@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="micha" comment="save topic" date="1286204342" format="1.1" reprev="6" version="6"}%
+%META:TOPICINFO{author="ProjectContributor" comment="save topic" date="1286204342" format="1.1" reprev="6" version="6"}%
 %META:TOPICPARENT{name="ApplicationTopic"}%
 %DBCALL{"Applications.RenderTopicInstaller"}%
 

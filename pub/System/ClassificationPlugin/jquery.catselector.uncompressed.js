@@ -27,6 +27,7 @@ jQuery(function($) {
     root: 'TopCategory',
     hidenull: 'off',
     nrleafs: '',
+    nrtopics: '',
     format:'editor',
     data: {
       name:'DBCALL',
@@ -57,7 +58,9 @@ jQuery(function($) {
     self.origSearch = self.filterField.val() || '';
 
     self.filterButton.click(function() {
-      self.filterField.animate({opacity:'toggle'}, 'fast').focus();
+      self.filterField.animate({opacity:'toggle'}, 'fast', function() {
+        $(this).focus();
+      });
       return false;
     });
 
@@ -107,6 +110,7 @@ jQuery(function($) {
       'fieldname':self.opts.fieldname,
       'format':self.opts.format,
       'nrleafs':self.opts.nrleafs,
+      'nrtopics':self.opts.nrtopics,
       'hidenull':self.opts.hidenull,
       'exclude':self.opts.exclude
     });
@@ -144,6 +148,20 @@ jQuery(function($) {
           }
         }
         $(elem).find('li.open > ul > li.closed').removeClass('closed').addClass('open');
+
+    	/* filter out expandables that have reached the max depth */
+	$(elem).find(".clsCategory").each(function() {
+	  var $cat = $(this), opts = $.extend({}, $cat.metadata());
+          if (opts.depth > self.opts.depth) {
+            var $li = $cat.parent().parent();
+	    $li.removeClass("hasChildren expandable")
+            if ($li.is(".lastExpandable")) {
+	      $li.removeClass("lastExpandable").addClass("last");
+            }
+            $li.children(".hitarea").remove();
+	    //console.log("reached max depth at ", $li, "class=",$li.attr("class"));
+          }
+        });
 
         // hilight current values
         var values = self.inputField.val() || '';

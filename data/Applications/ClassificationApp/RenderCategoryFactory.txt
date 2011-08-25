@@ -1,21 +1,17 @@
-%META:TOPICINFO{author="micha" comment="reprev" date="1286196445" format="1.1" reprev="10" version="10"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1305111482" format="1.1" reprev="11" version="12"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
 ---++ Documentation
 %STARTSECTION{name="documentation" type="section"}%
 This function renders an input form to create a new category.
-If you click on the "Show all Categories", all known categories
-in the baseweb will be listed below.
 
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
 <verbatim class="tml">
-%STARTINCLUDE%<!-- render category factory -->
----++ Create a new category in the <span class='foswikiAlert'><nop>%WEBLINK{"%BASEWEB%" format="$name"}%</span> web
+%STARTINCLUDE%<!-- -->
 <noautolink>
-<div class="foswikiPageForm clsCategoryFactory">
 <form action="%SCRIPTURLPATH{"save"}%/%BASEWEB%/" method="post">
 <input type="hidden" name="refresh" value="on" />
 <input type="hidden" name="web" value="%BASEWEB%" />
@@ -25,92 +21,68 @@ in the baseweb will be listed below.
 <input type="hidden" name="action" value="form" />
 <input type="hidden" name="TopicType" value="Category, CategorizedTopic" />
 <input type="hidden" name="topicparent" value="none" />
-<input type="hidden" name="redirectto" value="%BASEWEB%.%BASETOPIC%" />
-<table class="foswikiLayoutTable">
-<tr>
-  <th>Title:</th>
-  <td><input class="foswikiInputField" type="text" id="cattitle" name="TopicTitle" size="60" value="%URLPARAM{"TopicTitle" encode="entity"}%" /></td>
-</tr>
-<tr>
-  <th>Topic:</th>
-  <td><input class="foswikiInputField" type="text" id="cattopic" name="topic" size="60" value="%URLPARAM{"topic" encode="entity"}%" /></td>
-</tr>
-<tr>
-  <th>Summary:</th>
-  <td><input class="foswikiInputField" type="text" name="Summary" size="60" value="%URLPARAM{"Summary" encode="entity"}%"/></td>
-</tr>
-<tr>
-  <th valign="top">Parent:</th>
-  <td>
-    %DBCALL{"Applications.ClassificationApp.RenderCategoryEditor"}%
-  </td>
-</tr>
-<tr>
-  <th valign="top">Icon:</th>
-  <td>
-      %DBCALL{"Applications.ClassificationApp.RenderIconSelector" BUTTONS="off" VALUE="%URLPARAM{"Icon"}%" SOURCE="%CLASSIFICATIONPLUGIN_ICONSET%"}%
-  </td>
-</tr>
-<tr style="padding-top:1em">
-  <th>&nbsp;</th>
-  <td style="padding-top:1em">
-    %BUTTON{"%MAKETEXT{"Submit"}%" type="save" icon="add"}%
-    %CLEAR%
-  </td>
-</tr>
-</table>
+<div class="foswikiFormSteps clsCategoryFactory">
+<h2 >%MAKETEXT{"Create a new category in the [_1] web" args="<span class='foswikiAlert'><nop>%WEBLINK{"%BASEWEB%" format="$name"}%</span>"}%</h2>
+<div class="foswikiFormStep">
+  <h3>%MAKETEXT{"Title"}%:</h3>
+  <input class="foswikiInputField" type="text" id="cattitle" name="TopicTitle" size="60" value="%URLPARAM{"TopicTitle" encode="entity"}%" />
+  <div class="foswikiFormDescription">
+    %MAKETEXT{"Enter the title of the new category. This is a free-form text that the topic name will be derived from by default."}%
+  </div>
+</div>
+<div class="foswikiFormStep">
+  <h3>%MAKETEXT{"Topic"}%:</h3>
+  <input class="foswikiInputField" type="text" id="cattopic" name="topic" size="60" value="%URLPARAM{"topic" encode="entity"}%" />
+  <div class="foswikiFormDescription">
+    %MAKETEXT{"Enter the category topic name. This must be a unique ID among all categories within a taxonomy."}%
+  </div>
+</div>
+<div class="foswikiFormStep">
+  <h3>%MAKETEXT{"Summary"}%</h3>
+  <input class="foswikiInputField" type="text" name="Summary" size="60" value="%URLPARAM{"Summary" encode="entity"}%" />
+  <div class="foswikiFormDescription">
+    %MAKETEXT{"Enter a short summary line describing what this category is about."}%
+  </div>
+</div>
+<div class="foswikiFormStep">
+  <h3>%MAKETEXT{"Parent category"}%:</h3>
+  %DBCALL{"Applications.ClassificationApp.RenderCategoryEditor"}%
+  <div class="foswikiFormDescription">
+    %MAKETEXT{"Select one or more parent categories that the newly created category is subordinated to."}%
+  </div>
+</div>
+<div class="foswikiFormStep">
+  <h3>%MAKETEXT{"Icon"}%:</h3>
+  %DBCALL{"Applications.ClassificationApp.RenderIconSelector" 
+    BUTTONS="off" 
+    VALUE="%URLPARAM{"Icon"}%" 
+    SOURCE="%CLASSIFICATIONPLUGIN_ICONSET%"
+  }%
+  <div class="foswikiFormDescription">
+    %MAKETEXT{"Select an icon to be used when displaying this category in a list or hierarchy tree."}%
+  </div>
+</div>
+<div class="foswikiFormStep">
+  %BUTTON{"%MAKETEXT{"Submit"}%" type="save" icon="add"}%
+  %CLEAR%
+</div>
+</div>
 </form>
-</div>
-
-%BUTTON{"%MAKETEXT{"Show all Categories"}%" icon="application_cascade" id="catoggle"}%
-%BR%
-%CLEAR%
-
-%JQREQUIRE{"wikiword"}%
-%ADDTOZONE{"script" topic="%WEB%.%TOPIC%" section="init" requires="JQUERYPLUGIN::WIKIWORD"}%
+%JQREQUIRE{"wikiword"}%<!-- -->
+%ADDTOZONE{"script" topic="%WEB%.%TOPIC%" section="init" requires="JQUERYPLUGIN::WIKIWORD"}%<!-- -->
 </noautolink>
-
-<div id="catainer">
-</div>
-<!-- //render category factory -->%STOPINCLUDE%
+<!-- -->%STOPINCLUDE%
 </verbatim>
 
 ---++ !JavaScript initialisation
 <verbatim class="tml">
-%STARTSECTION{"init"}%
-<literal>
+%STARTSECTION{"init"}%<literal>
 <script>
 jQuery(function($) {
-  var toggleState = 0;
-
   $("#cattopic").wikiword("#cattitle", {suffix: 'Category', initial:'...Category'});
-  $("#catoggle").click(function() {
-    var $this = $(this);
-    var $icon = $this.find(".jqButtonIcon");
-    var $catainer = $("#catainer");
-    if (toggleState == 0) {
-      toggleState = 1;
-      var bgImg = $icon.css('background-image');
-      $icon.css('background-image', 'url(%PUBURLPATH%/%SYSTEMWEB%/JQueryPlugin/images/spinner.gif)');
-      $catainer.load("%SCRIPTURL{"rest"}%/RenderPlugin/tag?topic=%BASEWEB%.%BASETOPIC%;name=DBCALL;param=Applications.ClassificationApp.RenderAllCategories", '', function() {
-        $this.find("span span").text("%MAKETEXT{"Hide all Categories"}%");
-        $icon.css('background-image', bgImg);
-      });
-    } else if (toggleState == 1) {
-      toggleState = 2;
-      $this.find("span span").text("%MAKETEXT{"Show all Categories"}%");
-      $catainer.hide();
-    } else {
-      toggleState = 1;
-      $this.find("span span").text("%MAKETEXT{"Hide all Categories"}%");
-      $catainer.show();
-    }
-    return false;
-  });
 });
 </script>
-</literal>
-%ENDSECTION{"init"}%
+</literal>%ENDSECTION{"init"}%
 </verbatim>
 
 ---++ Test
@@ -119,13 +91,13 @@ jQuery(function($) {
 %DBCALL{"Applications.RenderFunctionCallers"}%
 
 ---++ Copyright
-&copy; 2008-2010 Michael Daum http://michaeldaumconsulting.com
+&copy; 2008-2011 Michael Daum http://michaeldaumconsulting.com
 
 %DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
 
 
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
-%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="RenderCategoryFactory"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
 %META:FIELD{name="Summary" attributes="c" title="Summary" value="Renders a factory for Categories"}%
 %META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

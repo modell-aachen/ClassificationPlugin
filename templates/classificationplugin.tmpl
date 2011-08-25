@@ -15,9 +15,18 @@
   SIZE="$size"
 }%%TMPL:END%
 
-%TMPL:DEF{"querytags"}%%DBCALL{
+%TMPL:DEF{"querytags"}%%TMPL:P{context="SolrPluginEnabled" then="querytags::solr" else="querytags::default"}%%TMPL:END%
+
+%TMPL:DEF{"querytags::default"}%%DBCALL{
   "Applications.ClassificationApp.RenderKnownTags"
-  TAG="%URLPARAM{"q"}%"
+  TAG="%URLPARAM{"term"}%"
+  LIMIT="%URLPARAM{"limit"}%"
+  THEWEB="%URLPARAM{"web" default="%BASEWEB%"}%"
+}%%TMPL:END%
+
+%TMPL:DEF{"querytags::solr"}%%DBCALL{
+  "Applications.ClassificationApp.RenderKnownTagsSolr"
+  TAG="%URLPARAM{"term"}%"
   LIMIT="%URLPARAM{"limit"}%"
   THEWEB="%URLPARAM{"web" default="%BASEWEB%"}%"
 }%%TMPL:END%

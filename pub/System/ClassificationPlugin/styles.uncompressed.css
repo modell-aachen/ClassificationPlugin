@@ -1,6 +1,3 @@
-h1 .foswikiTopicSummary {
-  font-style:normal;
-}
 .clsBrowserControl {
   margin:0em 0em 0.5em;
   float:right;
@@ -12,7 +9,7 @@ h1 .foswikiTopicSummary {
 .clsBrowserControlExpand,
 .clsBrowserControlCollapse {
   padding:1px 0px 1px 21px;
-  background-position:middle left !important;
+  background-position:center left !important;
   background-repeat:no-repeat !important;
 }
 .clsBrowserControlExpand {
@@ -20,6 +17,12 @@ h1 .foswikiTopicSummary {
 }
 .clsBrowserControlCollapse {
   background-image:url(../../System/FamFamFamSilkIcons/delete.png) !important;
+}
+.clsCategoryFactory {
+  margin-bottom:10px;
+}
+.clsCatSelector {
+  margin:5px 0px;
 }
 .clsCatSelector h3 a {
   color:inherit;
@@ -196,14 +199,14 @@ a.clsTagClose:hover {
 .clsTagCloud .typed {
   background:pink;
 }
+
 /* indexes */
 .clsIndexItem {
   min-height:16px;
+  background-repeat:no-repeat;
 }
 
 .clsTopicItem {
-  padding-left:20px;
-  background-image:url(../../Applications/ClassificationApp/IconSet/text.png); 
   background-repeat:no-repeat;
 }
 
@@ -213,7 +216,7 @@ a.clsTagClose:hover {
 }
 .clsTopicItem .imageSimple_left,
 .clsTopicItem .imagePlain_left {
-  margin:0px 7px 7px -20px;
+  margin:0px 7px 7px 0px;
 }
 .clsTopicItem .imageSimple_right,
 .clsTopicItem .imagePlain_right {
@@ -221,7 +224,6 @@ a.clsTagClose:hover {
 }
 .clsCategoryItem {
   padding-left:20px;
-  background-image:url(../../Applications/ClassificationApp/IconSet/folder.gif);
   background-repeat:no-repeat;
 }
 
@@ -263,6 +265,25 @@ a.clsTagClose:hover {
   border:0px;
   font-style:normal;
 }
+
+a.clsTopicInfoMoreClicked:hover {
+  background-color:transparent;
+}
+
+/* styles for special tags */
+a.tag_todo,
+span.tag_todo {
+  background-color:#FBE3E4;
+  color:#b22222;
+  border-color:#E2ADB0;
+}
+a:hover.tag_todo {
+  background-color:#b22222;
+  border-color:#b22222;
+  color:#fff;
+}
+
+
 /* pattern skin tweaks */
 #patternMainContents h1 a,
 #patternMainContents h2 a,

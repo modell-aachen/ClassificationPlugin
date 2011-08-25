@@ -1,6 +1,6 @@
 # Plugin for Foswiki - The Free and Open Source Wiki, http://foswiki.org/
 #
-# Copyright (C) 2006-2009 Michael Daum http://michaeldaumconsulting.com
+# Copyright (C) 2006-2011 Michael Daum http://michaeldaumconsulting.com
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -23,8 +23,25 @@ use Foswiki::Plugins::DBCachePlugin::Core ();
 use Foswiki::Plugins::ClassificationPlugin::Core();
 use Foswiki::Func ();
 use Foswiki::Sandbox ();
+use JSON ();
 
 use constant DEBUG => 0; # toggle me
+
+# JSON-RPC error codes
+# Error codes for json-rpc response
+# -32601: unknown action
+# -32600: method not allowed
+# 0: ok
+# 1: unknown error
+# 100: no from value
+# 200: access to service not allowed
+# 300: web does not exist
+# 400: missing parameter
+# 500: form definition not found
+# 600: unknwon category
+# 700: invalid map format
+# 800: topic has got an unknown category
+# 900: oops, not mapped onto any facet
 
 ###############################################################################
 sub writeDebug {
@@ -39,6 +56,40 @@ sub init {
 
 ###############################################################################
 sub finish {
+}
+
+###############################################################################
+sub printJSONRPC {
+  my ($response, $code, $text, $id) = @_;
+
+  $response->header(
+    -status  => $code?500:200,
+    -type    => 'text/plain',
+  );
+
+  $id = 'id' unless defined $id;
+
+  my $message;
+  
+  if ($code) {
+    $message = {
+      jsonrpc => "2.0",
+      error => {
+        code => $code,
+        message => $text,
+        id => $id,
+      }
+    };
+  } else {
+    $message = {
+      jsonrpc => "2.0",
+      result => ($text?$text:'null'),
+      id => $id,
+    };
+  }
+
+  $message = JSON::to_json($message, {pretty=>1});
+  $response->print($message);
 }
 
 ###############################################################################
@@ -78,10 +129,13 @@ sub normalizeTags {
   my $totalTags = scalar(keys %knownTags);
   my $foundTopics = scalar(@foundTopics);
 
-  return "OK: rename $foundTags of $totalTags tags in $foundTopics topics\n" 
-    if $foundTopics;
+  if ($foundTopics) {
+    printJSONRPC($response, 0, "Successfully rename $foundTags of $totalTags tags in $foundTopics topics");
+  } else {
+    printJSONRPC($response, 0, "No tags found");
+  }
 
-  return "OK\n";
+  return;
 }
 
 ###############################################################################
@@ -109,15 +163,19 @@ sub renameTag {
     push @from, $from;
   }
   unless (@from) {
-    returnRESTResult($response, 500, "undefined 'from' parameter");
+    printJSONRPC($response, 100, "undefined 'from' parameter");
     return;
   }
 
-  my $from = '\b('.join('|', @from).')\b';
-  my $count = Foswiki::Plugins::ClassificationPlugin::Core::renameTag($from, $theTo, $theWeb);
+  my $count = Foswiki::Plugins::ClassificationPlugin::Core::renameTag(\@from, $theTo, $theWeb);
 
-  return "OK: nothing renamed\n" unless $count;
-  return "OK: renamed $count topics\n";
+  if ($count) {
+    printJSONRPC($response, 0, "Successfully renamed $count topics");
+  } else {
+    printJSONRPC($response, 0, "Nothing to rename");
+  }
+
+  return;
 }
 
 ###############################################################################
@@ -139,8 +197,10 @@ sub renameTag {
 sub splitFacet {
   my ($session, $subject, $verb, $response) = @_;
 
-  throw("access to service not allowed")
-    unless Foswiki::Func::isAnAdmin();
+  unless (Foswiki::Func::isAnAdmin()) {
+    printJSONRPC($response, 200, "access to service not allowed");
+    return;
+  }
 
   my $query = Foswiki::Func::getCgiQuery();
   my $theDebug = $query->param('debug') || 0;
@@ -148,23 +208,31 @@ sub splitFacet {
 
   my $theWeb = $query->param('web') || $baseWeb;
 
-  throw("web '$theWeb' does not exist")
-    unless Foswiki::Func::webExists($theWeb);
+  unless (Foswiki::Func::webExists($theWeb)) {
+    printJSONRPC($response, 300, "web $theWeb does not exist");
+    return;
+  }
 
   my $theInTopicType = $query->param('intopictype');
-  throw Error::Simple("undefined intopictype") 
-    unless defined $theInTopicType;
+  unless (defined $theInTopicType) {
+    printJSONRPC($response, 400, "parameter intopictype required");
+    return;
+  }
 
   my $theOutTopicType = $query->param('outtopictype') || $theInTopicType;
   my $theExcludeTopicType = $query->param('excludetopictype');
 
   my $theNewForm = $query->param('form');
-  throw Error::Simple("unknown form $theNewForm")
-    unless Foswiki::Func::topicExists(undef, $theNewForm);
+  unless (Foswiki::Func::topicExists(undef, $theNewForm)) {
+    printJSONRPC($response, 500, "form definition $theNewForm not found");
+    return;
+  }
 
   my $theMap = $query->param('map');
-  throw Error::Simple("undefined map") 
-    unless defined $theMap;
+  unless (defined $theMap) {
+    printJSONRPC($response, 400, "parameter map required");
+    return;
+  }
 
   writeDebug("opening web '$theWeb'");
   my $hierarchy = Foswiki::Plugins::ClassificationPlugin::getHierarchy($theWeb);
@@ -176,13 +244,16 @@ sub splitFacet {
       my $fieldName = $1;
       my $categoryName = $2;
       my $cat = $hierarchy->getCategory($categoryName);
-      throw Error::Simple("unknwon category $categoryName")
-	unless $cat;
+      unless ($cat) {
+        printJSONRPC($response, 600, "unknwon category $categoryName");
+        return;
+      }
 
       writeDebug("mapping facet '$fieldName' to '$categoryName'");
       $map{$fieldName} = $cat;
     } else {
-      throw Error::Simple("invalid map format $theMap at '$mapItem'")
+      printJSONRPC($response, 700, "invalid map format $theMap at '$mapItem'");
+      return;
     }
   }
 
@@ -216,7 +287,8 @@ sub splitFacet {
     foreach my $catName (@$cats) {
       my $cat = $hierarchy->getCategory($catName);
       unless ($cat) {
-	throw Error::Simple("topic $topicName has got an unknown category $catName");
+	printJSONRPC($response, 800, "topic $topicName has got an unknown category $catName");
+        return;
       }
       my $foundFacet = 0;
       foreach my $facet (keys %map) {
@@ -226,8 +298,10 @@ sub splitFacet {
 	  last;
 	}
       }
-      throw("oops, $catName not mapped onto any facet")
-       	unless $foundFacet;
+      unless ($foundFacet) {
+        printJSONRPC($response, 900, "oops, $catName not mapped onto any facet");
+        return;
+      }
     }
   
     my ($meta, $text) = Foswiki::Func::readTopic($theWeb, $topicName);
@@ -267,19 +341,6 @@ sub splitFacet {
   }
 
   return "OK: converted $foundTopics topics\n";
-}
-
-##############################################################################
-sub returnRESTResult {
-  my ($response, $status, $text) = @_;
-
-  $response->header(
-    -status  => $status,
-    -type    => 'text/html',
-  );
-
-  $response->print($text);
-  writeDebug($text) if $status >= 400;
 }
 
 1;

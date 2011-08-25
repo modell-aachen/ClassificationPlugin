@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="micha" comment="reprev" date="1286203720" format="1.1" reprev="7" version="7"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1309370880" format="1.1" reprev="8" version="8"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -16,20 +16,12 @@ See also RenderCategoryEditor.
 ---++ Implementation
 <verbatim class="tml">
 %STARTINCLUDE%<!-- -->
-%DBCALL{"RenderCategoryEditor" 
+%DBCALL{"Applications.ClassificationApp.RenderCategoryEditor" 
   THEWEB="%IF{"defined THEWEB" then="%THEWEB%" else="%BASEWEB%"}%" 
   TOP="%IF{"defined TOP" then="%TOP%" else="TopCategory"}%"
   THEFORMAT="browser"
 }%
-<literal>
-<style>
-.clsClearButton, .clsUndoButton {display:none}
-.clsButtonBox .jqButton {
-  margin-top:2px;
-  margin-bottom:2px;
-}
-</style>
-</literal>
+<style>.clsClearButton, .clsUndoButton {display:none}</style>
 <!-- -->%STOPINCLUDE%
 </verbatim>
 
@@ -39,12 +31,12 @@ See also RenderCategoryEditor.
 %DBCALL{"Applications.RenderFunctionCallers"}%
 
 ---++ Copyright
-&copy; 2007-2010 Michael Daum http://michaeldaumconsulting.com
+&copy; 2007-2011 Michael Daum http://michaeldaumconsulting.com
 
 %DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
 
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
-%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="RenderCategoryBrowser"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
 %META:FIELD{name="Summary" attributes="c" title="Summary" value="Renders a hierarchical browser for categories"}%
 %META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

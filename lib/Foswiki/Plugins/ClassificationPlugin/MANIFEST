@@ -91,6 +91,7 @@ data/Applications/ClassificationApp/RenderEditTagCloud.txt 0644
 data/Applications/ClassificationApp/RenderHierarchyAsJSON.txt 0644
 data/Applications/ClassificationApp/RenderIconSelector.txt 0644
 data/Applications/ClassificationApp/RenderKnownCats.txt 0644
+data/Applications/ClassificationApp/RenderKnownTagsSolr.txt 0644
 data/Applications/ClassificationApp/RenderKnownTags.txt 0644
 data/Applications/ClassificationApp/RenderSideBar.txt 0644
 data/Applications/ClassificationApp/RenderSolrTagCloud.txt 0644
@@ -324,6 +325,9 @@ pub/System/ClassificationPlugin/close.gif 0644
 pub/System/ClassificationPlugin/jquery.catselector.js 0644
 pub/System/ClassificationPlugin/jquery.catselector.js.gz 0644
 pub/System/ClassificationPlugin/jquery.catselector.uncompressed.js 0644
+pub/System/ClassificationPlugin/jquery.classifiedtopic.js 0644
+pub/System/ClassificationPlugin/jquery.classifiedtopic.js.gz 0644
+pub/System/ClassificationPlugin/jquery.classifiedtopic.uncompressed.js 0644
 pub/System/ClassificationPlugin/jquery.tagcloud.js 0644
 pub/System/ClassificationPlugin/jquery.tagcloud.js.gz 0644
 pub/System/ClassificationPlugin/jquery.tagcloud.uncompressed.js 0644

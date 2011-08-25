@@ -1,6 +1,5 @@
 %META:TOPICINFO{author="ProjectContributor" date="1275569726" format="1.1" reprev="2" version="2"}%
 %META:TOPICPARENT{name="TopicType"}%
-%DBCALL{"%FORMFIELD{"Target"}%" remote="on" section="%FORMFIELD{"Section"}%"}%
 
 %META:FORM{name="Applications.TopicStub"}%
 %META:FIELD{name="TopicType" title="TopicType" value="TopicStub, TopicType"}%
@@ -9,4 +8,3 @@
 %META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="WikiWorkbench"}%
 %META:FIELD{name="Target" attributes="" title="Target" value="Applications.WebTool"}%
 %META:FIELD{name="Section" attributes="" title="Section" value=""}%
-%META:TOPICMOVED{by="micha" date="1212999288" from="_ClassificationTemplate.AdminTool" to="_ClassificationTemplate.WebTool"}%

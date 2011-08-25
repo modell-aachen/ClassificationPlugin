@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="micha" comment="reprev" date="1289660798" format="1.1" reprev="2" version="2"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1289660798" format="1.1" reprev="2" version="2"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -34,7 +34,6 @@ file.
 }%%STOPINCLUDE%
 </verbatim>
 
-<!-- interrupt glue -->
 
 ---++ Test
 <div class="alt">

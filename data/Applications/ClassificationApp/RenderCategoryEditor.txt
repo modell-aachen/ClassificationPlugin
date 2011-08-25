@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="mdaum" date="1288793544" format="1.1" reprev="1.5" version="1.5"}%
+%META:TOPICINFO{author="ProjectContributor" date="1309514433" format="1.1" reprev="1.7" version="1.7"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -16,13 +16,15 @@
    * ONCLICK: javascript handler to be called when a category is clicked, defaults to selecting the category
    * HIDENULL: "on" or "off", hide empty categories, defaults to off
    * NRLEAFS: list of cat:count values that specify the number of leaf nodes per category
+   * NRTOPICS: list of cat:count values that specify the number of topics nodes per category
    * THEFORMAT: format of the link text; this is a named section as defined in RenderHierarchyAsJSON, defaults to =editor=
+   * DEPTH: number of levels to extract, defaults to infinite depth
 
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
 <verbatim class="tml">
-%STARTINCLUDE%<!-- rendercategoryeditor --> 
+%STARTINCLUDE%<!-- --> 
 <noautolink>
 <div id="clsCatSelector_%IF{"defined NAME" then="%NAME%" else="Category"}%" 
 ~~~ class="clsCatSelector {
@@ -35,8 +37,16 @@
 ~~~   exclude:'%IF{"defined EXCLUDE" then="%EXCLUDE%"}%',
 ~~~   format:'%IF{"defined THEFORMAT" then="%THEFORMAT%" else="editor"}%'
 ~~~
+%~~   IF{"defined DEPTH" 
+~~~     then=", depth: '%DEPTH%'"
+~~~   }%
+~~~
 %~~   IF{"defined NRLEAFS" 
 ~~~     then=", nrleafs: '%NRLEAFS%'"
+~~~   }%
+~~~
+%~~   IF{"defined NRTOPICS" 
+~~~     then=", nrtopics: '%NRTOPICS%'"
 ~~~   }%
 ~~~
 %~~   IF{"defined ONCLICK" 
@@ -66,12 +76,12 @@
   text="<link rel='stylesheet' href='%PUBURLPATH%/%SYSTEMWEB%/ClassificationPlugin/styles.css' media='all' />"
   requires="JQUERYPLUGIN::TREEVIEW"
 }%<!-- -->
-<!-- //rendercategoryeditor -->%STOPINCLUDE%
+<!-- -->%STOPINCLUDE%
 </verbatim>
 
 ---++ Buttons
 <verbatim class="tml">
-%STARTSECTION{"buttons"}%<!-- buttons -->
+%STARTSECTION{"buttons"}%<!-- -->
 <div class="clsButtonBox">
   %BUTTON{"Clear" icon="application" class="clsClearButton"}%
   %BUTTON{"Undo" icon="arrow_refresh" class="clsUndoButton"}%
@@ -79,7 +89,13 @@
   <input type="text" name="filter" size="30" value="%IF{"defined FILTER" then="%FILTER%"}%" class="foswikiInputField clsFilterField" style="display:none" />
   %CLEAR%
 </div>
-<!-- //buttons -->%ENDSECTION{"buttons"}%
+<literal><style>
+.clsButtonBox .jqButton {
+  margin-top:2px;
+  margin-bottom:3px;
+}
+</style></literal>
+<!-- -->%ENDSECTION{"buttons"}%
 </verbatim>
 
 ---++ Test
@@ -89,6 +105,9 @@
 </div>
 <div class="foswikiFormStep">
 %DBCALL{"%TOPIC%" NAME="Cat2" VALUE="TestCategory" BUTTONS="bottom" EXCLUDE="TestCategory2"}%
+</div>
+<div class="foswikiFormStep">
+%DBCALL{"%TOPIC%" NAME="Cat3" BUTTONS="off" DEPTH="2" THEFORMAT="solrfacet"}%
 </div>
 </div>
 
@@ -103,7 +122,7 @@ function showConfirm(cat) {
 %DBCALL{"Applications.RenderFunctionCallers"}%
 
 ---++ Copyright
-&copy; 2006-2010 Michael Daum http://michaeldaumconsulting.com
+&copy; 2006-2011 Michael Daum http://michaeldaumconsulting.com
 
 %DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
 

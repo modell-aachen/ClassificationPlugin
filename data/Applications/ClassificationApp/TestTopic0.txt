@@ -1,5 +1,5 @@
-%META:TOPICINFO{author="micha" date="1285260166" format="1.1" version="2"}%
-%META:TOPICPARENT{name="MarketingResearchCategory"}%
+%META:TOPICINFO{author="ProjectContributor" date="1311070780" format="1.1" version="4"}%
+%META:TOPICPARENT{name="ContactsCategory"}%
    * DISTANCE{from="TopCategory" to="BottomCategory" format="min=$min, max=$max"} = %DISTANCE{from="TopCategory" to="BottomCategory" format="min=$min, max=$max"}%
    * DISTANCE{from="%TOPIC%" to="PlansAndPresentations"}: %DISTANCE{from="%TOPIC%" to="PlansAndPresentations"}%
    * DISTANCE{from="%TOPIC%" to="MarketingCategory"}: %DISTANCE{from="%TOPIC%" to="MarketingCategory"}%
@@ -13,4 +13,4 @@ TestTopic0
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="Foo"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value="%22foo bar%22"}%
 %META:FIELD{name="Tag" attributes="" title="Tag" value="fertig, festival, freak"}%
-%META:FIELD{name="Category" attributes="" title="Category" value="MarketingResearchCategory, PlansAndPresentations"}%
+%META:FIELD{name="Category" attributes="" title="Category" value="ContactsCategory, HRFormTemplatesCategory"}%

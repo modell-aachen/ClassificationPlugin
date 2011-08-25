@@ -1,16 +1,70 @@
-%META:TOPICINFO{author="ProjectContributor" comment="save topic" date="1273175503" format="1.1" reprev="1.5" rev="5" version="1.5"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1294243029" format="1.1" reprev="9" version="9"}%
 %META:TOPICPARENT{name="TopicView"}%
 %{<verbatim class="tml">}%
-%TMPL:INCLUDE{"Applications.ClassificationApp.ClassifiedTopicView"}%
+%TMPL:INCLUDE{"Applications.WikiTopicView"}%
+%{</verbatim>}%
 
+%{<verbatim class="tml">}%
 %TMPL:DEF{"breadcrumbs"}%%DBCALL{
   "Applications.ClassificationApp.RenderCategoryBreadcrumbs"
   CAT="%URLPARAM{"catname"}%"
 }%%TMPL:END%
 %{</verbatim>}%
 
+%{<verbatim class="tml">}%
+%TMPL:DEF{"beforetext"}%<!-- -->
+%IF{"defined catname"
+  then="$percntTMPL:P{\"virtualcategory\"}$percnt"
+  else="$percntTMPL:P{\"normalcategory\"}$percnt"
+}%
+<!-- -->%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"normalcategory"}%<!-- -->
+<div class="foswikiTopicInfo"> 
+%DBCALL{"Applications.ClassificationApp.RenderClassifiedTopicView" TITLE_EXTRA="%TMPL:P{"titleextra"}%" }% 
+</div>
+<!-- -->%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"virtualcategory"}%<!-- -->
+<div class="foswikiTopicInfo">
+%CATINFO{
+   cat="%URLPARAM{"catname"}%"
+   format="<h1>$link 
+     $percntIF{\"'$summary'!=''\"
+       then=\"<br /><span class='foswikiTopicSummary'>$summary</span>\"
+     }$percnt</h1>
+     $percntMAKETEXT{\"Filed in [_1]\" 
+       args=\"$percntFORMATLIST{\"$parentlinks\" split=\"\s*,\s*\" separator=\"&#44; \"}$percnt\"
+     }$percnt"
+}%
+</div>
+<!-- -->%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"title"}%%HTMLTITLE{
+  separator=" %IF{"defined 'HTMLTITLESEP'" then="%HTMLTITLESEP%" else="-"}% "
+  title="%TMPL:P{"categorytitle"}%"
+}%%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"metatitle"}%<meta name='title' content='%ENCODE{"%TMPL:P{"categorytitle"}%"type="html"}%' />%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"categorytitle"}%%IF{"defined catname"
+  then="$percntCATINFO{cat=\"%URLPARAM{"catname"}%\" format=\"$title\"}$percnt"
+  else="%TOPICTITLE%"
+}%%TMPL:END%
+%{</verbatim>}%
+
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="TopicView"}%
-%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="CategoryViewTemplate"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
 %META:FIELD{name="Summary" attributes="c" title="Summary" value="View for Categories"}%
 %META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

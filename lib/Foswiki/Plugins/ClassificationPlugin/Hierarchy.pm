@@ -20,7 +20,7 @@ use Foswiki::Plugins::ClassificationPlugin::Category;
 use Storable;
 require Foswiki::Prefs;
 
-use constant OBJECTVERSION => 0.80;
+use constant OBJECTVERSION => 0.81;
 use constant CATWEIGHT => 1.0; # used in computeSimilarity()
 use constant DEBUG => 0; # toggle me
 
@@ -671,15 +671,15 @@ sub getCatFields {
     next unless $formDef;
 
     # check if this is a TopicStub
-    my $form = $formDef->fastget('form');
-    next unless $form; # woops got no form
-    $form = $formDef->fastget($form);
+    my $formName = $formDef->fastget('form');
+    next unless $formName; # woops got no form
+    my $form = $formDef->fastget($formName);
     next unless $form;
 
     my $type = $form->fastget('TopicType') || '';
     #writeDebug("type=$type");
 
-    if ($type =~ /\bTopicStub\b/) {
+    if ($type =~ /\bTopicStub\b/ || $formName =~ /\bTopicStub\b/) {
       #writeDebug("reading stub");
       # this is a TopicStub, lookup the target
       my ($targetWeb, $targetTopic) = 

@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="mdaum" date="1288798170" format="1.1" reprev="1.2" version="1.2"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1297069904" format="1.1" reprev="6" version="6"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -15,24 +15,20 @@ a summary for an object of type ClassifiedTopic.
 
 ---++ Implementation
 <verbatim class="tml">
-%STARTINCLUDE%<!-- CategoryRenderIndexItem -->
-%~~ CATINFO{cat="%DBQUERY{topic="%OBJECT%" format="$topic"}%"
-~~~   maxchildren="6"
-~~~   sortchildren="on"
-~~~   morechildren="<a href='$url' title='%MAKETEXT{"more"}%'>...</a>"
-~~~   format="
-*~~     <div class='clsIndexItem clsCategoryItem' style='background-image:url($icon)'>
-~~~       <a href='$url'><noautolink>%IF{"defined TITLE" then="%TITLE%" else="$title"}%</noautolink></a>
-~~~       $percntIF{\"'$count'>'0'\" then=\"&nbsp;($count)\"}$percnt
-~~~       <div class='foswikiTopicInfo'><noautolink>$summary</noautolink></div>
-~~~       <div class='clsSubCategories'>$children $more</div>
-*~~     </div>
-~~~  "
-~~~ }%
-<!-- //CategoryRenderIndexItem -->%STOPINCLUDE%
+%STARTINCLUDE%<!-- --><noautolink>
+%CATINFO{cat="%DBQUERY{topic="%OBJECT%" format="$topic"}%"
+   maxchildren="6"
+   sortchildren="on"
+   morechildren="<a href='$url' title='%MAKETEXT{"more"}%'>...</a>"
+   format="<div class='clsIndexItem clsCategoryItem' style='background-image:url($icon)'>
+     <a href='$url'>%IF{"defined TITLE" then="%TITLE%" else="$title"}%</a>$percntIF{
+       \"'$count'>'0'\" then=\"&nbsp;($count)\"
+     }$percnt<!-- -->
+     <div class='foswikiTopicInfo'>$summary</div>
+     <div class='clsSubCategories'>$children $more</div>
+   </div>"
+}%</noautolink><!-- -->%STOPINCLUDE%
 </verbatim>
-
-<!-- interrupt glue -->
 
 ---++ Test
 <div class="alt">
@@ -42,7 +38,7 @@ a summary for an object of type ClassifiedTopic.
 %DBCALL{"Applications.RenderFunctionCallers"}%
 
 ---++ Copyright
-&copy; 2007-2010 Michael Daum http://michaeldaumconsulting.com
+&copy; 2007-2011 Michael Daum http://michaeldaumconsulting.com
 
 %DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
 

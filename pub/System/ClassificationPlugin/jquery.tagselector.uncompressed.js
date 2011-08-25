@@ -1,7 +1,7 @@
 /*
  * jQuery TagSelector plugin 1.1
  *
- * Copyright (c) 2008-2009 Michael Daum http://michaeldaumconsulting.com
+ * Copyright (c) 2008-2011 Michael Daum http://michaeldaumconsulting.com
  *
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
@@ -126,7 +126,7 @@
           tags.push([$(this).text(),$(this).attr('title')]);
         });
         $.log("tags = "+tags);
-        $input.autocomplete(
+        $input.Autocomplete(
           tags,
           {
             selectFirst:false,

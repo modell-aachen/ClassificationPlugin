@@ -1,6 +1,5 @@
 %META:TOPICINFO{author="ProjectContributor" date="1275569586" format="1.1" reprev="1" version="2"}%
 %META:TOPICPARENT{name="TopicType"}%
-%DBCALL{"%FORMFIELD{"Target"}%" remote="on" section="%FORMFIELD{"Section"}%"}%
 
 %META:FORM{name="Applications.TopicStub"}%
 %META:FIELD{name="TopicType" title="TopicType" value="TopicStub, TopicType"}%

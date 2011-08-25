@@ -637,15 +637,19 @@ sub handleTAGINFO {
     if ($context->{SolrPluginEnabled}) {
       $url = Foswiki::Func::getScriptUrl($thisWeb, "WebSearch", "view", 
         filter=>"tag:\"$tag\"",
-        origtopic=>"$baseWeb.$baseTopic"
+        origtopic=>$baseWeb.".".$baseTopic,
       );
     } else {
       $url = Foswiki::Func::getScriptUrl($thisWeb, "WebTagCloud", "view", tag=>$tag);
     }
-    my $link = "<a href='$url'><noautolink>$tag</noautolink></a>";
+    my $class = $tag;
+    $class =~ s/["' ]/_/g;
+    $class = "tag_".$class;
+    my $link = "<a href='$url' rel='tag' class='\$class'><noautolink>$tag</noautolink></a>";
     $line =~ s/\$index/$index/g;
     $line =~ s/\$url/$url/g;
     $line =~ s/\$link/$link/g;
+    $line =~ s/\$class/$class/g;
     $line =~ s/\$name/$tag/g;
     push @result, $line;
     last if $theLimit && $index >= $theLimit;
@@ -694,7 +698,7 @@ sub beforeSaveHandler {
     };
     if ($formDef) {
       foreach my $fieldDef (@{$formDef->getFields()}) {
-        #writeDebug("formDef field $fieldDef->{name} type=$fieldDef->{type}");
+        writeDebug("formDef field $fieldDef->{name} type=$fieldDef->{type}");
         $isCatField{$fieldDef->{name}} = 1 if $fieldDef->{type} eq 'cat';
         $isTagField{$fieldDef->{name}} = 1 if $fieldDef->{type} eq 'tag';
       }
@@ -728,7 +732,7 @@ sub beforeSaveHandler {
         $field->{title} =~ s/^.*[\.\/](.*?)$/$1/;
       }
       if ($isCatField{$field->{name}}) {
-        #writeDebug("before, value=$field->{value}");
+        writeDebug("before, value=$field->{value}");
         $field->{value} =~ s/^top=.*$//; # clean up top= in value definition
         my $item;
         $field->{value} = join(', ', 
@@ -739,7 +743,7 @@ sub beforeSaveHandler {
             }
             split(/\s*,\s*/, $field->{value})
         ); # remove accidental web part from categories
-        #writeDebug("after, value=$field->{value}");
+        writeDebug("after, value=$field->{value}");
       }
     }
 
@@ -753,7 +757,7 @@ sub beforeSaveHandler {
 
   my $trashWeb = $Foswiki::cfg{TrashWebName};
   if ($web eq $trashWeb) {
-    #writeDebug("detected a move from $baseWeb to trash");
+    writeDebug("detected a move from $baseWeb to trash");
     $web = $baseWeb;# operations are on the baseWeb
   }
 
@@ -763,10 +767,10 @@ sub beforeSaveHandler {
   $topicType = $topicType->{value};
 
   # fix topic type depending on the form
-  #writeDebug("old TopicType=$topicType");
+  writeDebug("old TopicType=$topicType");
   my @topicType = split(/\s*,\s*/, $topicType);
   my $index = scalar(@topicType)+3;
-  my %newTopicType = map {$_ => $index--} @topicType;
+  my %newTopicType = map {$_ =~ s/^.*\.//; $_ => $index--} @topicType;
 
   if ($formName =~ /^Applications[\.\/]ClassificationApp[\.\/]Category$/) {
     $newTopicType{Category} = 2;
@@ -797,7 +801,7 @@ sub beforeSaveHandler {
       push @newTopicType, $item;
     }
     my $newTopicType = join(', ', @newTopicType);
-    #writeDebug("new TopicType=$newTopicType");
+    writeDebug("new TopicType=$newTopicType");
     $meta->putKeyed('FIELD', {name =>'TopicType', title=>'TopicType', value=>$newTopicType});
   }
 
@@ -861,7 +865,7 @@ sub beforeSaveHandler {
 
   # set the new parent topic
   if ($doAutoReparent) {
-    #writeDebug("autoreparenting");
+    writeDebug("autoreparenting");
     my $newParentCat;
     foreach my $cat (sort keys %newCats) {
       if ($cat ne 'TopCategory') {
@@ -871,11 +875,11 @@ sub beforeSaveHandler {
     }
     my $homeTopicName = $Foswiki::cfg{HomeTopicName};
     $newParentCat = $homeTopicName unless defined $newParentCat;
-    #writeDebug("newParentCat=$newParentCat");
+    writeDebug("newParentCat=$newParentCat");
     $meta->remove('TOPICPARENT');
     $meta->putKeyed('TOPICPARENT', {name=>$newParentCat});
   } else {
-    #writeDebug("not autoreparenting");
+    writeDebug("not autoreparenting");
   }
 
   # get changed categories
@@ -1074,34 +1078,48 @@ sub renameTag {
   my $db = Foswiki::Plugins::DBCachePlugin::Core::getDB($web);
 
   $topics = [$db->getKeys()] unless $topics;
+  my @from = ();
+
+  if (ref($from)) {
+    @from = @$from;
+  } else {
+    @from = split(/\s*,s\*/, $from);
+  }
 
   my $user = Foswiki::Func::getWikiName();
   my $count = 0;
+  my $gotAccess;
   foreach my $topic (@$topics) {
+
     my $tags = $hierarchy->getTagsOfTopic($topic);
     next unless $tags;
-    if (grep(/$from/, @$tags)) {
-      my @newTags;
-      if ($to) {
-        @newTags = map {$_ =~ $from?$to:$_} @$tags;
-      } else {
-        @newTags = grep(!/$from/, @$tags);
-      }
+    my %tags = map {$_ => 1} @$tags;
+    my $found = 0;
 
-      if (Foswiki::Func::checkAccessPermission('change', $user, undef, $web, $topic)) {
-        if (DEBUG) {
-          print STDERR "\n$topic: old=".join(", ", sort @$tags)."\n";
-          print STDERR "$topic: new=".join(", ", sort @newTags)."\n";
-        } else {
-          my ($meta, $text) = Foswiki::Func::readTopic($web, $topic);
-          $meta->putKeyed( 'FIELD', { name => 'Tag', title => 'Tag', value =>join(', ', @newTags)});
-          Foswiki::Func::saveTopic($web, $topic, $meta, $text);
-          #print STDERR "saved $web.$topic\n";
-        }
-        $count++;
-      } else {
-        print STDERR "WARNING: $user can't rename tags at topic $topic\n";
+    foreach my $from (@from) {
+      if ($tags{$from}) {
+        $gotAccess = Foswiki::Func::checkAccessPermission('change', $user, undef, $web, $topic)
+          unless defined $gotAccess;
+        next unless $gotAccess;
+        delete $tags{$from};
+        $tags{$to} = 1 if $to;
+        $found = 1;
       }
+    }
+    if ($found) {
+      my $newTags = join(', ', keys %tags);
+
+      if (DEBUG) {
+        print STDERR "\n$topic: old=".join(", ", sort @$tags)."\n";
+        print STDERR "$topic: new=$newTags\n";
+      } 
+
+      my ($meta, $text) = Foswiki::Func::readTopic($web, $topic);
+      $meta->putKeyed( 'FIELD', { name => 'Tag', title => 'Tag', value =>$newTags});
+      Foswiki::Func::saveTopic($web, $topic, $meta, $text);
+      #print STDERR "saved $web.$topic\n";
+
+      $count++;
     }
   }
 
@@ -1111,7 +1129,6 @@ sub renameTag {
 ###############################################################################
 sub getIndexFields {
   my ($web, $topic, $meta) = @_;
-
 
   my $indexFields = $cachedIndexFields{"$web.$topic"};
   return $indexFields if $indexFields;
@@ -1136,6 +1153,7 @@ sub getIndexFields {
     my %seenFields = ();
     my %categories;
     my %tags;
+    my $hierarchy = getHierarchy($web);
     foreach my $fieldDef (@{$formDef->getFields()}) {
       my $name = $fieldDef->{name};
       my $type = $fieldDef->{type};
@@ -1147,21 +1165,28 @@ sub getIndexFields {
 
        # categories
       if ($type eq 'cat') {
+        my %thisCategories = ();
         foreach my $item (split(/\s*,\s*/, $value)) {
-          $categories{$item} = 1;
+          $thisCategories{$item} = 1; # this cat field
+          $categories{$item} = 1; # all cat fields
         }
 
-        # gather all parent categories
-        my $hierarchy = getHierarchy($web);
+        # gather all parent categories for this cat field
         if ($hierarchy) {
-          foreach my $category (keys %categories) {
+          foreach my $category (keys %thisCategories) {
             my $cat = $hierarchy->getCategory($category);
             next unless $cat;
             foreach my $parent ($cat->getAllParents()) {
-              $categories{$parent} = 1;
+              $thisCategories{$parent} = 1;
             }
           }
         }
+
+        # create a field specific category facet
+	my $fieldName = 'field_'.$name.'_lst'; # Note, there's a field_..._s as well
+	foreach my $category (keys %thisCategories) {
+	  push @$indexFields, [$fieldName => $category];
+	}
       }
 
       # tags
@@ -1169,6 +1194,17 @@ sub getIndexFields {
         foreach my $item (split(/\s*,\s*/, $value)) {
           $tags{$item} = 1; 
         }
+      }
+    }
+
+    # gather all parents of all cat fields
+    if ($hierarchy) {
+      foreach my $category (keys %categories) {
+	my $cat = $hierarchy->getCategory($category);
+	next unless $cat;
+	foreach my $parent ($cat->getAllParents()) {
+	  $categories{$parent} = 1;
+	}
       }
     }
 

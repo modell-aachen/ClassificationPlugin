@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1308076281" format="1.1" reprev="3" version="3"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1308123119" format="1.1" reprev="3" version="4"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -6,28 +6,29 @@
 %STARTSECTION{name="documentation" type="section"}%
 This function is used in the tag editor's autocompletion textboxlist to return
 a set of matching tags given the prefix in the url param =q=. See the =classificationplugin.tmpl= template
-file.
+file. This in essence is functionally equivalent to RenderKnownTags however is using %SYSTEMWEB%.SolrPlugin
+if installed for better performance.
 
 ---+++++ Parameters
    * TAG: pattern of tags to include, defaults to a neutral filter; this pattern is to match the prefix of the tag name
    * LIMIT: maximum number of categories to return, defaults to 10
-   * THEWEB: web from which to extract category information, defaults to BASEWEB 
+   * THEWEB: web from which to extract category information, defaults to BASEWEB
 
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
 <verbatim class="tml">
-%STARTINCLUDE%%DBSTATS{
-  "TopicType=~'\b(TaggedTopic|ClassifiedTopic)\b'"
-  %IF{"defined TAG" then="include=\"^%TAG%\""}%
-  field="Tag"
+%STARTINCLUDE%%SOLRSEARCH{
   web="%IF{"defined THEWEB" then="%THEWEB%" else="%BASEWEB%"}%"
-  header="[$n"
-  format="{\"value\":\"$key\"}"
-  separator=",$n"
-  footer="$n]"
-  limit="%IF{"defined LIMIT" then="%LIMIT%" else="10"}%"
-  pattern="^(.*)$" 
+  facetlimit="tag=%IF{"defined LIMIT" then="%LIMIT%" else="10"}%"
+  field="none"
+  facets="tag"
+  facetprefix="%IF{"defined TAG" then="%TAG%"}%"
+  facetsort="index"
+  header_tag="[$n"
+  format_tag="{\"value\":\"$key\"}"
+  separator_tag=",$n"
+  footer_tag="$n]"
 }%%STOPINCLUDE%
 </verbatim>
 
@@ -49,5 +50,6 @@ file.
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
 %META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
-%META:FIELD{name="Summary" attributes="c" title="Summary" value="Returns a list of tags"}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="returns a list of known tags using !SolrPlugin"}%
 %META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%
+%META:PREFERENCE{name="EDIT_TEMPLATE" title="EDIT_TEMPLATE" type="Set" value="Applications.WikiTopicEdit"}%

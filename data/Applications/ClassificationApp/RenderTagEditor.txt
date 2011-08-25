@@ -62,7 +62,6 @@
 <!-- //tagsuggestion-->%ENDSECTION{"tagsuggestion"}%
 </verbatim>
 
-<!-- interrupt glue -->
 
 ---++ Test
 <div class="alt">

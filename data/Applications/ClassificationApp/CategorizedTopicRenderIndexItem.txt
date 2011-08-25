@@ -37,7 +37,6 @@ a summary for an object listed within the Category topic.
 <!-- //CategorizedTopicRenderIndexItem -->%STOPINCLUDE%
 </verbatim>
 
-<!-- interrupt glue -->
 
 ---++ Test
 <div class="alt">

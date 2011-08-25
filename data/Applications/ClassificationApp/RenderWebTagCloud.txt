@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" date="1271176151" format="1.1" version="1.12"}%
+%META:TOPICINFO{author="ProjectContributor" date="1307692067" format="1.1" version="13"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 ---++ Documentation
@@ -77,7 +77,7 @@
    split=","
    min="%IF{"not isempty 'MIN'" then="%MIN%" else="0"}%"
    header="<div class='clsTagCloud'>"
-   group="<strong>$group</strong>"
+   group="<strong>$group</strong>&nbsp;"
    format="<a rel='nofollow' name='$term'
 ~~~   style='font-size:$weight%;
 ~~~           color:$fadeRGB(
@@ -145,6 +145,6 @@
 
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
-%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="RenderWebTagCloud"}%
-%META:FIELD{name="Summary" attributes="" title="Summary" value="Render a tool to list all classified topics in this web"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Render a tool to list all classified topics in this web"}%
 %META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

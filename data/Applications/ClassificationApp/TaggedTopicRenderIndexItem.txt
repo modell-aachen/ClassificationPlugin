@@ -37,7 +37,6 @@ a summary for an object listed within the TaggedTopic.
 <!-- //TaggedTopicRenderIndexItem -->%STOPINCLUDE%
 </verbatim>
 
-<!-- interrupt glue -->
 
 ---++ Test
 <div class="alt">

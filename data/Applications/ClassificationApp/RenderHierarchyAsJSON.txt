@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="mdaum" date="1288796972" format="1.1" reprev="1.4" version="1.4"}%
+%META:TOPICINFO{author="ProjectContributor" date="1309514072" format="1.1" reprev="1.5" version="1.5"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -16,6 +16,7 @@ for the hierarchy browsers.
    * open: categories to be expanded
    * hidenull: hides empty categories
    * nrleafs: list of =cat:count= items that specify the number of leafs per category; these values are used instead of computing them by HIERARCHY itself
+   * nrtopics: list of =cat:count= items that specify the number of topics per category; these values are used instead of computing them by HIERARCHY itself
 
 %ENDSECTION{name="documentation" type="section"}%
 
@@ -29,6 +30,7 @@ for the hierarchy browsers.
    exclude="%IF{"defined root" then="%root%" else="TopCategory"}%%IF{"defined exclude" then="|%exclude%"}%"
    hidenull="%IF{"defined hidenull" then="%hidenull%" else="off"}%"
    %IF{"defined nrleafs" then="nrleafs=\"%nrleafs%\""}%
+   %IF{"defined nrtopics" then="nrtopics=\"%nrtopics%\""}%
    %IF{"defined search" then="hideclosed=\"on\""}%
    open="%IF{"defined root" 
      then="%root%" 
@@ -106,7 +108,7 @@ $indent}"
 %STARTSECTION{"editor"}%
 *~~  <a href='#'
 ~~~     title='$title'
-~~~     value='$name' class='$name clsCategory'>
+~~~     value='$name' class='$name clsCategory {depth:$depth}'>
 ~~~    <img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' />
 ~~~    <noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink></a> 
 *~~
@@ -129,7 +131,7 @@ $indent}"
 <verbatim class="tml">
 %STARTSECTION{"solrfacet"}%
 *~~  <a href='#'
-~~~     class='$name clsCategory solrFacetValue'
+~~~     class='$name clsCategory solrFacetValue {depth:$depth}'
 ~~~     title='$title'
 ~~~     value='category:$name'>
 ~~~    <img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' />

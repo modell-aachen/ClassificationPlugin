@@ -137,7 +137,7 @@ sub getLeafs {
   
   unless($foundChild) {
     $result->{$this->{name}} = 1;
-    writeDebug("found leaf $this->{name}");
+    #writeDebug("found leaf $this->{name}");
   }
 
   return keys %$result;
@@ -151,7 +151,7 @@ sub countLeafs {
   my $nrLeafs = $this->{_nrLeafs}{$filter};
 
   unless (defined $nrLeafs) {
-    writeDebug("counting leafs of $this->{name}, filter=$filter");
+    #writeDebug("counting leafs of $this->{name}, filter=$filter");
 
     my @leafs = $this->getLeafs();
     if ($filter) {
@@ -171,7 +171,7 @@ sub countLeafs {
 
     $this->{_nrLeafs}{$filter} = $nrLeafs;
     $this->{gotUpdate} = 1;
-    writeDebug("countLeafs($this->{name})=$nrLeafs");
+    #writeDebug("countLeafs($this->{name})=$nrLeafs");
   }
 
   return $nrLeafs;
@@ -339,10 +339,33 @@ sub _getAllParents {
 sub countTopics {
   my ($this, $filter) = @_;
 
-  my @topics = $this->getTopics($filter);
-  return scalar(@topics);
+  my $topics = $this->getAllTopics();
+  my @topics = keys %$topics;
+
+  @topics = $this->filterTopics(\@topics, $filter) if $filter;
+
+  return scalar(@topics);;
 }
 
+###############################################################################
+sub getAllTopics {
+  my ($this, $seen) = @_;
+
+  $seen ||= {};
+
+  return {} if $seen->{$this->{name}};
+  $seen->{$this->{name}} = 1;
+
+  $this->getTopics();
+  my %topics = %{$this->{_topics}};
+
+  foreach my $child ($this->getChildren()) {
+    next if $child->{name} eq 'BottomCategory';
+    %topics = (%topics, %{$child->getAllTopics($seen)});
+  }
+
+  return \%topics;
+}
 
 ###############################################################################
 sub getTopics {
@@ -643,7 +666,7 @@ sub getIconUrl {
 sub getLink {
   my $this = shift;
 
-  return "<a href='".$this->getUrl()."'><noautolink>$this->{title}</noautolink></a>";
+  return "<a href='".$this->getUrl()."' rel='tag' class='$this->{name}'><noautolink>$this->{title}</noautolink></a>";
 }
 
 ###############################################################################
@@ -653,7 +676,7 @@ sub getUrl {
   my $hierWeb = $this->{hierarchy}->{web};
   if ($hierWeb ne $this->{origWeb}) {
     return Foswiki::Func::getScriptUrl($hierWeb, 
-      'Category', 'view', catname=>$this->{name});
+      'TopCategory', 'view', catname=>$this->{name});
   }
 
   return Foswiki::Func::getScriptUrl($hierWeb, 
@@ -826,12 +849,37 @@ sub traverse {
   }
 
   my $filter = $params->{filter};
+  my $nrTopics;
+
+  if ($header =~ /\$count/ ||
+      $footer =~ /\$count/ ||
+      $format =~ /\$count/ ||
+      (defined $params->{hidenull} && $params->{hidenull} eq 'on')) {
+
+    if ($params->{nrtopics}) {
+      unless ($params->{_nrTopics}) {
+        my %nrTopics = ();
+        foreach my $item (split(/\s*,\s*/, $params->{nrtopics})) {
+          if ($item =~ /^(.*):(.*)$/) {
+            $nrTopics{$1} = $2;
+          }
+        }
+        $params->{_nrTopics} = \%nrTopics;
+      }
+      $nrTopics = $params->{_nrTopics}{$this->{name}} || 0;
+    } else {
+      $nrTopics = $this->countTopics($filter);
+    }
+  }
+
+  return $subResult
+    if defined $params->{hidenull} && $params->{hidenull} eq 'on' && !$nrTopics;
+
   my $nrLeafs;
 
   if ($header =~ /\$leafs/ ||
       $footer =~ /\$leafs/ ||
-      $format =~ /\$leafs/ ||
-      (defined $params->{hidenull} && $params->{hidenull} eq 'on')) {
+      $format =~ /\$leafs/) {
 
     if ($params->{nrleafs}) {
       unless ($params->{_nrLeafs}) {
@@ -848,9 +896,6 @@ sub traverse {
       $nrLeafs = $this->countLeafs($filter);
     }
   }
-
-  return $subResult
-    if defined $params->{hidenull} && $params->{hidenull} eq 'on' && !$nrLeafs;
 
   return $subResult
     if defined $params->{duplicates} && $params->{duplicates} eq 'off' && $params->{seen}{$this->{name}};
@@ -884,19 +929,18 @@ sub traverse {
     $tags = join(', ', @tags);
   }
 
-  my $nrTopics = '';
-  if ($header =~ /\$count/ ||
-      $footer =~ /\$count/ ||
-      $format =~ /\$count/) {
-    my @topics = $this->getTopics($filter);
-    $nrTopics = scalar(@topics); 
-  }
-
   my $parents = '';
   if ($header =~ /\$parents/ ||
       $footer =~ /\$parents/ ||
       $format =~ /\$parents/) {
     $parents = join(', ', map {$_->{name}} $this->getParents());
+  }
+
+  my $distToRoot = 0;
+  if ($header =~ /\$depth/ ||
+      $footer =~ /\$depth/ ||
+      $format =~ /\$depth/) {
+    $distToRoot = abs($this->distance($this->{hierarchy}{_top}));
   }
 
   my $breadCrumbs = '';
@@ -938,7 +982,7 @@ sub traverse {
       'leafs'=>$nrLeafs,
       'cyclic'=>$isCyclic,
       'id'=>$this->{id},
-      'depth'=>$depth,
+      'depth'=>$distToRoot,
       'indent'=>$indent,
       'icon'=>$iconUrl,
       'tags'=>$tags,
@@ -963,7 +1007,7 @@ sub traverse {
       'leafs'=>$nrLeafs,
       'cyclic'=>$isCyclic,
       'id'=>$this->{id},
-      'depth'=>$depth,
+      'depth'=>$distToRoot,
       'indent'=>$indent,
       'icon'=>$iconUrl,
       'tags'=>$tags,
@@ -996,7 +1040,7 @@ sub traverse {
     'leafs'=>$nrLeafs,
     'cyclic'=>$isCyclic,
     'id'=>$this->{id},
-    'depth'=>$depth,
+    'depth'=>$distToRoot,
     'indent'=>$indent,
     'icon'=>$iconUrl,
     'tags'=>$tags,

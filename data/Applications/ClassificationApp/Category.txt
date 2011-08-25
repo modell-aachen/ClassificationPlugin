@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1271694810" format="1.1" reprev="1.9" rev="9" version="1.9"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1305026898" format="1.1" reprev="13" version="13"}%
 %META:TOPICPARENT{name="TopicType"}%
 %TOC%
 %DBCALL{"Applications.RenderTopicInstaller" 
@@ -18,38 +18,21 @@ Categories themselves are CategorizedTopics thus implementing a hierarchy.
 See also: See CategorizedTopic, ClassifiedTopic, TaggedTopic, CategoryTemplate, CategoryViewTemplate, CategoryEditTemplate
 %ENDSECTION{name="documentation" type="section"}%
 
-%STARTINCLUDE%%IF{"defined catname"
-  then="$percntDBCALL{\"%WEB%.%TOPIC%\" section=\"thenbranch\"}$percnt"
-  else="$percntDBCALL{\"%WEB%.%TOPIC%\" section=\"elsebranch\"}$percnt"
-}%%STOPINCLUDE%
-
-<verbatim class="tml">
-%STARTSECTION{"thenbranch"}%<!-- thenbranch -->
-<noautolink>
-<div class="foswikiTopicInfo">
-%CATINFO{
-   cat="%URLPARAM{"catname"}%"
-   format="<h1>$link 
-     $percntIF{\"'$summary'!=''\"
-       then=\"<br /><span class='foswikiTopicSummary'>$summary</span>\"
-     }$percnt</h1>
-     $percntMAKETEXT{\"Filed in [_1]\" 
-       args=\"$percntFORMATLIST{\"$parentlinks\" split=\"\s*,\s*\" separator=\"&#44; \"}$percnt\"
-     }$percnt"
+%STARTINCLUDE%<!-- -->
+%TWISTY{
+  link="%BUTTON{
+    "%IF{"defined 'LABEL'" then="%LABEL%" else="%MAKETEXT{"New"}%"}%" 
+    icon="add"
+    style="margin-bottom:2px;"
+  }%%CLEAR%"
 }%
-</div>
-</noautolink>
-%DBCALL{"Applications.ClassificationApp.RenderCategory" CAT="%URLPARAM{"catname"}%"}%
-<!-- //thenbranch -->%ENDSECTION{"thenbranch"}%
-</verbatim>
-
-<verbatim class="tml">
-%STARTSECTION{"elsebranch"}%<!-- elsebranch -->
-<div class="foswikiTopicInfo">
-%DBCALL{"Applications.ClassificationApp.RenderClassifiedTopicView"}%
-</div>
 %DBCALL{"Applications.ClassificationApp.RenderCategoryFactory"}%
-<!-- //elsebranch -->%ENDSECTION{"elsebranch"}%
+%ENDTWISTY%
+%DBCALL{"Applications.ClassificationApp.RenderCategoryBrowser" 
+  THEWEB="%URLPARAM{"web" default="%BASEWEB%"}%"
+  BUTTONS="bottom"
+}%
+<!-- -->%STOPINCLUDE%
 </verbatim>
 
 ---++ %TOPIC% form
@@ -67,7 +50,7 @@ See also: See CategorizedTopic, ClassifiedTopic, TaggedTopic, CategoryTemplate, 
 
 %META:FORM{name="Applications.TopicType"}%
 %META:FIELD{name="TopicType" title="TopicType" value="TopicType, DataForm, DocuTopic"}%
-%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="Category"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
 %META:FIELD{name="Inheritance" attributes="" title="Inheritance" value="CategorizedTopic"}%
-%META:FIELD{name="Summary" attributes="" title="Summary" value="Hierarchy of categories for topics"}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Hierarchy of categories for topics"}%
 %META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

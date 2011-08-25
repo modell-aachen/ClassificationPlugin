@@ -19,7 +19,6 @@ use Foswiki::Form::FieldDefinition ();
 our @ISA = ('Foswiki::Form::FieldDefinition');
 
 use Foswiki::Plugins::ClassificationPlugin ();
-use Foswiki::Attrs ();
 use Foswiki::Func ();
 use strict;
 
@@ -59,7 +58,9 @@ sub getOptions { # needed by FieldDefinition
 }
 
 sub renderForDisplay {
-    my ( $this, $format, $value, $attrs ) = @_;
+    my ( $this, $format, $value, $attrs, $web, $topic ) = @_;
+    # SMELL: working around the topicObj not being added to the renderForDisplay API as it does for
+    # renderForEdit, by using some extra params ... *shudder*
 
     if ( !$attrs->{showhidden} ) {
         my $fa = $this->{attributes} || '';
@@ -68,8 +69,10 @@ sub renderForDisplay {
         }
     }
 
-    my $web = $this->{session}->{webName};
+    $web ||= $this->{session}->{webName};
+
     my $hierarchy = Foswiki::Plugins::ClassificationPlugin::getHierarchy($web);
+
     my @value = ();
     foreach my $catName (split(/\s*,\s*/, $value)) {
       my $cat = $hierarchy->getCategory($catName);
@@ -107,6 +110,7 @@ sub renderForEdit {
   }
 
   my $value = shift;
+  $value =~ s/\s*\w+=\".*?\"\s*//g; # remove top="..."
 
   # SMELL find a condition under which we render hidden instead
   #my $query = Foswiki::Func::getCgiQuery();

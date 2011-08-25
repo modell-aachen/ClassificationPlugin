@@ -22,7 +22,9 @@ our @ISA = ('Foswiki::Form::Textboxlist');
 use strict;
 
 sub renderForDisplay {
-    my ( $this, $format, $value, $attrs ) = @_;
+    my ( $this, $format, $value, $attrs, $web, $topic ) = @_;
+    # SMELL: working around the topicObj not being added to the renderForDisplay API as it does for
+    # renderForEdit, by using some extra params ... *shudder*
 
     if ( !$attrs->{showhidden} ) {
         my $fa = $this->{attributes} || '';
@@ -31,8 +33,10 @@ sub renderForDisplay {
         }
     }
 
-    my $web = $this->{session}->{webName};
-    my $topic = $this->{session}->{topicName};
+    my $baseWeb = $this->{session}->{webName};
+    my $baseTopic = $this->{session}->{topicName};
+    $web ||= $baseWeb;
+
     my $context = Foswiki::Func::getContext();
 
     my @value = ();
@@ -41,7 +45,7 @@ sub renderForDisplay {
       if ($context->{SolrPluginEnabled}) {
         $url = Foswiki::Func::getScriptUrl($web, "WebSearch", "view", 
           filter=>"tag:$tag",
-          origtopic=>"$web.$topic"
+          origtopic=>"$baseWeb.$baseTopic"
         );
       } else {
         $url = Foswiki::Func::getScriptUrl($web, "WebTagCloud", "view", tag=>$tag);
@@ -71,6 +75,7 @@ sub renderForEdit {
     $topic = $param2;
     $value = $param3;
   }
+  $value = '' unless defined $value;
 
   Foswiki::Func::readTemplate("classificationplugin");
   my $baseWeb = $this->{session}->{webName};

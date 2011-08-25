@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="micha" comment="reprev" date="1288594728" format="1.1" reprev="7" version="8"}%
+%META:TOPICINFO{author="ProjectContributor" comment="save topic" date="1299849161" format="1.1" reprev="10" version="11"}%
 %TOC{depth="2"}%
 
 ---++ Documentation
@@ -14,7 +14,7 @@ showing its category and tagging info in the top.
 
 ---++ Implementation
 <verbatim class="tml">
-%STARTINCLUDE%<!-- renderclassifiedtopicview -->
+%STARTINCLUDE%<!-- -->
 %DBCALL{"Applications.RenderWikiTopicView" TITLE_EXTRA="%TITLE_EXTRA%"}%
 %IFDEFINED{
   "$percntCATINFO{
@@ -29,7 +29,7 @@ showing its category and tagging info in the top.
     separator=\"&#44; \"
     limit=\"30\"
     footer=\"$dollarpercntIF{\\"$count > $index\\" 
-        then=\\" <span class='clsTopicInfoMoreContainer'>&#8230; 
+        then=\\"<span class='clsTopicInfoMoreContainer'> &#8230; 
           <a href='#' class='clsTopicInfoMore' title='%MAKETEXT{"Show all tags"}%'>%MAKETEXT{"more"}%</a>
           </span>\\"
       }$dollarpercnt\\"}$dollarpercnt\"
@@ -50,22 +50,9 @@ showing its category and tagging info in the top.
 %ADDTOZONE{
   "script"
   requires="JQUERYPLUGIN, JQUERYPLUGIN::UI"
-  text="<literal><script>
-jQuery(function($) {
-  $('.clsTopicInfoMore').livequery(function() {
-    $(this).click(function() {
-      var $this = $(this), $container = $this.parent();
-      $this.html('<img src=%PUBURLPATH%/%SYSTEMWEB%/JQueryPlugin/images/spinner.gif />');
-      $container.load(foswiki.getPreference('SCRIPTURLPATH')+'/view/Applications/ClassificationApp/RenderClassifiedTopicView?section=more;skin=text;source=%BASEWEB%.%BASETOPIC%', function() {
-         $container.effect('highlight');
-      });
-      return false;
-    });
-  });
-});
-</script></literal>"
-}%<!-- -->
-<!-- //renderclassifiedtopicview-->%STOPINCLUDE%
+  text="<script src='%PUBURLPATH%/%SYSTEMWEB%/ClassificationPlugin/jquery.classifiedtopic.js'></script>"
+  id="CLASSIFICATIONPLUGIN::JS"
+}%<!-- -->%STOPINCLUDE%
 </verbatim>
 
 ---++ More tags
@@ -73,6 +60,7 @@ jQuery(function($) {
 %STARTSECTION{"more"}%%TAGINFO{
   "%URLPARAM{"source"}%" 
   skip="30"
+  header=", "
 }%%ENDSECTION{"more"}%
 </verbatim>
 

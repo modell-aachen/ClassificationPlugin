@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="micha" comment="reprev" date="1290602857" format="1.1" reprev="4" version="5"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1310677940" format="1.1" reprev="11" version="11"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -8,19 +8,20 @@
 
 ---+++++ Parameters
    * DAYS: number of recent days of changes to take under consideration, defaults to 7
-   * LIMIT: maximum number of topics to harvest tags from, defaults to 100
+   * RECENCY: maximum number of topics to harvest tags from, defaults to 100
+   * LIMIT: maximum number of tags in the could, defaults to 100
    * TAG: comma separated list of tags to be searched for in the archive
    * CAT: restrict tag cloud to this category; displays all tags of all categories if unspecified
    * KEYWORDS: keywords to filter for
    * THEWEB: web to restrict search to, defaults to all
-   * TYPE: content type to restrict results to, e.g. "topic", "image", "video", "pdf", "zip", ...
+   * TYPE: content type to restrict results to, e.g. "topic", "image", "video", "pdf", "zip", <!-- ALIAS:... -->&hellip;<!-- //ALIAS -->
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
 <verbatim class="tml">
 %STARTINCLUDE%<!-- solrtagcloud -->
 %SOLRSEARCH{
-  "%IF{"defined KEYWORDS" then="%KEYWORDS"}% "
+  "%IF{"defined KEYWORDS" then="%KEYWORDS%"}% "
   id="solrtagcloud1"
   sort="date desc"
   type="dismax"
@@ -37,20 +38,23 @@
           %IF{"defined TYPE"
             then="type:%TYPE%"
           }% 
-          date:\"[NOW/DAY-%IF{"defined DAYS" then="%DAYS%" else="14"}%DAY TO NOW]\""
+          %IF{"defined DAYS"
+            then="date:\\"[NOW/DAY-%DAYS%DAY TO NOW]\\""
+          }%"
   facets="tag"
-  rows="%IF{"defined LIMIT" then="%LIMIT%" else="100"}%"
-}%
+  facetlimit="%IF{"defined LIMIT" then="%LIMIT%" else="100"}%"
+  rows="%IF{"defined RECENCY" then="%RECENCY%" else="100"}%"
+}%<!-- -->
 %TAGCLOUD{
   terms="%SOLRFORMAT{
     "solrtagcloud1"
     format_tag="$key:$count"
     separator_tag=", "
   }%"
-  header="<div class='solrTagCloud tagCloud' style='text-align:center'>"
-  format="<span style='font-size:$weightpx;line-height:110%'><a href='#' style='color:$fadeRGB(104,144,184,0,102,255);' class='solrFacetValue' title='$count' name='tag_$term'>$term</a></span>"
+  header="<div class='solrTagCloud tagCloud'>"
+  format="<span style='font-size:$weightpx;line-height:110%'><a href='#' style='color:$fadeRGB(104,144,184,0,102,255);' class='solrFacetValue' name='tag_$term' value='$term'>$term</a></span>"
   footer="</div>"
-  group="<strong>$group</strong>"
+  group="<strong>$group</strong>&nbsp;"
   split="\s*,\s*"
   buckets="20"
   offset="11"
@@ -63,7 +67,7 @@ jQuery(function($) {
   $('.solrTagCloud a').click(function() {
     var $this = $(this);
     var href = '%SCRIPTURLPATH{"view"}%/%IF{"defined THEWEB and $THEWEB != 'all'" then="%THEWEB%" else="%BASEWEB%"}%/WebSearch?filter='+
-      escape('tag:'+$this.text());
+      escape('tag:'+$this.attr('value'));
     href += ';web='+'%IF{"defined THEWEB" then="%THEWEB%" else="all"}%';
     var tags = '%IF{"defined TAG" then="%TAG%"}%'.split(/\s*,\s*/);
     for (var i = 0; i < tags.length; i++) {
@@ -81,6 +85,7 @@ jQuery(function($) {
       href += ';filter=type:%TYPE%';
     }
     href += ';search='+escape('%IF{"defined KEYWORDS" then="%KEYWORDS%"}%');
+    href += ';origtopic=%BASEWEB%.%BASETOPIC%';
     window.location.href = href;
     return false;
   });
@@ -92,12 +97,12 @@ jQuery(function($) {
 </verbatim>
 
 ---++ Test
-%DBCALL{"%TOPIC%"}%
+%DBCALL{"%TOPIC%" THEWEB="%URLPARAM{"theweb"}%"}%
 
 %DBCALL{"Applications.RenderFunctionCallers"}%
 
 ---++ Copyright
-&copy; 2006-2010 Michael Daum http://michaeldaumconsulting.com
+&copy; 2006-2011 Michael Daum http://michaeldaumconsulting.com
 
 %DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
 

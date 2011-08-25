@@ -31,7 +31,6 @@ All information is extracted from BASEWEB.
 }%%STOPINCLUDE%
 </verbatim>
 
-<!-- interrupt glue -->
 
 ---++ Test
 <div class="alt">

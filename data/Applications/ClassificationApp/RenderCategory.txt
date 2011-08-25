@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1276601691" format="1.1" reprev="7" version="8"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1306772530" format="1.1" reprev="10" version="10"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -8,7 +8,7 @@ This function is called in Category topics.
 
 See the CategoryTemplate.
 ---+++++ Parameters
-   * CAT: category to be rendered, defaults to BASETOPIC
+   * CAT: category to be rendered, defaults to URLPARM{"catname" default="BASETOPIC"}
    * KEYWORDS: keywords to filter for
    * TAG: tags to be searching for in this category
    * SHOWHEADER: display anchors, defaults to off
@@ -17,71 +17,67 @@ See the CategoryTemplate.
 
 ---++ Implementation
 <verbatim class="tml">
-%STARTINCLUDE%<!-- rendercategory -->
+%STARTINCLUDE%<!-- -->
 <noautolink><div class='clsMakeIndexWrapper'>
-%~~ MAKEINDEX{"
-*~~
-%~~     HIERARCHY{
-~~~       web="%BASEWEB%"
-~~~       top="%IF{"defined CAT" then="%CAT%" else="%BASETOPIC%"}%"
-~~~       exclude="%IF{"defined CAT" then="%CAT%" else="%BASETOPIC%"}%"
-~~~       depth="2"
-~~~       format="$trunctitle;$topic;$origweb$n"
-~~~     }%
-*~~   "
-~~~   cols="%IF{"defined CLASSIFICATIONPLUGIN_NRCOLS" then="%CLASSIFICATIONPLUGIN_NRCOLS%" else="3"}%"
-~~~   split="\n"
-~~~   pattern="(.*);(.*);(.*)"
-~~~   sort="nocase"
-~~~   format="$percntDBCALL{\"$3.$2->RenderIndexItem\" TITLE=\"$1\"}$percnt"
-~~~ }%
-%~~ MAKEINDEX{"
-*~~ 
-%~~    DBQUERY{
-~~~      "!(TopicType=~'\bCategory\b') AND 
-~~~        ('%IF{"defined CAT" then="%CAT%" else="%BASETOPIC%"}%' DISTANCE topic) = 1
-%~~        FORMATLIST{"%URLPARAM{"tag" default="%IF{"defined TAG" then="%TAG%"}%"}%" 
-~~~          header="AND" 
-~~~          format=" Tag=~'\b$1\b' "
-~~~          separator="AND"
-~~~        }%
-%~~        FORMATLIST{"%URLPARAM{"search" default="%IF{"defined KEYWORDS" then="%KEYWORDS%"}%"}%"
-~~~          header="AND" 
-~~~          format=" uc(all) =~ uc('$1') "
-~~~          separator="AND"
-~~~        }%
-~~~      "
-~~~      web="%BASEWEB%"
-~~~      hidenull="on"
-~~~      format="$expand(TopicTitle or topic);$topic;$web"
-~~~      separator="$n"
-~~~    }%
-*~~   "
-~~~   cols="%IF{"defined CLASSIFICATIONPLUGIN_NRCOLS" then="%CLASSIFICATIONPLUGIN_NRCOLS%" else="3"}%"
-~~~   split="\n"
-~~~   pattern="(.*);(.*);(.*)"
-~~~   sort="nocase"
-%~~   IF{"'%SHOWHEADER%'='on'" then="header=\"$anchors\""}%
-~~~   format="$percntDBCALL{\"$3.$2->RenderIndexItem\"}$percnt"
-~~~ }%
+%MAKEINDEX{
+  "%HIERARCHY{
+     web="%BASEWEB%"
+     top="%IF{"defined CAT" then="%CAT%" else="%URLPARAM{"catname" default="%BASETOPIC%"}%"}%"
+     exclude="%IF{"defined CAT" then="%CAT%" else="%URLPARAM{"catname" default="%BASETOPIC%"}%"}%"
+     depth="2"
+     format="$trunctitle;$topic;$origweb$n"
+   }%"
+  cols="%IF{"defined CLASSIFICATIONPLUGIN_NRCOLS" then="%CLASSIFICATIONPLUGIN_NRCOLS%" else="3"}%"
+  split="\n"
+  pattern="(.*);(.*);(.*)"
+  sort="off"
+  format="$percntDBCALL{\"$3.$2->RenderIndexItem\" TITLE=\"$1\"}$percnt"
+}%
+%MAKEINDEX{
+  "%DBQUERY{
+    "!(TopicType=~'\bCategory\b') AND 
+      ('%IF{"defined CAT" then="%CAT%" else="%URLPARAM{"catname" default="%BASETOPIC%"}%"}%' DISTANCE topic) = 1
+      %FORMATLIST{"%URLPARAM{"tag" default="%IF{"defined TAG" then="%TAG%"}%"}%" 
+         header="AND" 
+         format=" Tag=~'\b$1\b' "
+         separator="AND"
+       }%
+      %FORMATLIST{"%URLPARAM{"search" default="%IF{"defined KEYWORDS" then="%KEYWORDS%"}%"}%"
+         header="AND" 
+         format=" uc(all) =~ uc('$1') "
+         separator="AND"
+      }%
+    "
+    web="%BASEWEB%"
+    hidenull="on"
+    format="$expand(TopicTitle or topic);$topic;$web"
+    separator="$n"
+  }%"
+  cols="%IF{"defined CLASSIFICATIONPLUGIN_NRCOLS" then="%CLASSIFICATIONPLUGIN_NRCOLS%" else="3"}%"
+  split="\n"
+  pattern="(.*);(.*);(.*)"
+  sort="nocase"
+  %IF{"'%SHOWHEADER%'='on'" then="header=\"$anchors\""}%
+    format="$percntDBCALL{\"$3.$2->RenderIndexItem\"}$percnt"
+  }%
 </div></noautolink>
-<!-- //rendercategory -->%STOPINCLUDE%
+<!--  -->%STOPINCLUDE%
 </verbatim>
 
 ---++ Toolbar 
 <verbatim class="tml">
 %STARTSECTION{"toolbar"}%<!-- toolbar -->
 <div class="toolbar">
-%~~ BUTTON{"New Topic" href="%SCRIPTURLPATH{view}%/%BASEWEB%/ClassifiedTopic?cat=%BASETOPIC%
+%~~ BUTTON{"New Topic" href="%SCRIPTURLPATH{view}%/%BASEWEB%/ClassifiedTopic?cat=%URLPARAM{"catname" default="%BASETOPIC%"}%
 *~~
 %~~   IF{"defined TEMPLATE" 
 ~~~     then=";tmpl=%TEMPLATE%" 
-~~~     else="$percntIFEXISTS{\"%BASEWEB%.%BASETOPIC%Template\" 
-~~~         then=\";tmpl=%BASEWEB%.%BASETOPIC%Template\"
+~~~     else="$percntIF{\"istopic '%BASEWEB%.%URLPARAM{"catname" default="%BASETOPIC%"}%Template'\"
+~~~         then=\";tmpl=%BASEWEB%.%URLPARAM{"catname" default="%BASETOPIC%"}%Template\"
 ~~~         else=\"\"
 ~~~       }$percnt"
 ~~~   }%" 
-~~~   title="Create a new topic in %CATINFO{cat="%BASEWEB%.%BASETOPIC%" format="<nop>$title"}%"
+~~~   title="Create a new topic in %CATINFO{cat="%BASEWEB%.%URLPARAM{"catname" default="%BASETOPIC%"}%" format="<nop>$title"}%"
 ~~~ }%  
 %IF'%USERSWEB%.AdminGroup' allows 'change'"
   then="%BUTTON{"Manage" href="%SCRIPTURLPATH{view}%/%BASEWEB%/Category" title="Manage categories"}%  
@@ -107,6 +103,6 @@ See the CategoryTemplate.
 
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
-%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="RenderCategory"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
 %META:FIELD{name="Summary" attributes="c" title="Summary" value="Render tools to handle categories"}%
 %META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

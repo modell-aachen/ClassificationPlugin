@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="micha" comment="save topic" date="1289674081" format="1.1" reprev="13" version="13"}%
+%META:TOPICINFO{author="ProjectContributor" comment="save topic" date="1311053272" format="1.1" reprev="13" version="15"}%
 %META:TOPICPARENT{name="TopicView"}%
 %{<verbatim class="tml">}%
 %TMPL:INCLUDE{"Applications.WikiTopicEdit"}%
@@ -29,7 +29,7 @@
 %{</verbatim>}%
 
 %{<verbatim class="tml">}%
-%TMPL:DEF{"categoriestab"}%<!-- categoriestab -->
+%TMPL:DEF{"categoriestab"}%<!-- -->
 %~~ TAB{"%TMPL:P{"categorieslabel"}%"
 ~~~   url="%SCRIPTURL{"rest"}%/RenderPlugin/tag?
 *~~     topic=%BASEWEB%.%BASETOPIC%;
@@ -38,18 +38,18 @@
 *~~     form=%TMPL:P{"formdefinition"}%;
 *~~
 %~~     IF{"defined '%TMPL:P{"catfield"}%'" then="value=%URLPARAM{"%TMPL:P{"catfield"}%"}%;"}%
-*~~     render=on"
+*~~     render=on;t=%GMTIME{"$epoch"}%"
 ~~~ }%
 <span class="jqAjaxLoader">&nbsp;</span>
 <noautolink>
 <input type="hidden" name="%TMPL:P{"catfield"}%" value="%URLPARAM{"%TMPL:P{"catfield"}%" default="%ENCODE{"%FORMFIELD{"%TMPL:P{"catfield"}%"}%" type="entity"}%"}%" />
 </noautolink>
 %ENDTAB%
-<!-- //categoriestab -->%TMPL:END%
+<!-- -->%TMPL:END%
 %{</verbatim>}%
 
 %{<verbatim class="tml">}%
-%TMPL:DEF{"tagstab"}%<!-- tagstab -->
+%TMPL:DEF{"tagstab"}%<!-- -->
 %~~ TAB{"%TMPL:P{"tagslabel"}%" 
 ~~~   url="%SCRIPTURL{"rest"}%/RenderPlugin/tag?
 *~~     topic=%BASEWEB%.%BASETOPIC%;
@@ -58,29 +58,29 @@
 *~~     form=%TMPL:P{"formdefinition"}%;
 *~~
 %~~     IF{"defined 'Tag'" then="value=%URLPARAM{"Tag"}%;"}%
-*~~     render=on"
+*~~     render=on;t=%GMTIME{"$epoch"}%"
 ~~~ }%
 <span class="jqAjaxLoader">&nbsp;</span>
-%JQREQUIRE{"autocomplete"}%<!-- jqrequire autocomplete -->
+%JQREQUIRE{"ui"}%<!-- -->
 %ADDTOZONE{
   "script"
   tag="tagsuggestion"
   text="<script src='%PUBURLPATH%/%SYSTEMWEB%/ClassificationPlugin/jquery.tagsuggestion.js'></script>"
-  requires="JQUERYPLUGIN::AUTOCOMPLETE"
-}%<!-- addtozone tagselector -->
+  requires="JQUERYPLUGIN::UI"
+}%<!-- -->
 <noautolink>
 <input type="hidden" name="Tag" value="%URLPARAM{"Tag" default="%ENCODE{"%FORMFIELD{"Tag"}%" type="entity"}%"}%" />
 </noautolink>
 %ENDTAB%
-<!-- //tagstab  -->%TMPL:END%
+<!-- -->%TMPL:END%
 %{</verbatim>}%
 
 %{<verbatim class="tml">}%
-%TMPL:DEF{"formfields"}%<!-- formfields -->
+%TMPL:DEF{"formfields"}%<!-- -->
 <input type="hidden" name="action" value="text" />
 %TMPL:P{"categoriestab"}%
 %TMPL:P{"tagstab"}%
-<!-- //formfields -->%TMPL:END%
+<!-- -->%TMPL:END%
 %{</verbatim>}%
 
 %META:FORM{name="Applications.ApplicationTopic"}%
