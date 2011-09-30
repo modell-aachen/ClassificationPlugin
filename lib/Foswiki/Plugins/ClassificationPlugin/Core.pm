@@ -1171,7 +1171,12 @@ sub getIndexFields {
           $categories{$item} = 1; # all cat fields
         }
 
-        # gather all parent categories for this cat field
+	# first, add categories as is
+	foreach my $category (keys %thisCategories) {
+	  push @$indexFields, ['field_'.$name.'_flat_lst' => $category];
+	}
+
+        # then, gather all parent categories for this cat field
         if ($hierarchy) {
           foreach my $category (keys %thisCategories) {
             my $cat = $hierarchy->getCategory($category);

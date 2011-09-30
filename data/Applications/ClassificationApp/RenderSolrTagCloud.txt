@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1310677940" format="1.1" reprev="11" version="11"}%
+%META:TOPICINFO{author="micha" comment="reprev" date="1315999368" format="1.1" reprev="11" version="13"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -7,7 +7,7 @@
 %RED%TODO%ENDCOLOR%
 
 ---+++++ Parameters
-   * DAYS: number of recent days of changes to take under consideration, defaults to 7
+   * DAYS: number of recent days of changes to take under consideration, defaults to unlimited
    * RECENCY: maximum number of topics to harvest tags from, defaults to 100
    * LIMIT: maximum number of tags in the could, defaults to 100
    * TAG: comma separated list of tags to be searched for in the archive

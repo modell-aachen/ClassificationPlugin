@@ -7,7 +7,7 @@
 
 ---++ Documentation
 %STARTSECTION{name="documentation" type="section"}%
-%RED%TODO%ENDCOLOR%
+%RED%DEPRECATED%ENDCOLOR%
 
 ---+++++ Parameters
    * THEWEB: the web where to look for tags, defaults to BASEWEB

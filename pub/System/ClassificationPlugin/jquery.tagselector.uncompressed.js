@@ -126,7 +126,7 @@
           tags.push([$(this).text(),$(this).attr('title')]);
         });
         $.log("tags = "+tags);
-        $input.Autocomplete(
+        $input.autocomplete(
           tags,
           {
             selectFirst:false,

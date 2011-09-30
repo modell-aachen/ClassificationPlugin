@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" date="1309514433" format="1.1" reprev="1.7" version="1.7"}%
+%META:TOPICINFO{author="mdaum" date="1309514433" format="1.1" reprev="1.7" version="1.7"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -83,9 +83,9 @@
 <verbatim class="tml">
 %STARTSECTION{"buttons"}%<!-- -->
 <div class="clsButtonBox">
-  %BUTTON{"Clear" icon="application" class="clsClearButton"}%
-  %BUTTON{"Undo" icon="arrow_refresh" class="clsUndoButton"}%
-  %BUTTON{"Search" icon="find" class="clsFilterButton"}%
+  %BUTTON{"%MAKETEXT{"Clear"}%" icon="application" class="clsClearButton"}%
+  %BUTTON{"%MAKETEXT{"Undo"}%" icon="arrow_refresh" class="clsUndoButton"}%
+  %BUTTON{"%MAKETEXT{"Filter"}%" icon="find" class="clsFilterButton"}%
   <input type="text" name="filter" size="30" value="%IF{"defined FILTER" then="%FILTER%"}%" class="foswikiInputField clsFilterField" style="display:none" />
   %CLEAR%
 </div>
