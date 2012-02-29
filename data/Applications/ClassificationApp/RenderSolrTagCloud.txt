@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1315999368" format="1.1" reprev="11" version="13"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1330097023" format="1.1" reprev="16" version="16"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -25,6 +25,7 @@
   id="solrtagcloud1"
   sort="date desc"
   type="dismax"
+  fields=""
   web="%IF{"defined THEWEB" then="%THEWEB%" else="all"}%"
   filter="%IF{"defined THEWEB and $THEWEB!='all'" 
             then="web:%THEWEB%"
@@ -67,12 +68,12 @@ jQuery(function($) {
   $('.solrTagCloud a').click(function() {
     var $this = $(this);
     var href = '%SCRIPTURLPATH{"view"}%/%IF{"defined THEWEB and $THEWEB != 'all'" then="%THEWEB%" else="%BASEWEB%"}%/WebSearch?filter='+
-      escape('tag:'+$this.attr('value'));
+      'tag:\"'+escape($this.attr('value'))+'\"';
     href += ';web='+'%IF{"defined THEWEB" then="%THEWEB%" else="all"}%';
     var tags = '%IF{"defined TAG" then="%TAG%"}%'.split(/\s*,\s*/);
     for (var i = 0; i < tags.length; i++) {
       if (tags[i] !='') {
-        href += ';filter='+escape('tag:'+tags[i]);
+        href += ';filter=tag:\"'+escape(tags[i])+'\"';
       }
     }
     var cats = '%IF{"defined CAT" then="%CAT%"}%'.split(/\s*,\s*/);
@@ -81,9 +82,11 @@ jQuery(function($) {
         href += ';filter='+escape('category:'+cats[i]);
       }
     }
+    /*
     if ('%IF{"defined TYPE" then="%TYPE%"}%'!='') {
       href += ';filter=type:%TYPE%';
     }
+    */
     href += ';search='+escape('%IF{"defined KEYWORDS" then="%KEYWORDS%"}%');
     href += ';origtopic=%BASEWEB%.%BASETOPIC%';
     window.location.href = href;
@@ -102,7 +105,7 @@ jQuery(function($) {
 %DBCALL{"Applications.RenderFunctionCallers"}%
 
 ---++ Copyright
-&copy; 2006-2011 Michael Daum http://michaeldaumconsulting.com
+&copy; 2006-2012 Michael Daum http://michaeldaumconsulting.com
 
 %DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
 

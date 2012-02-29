@@ -637,6 +637,7 @@ sub handleTAGINFO {
     if ($context->{SolrPluginEnabled}) {
       $url = Foswiki::Func::getScriptUrl($thisWeb, "WebSearch", "view", 
         filter=>"tag:\"$tag\"",
+        web=>$baseWeb,
         origtopic=>$baseWeb.".".$baseTopic,
       );
     } else {
