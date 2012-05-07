@@ -19,7 +19,7 @@ data/Applications/ClassificationApp/CategoryTemplate.txt 0644
 data/Applications/ClassificationApp/Category.txt 0644
 data/Applications/ClassificationApp/CategoryViewTemplate.txt 0644
 data/Applications/ClassificationApp/ChannelManagementCategory.txt 0644
-data/Applications/ClassificationApp/ClassificationApp.txt 0644
+data/Applications/ClassificationApp/CompleteDocumentation.txt 0644
 data/Applications/ClassificationApp/ClassifiedTopicEditTemplate.txt 0644
 data/Applications/ClassificationApp/ClassifiedTopicRenderIndexItem.txt 0644
 data/Applications/ClassificationApp/ClassifiedTopicTemplate.txt 0644
@@ -166,9 +166,8 @@ data/Applications/ClassificationApp/WikiTopic.txt 0644
 data/Applications/ClassificationApp/WishListForum.txt 0644
 data/_ClassificationTemplate/Category.txt 0644
 data/_ClassificationTemplate/ClassifiedTopic.txt 0644
-data/_ClassificationTemplate/TestCategory.txt 0644
-data/_ClassificationTemplate/TestTopic.txt 0644
 data/_ClassificationTemplate/TopCategory.txt 0644
+data/_ClassificationTemplate/TopicType.txt 0644
 data/_ClassificationTemplate/WebAtom.txt 0644
 data/_ClassificationTemplate/WebChanges.txt 0644
 data/_ClassificationTemplate/WebHome.txt 0644
