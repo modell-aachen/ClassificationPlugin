@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1329401804" format="1.1" reprev="6" version="6"}%
+%META:TOPICINFO{author="micha" comment="reprev" date="1343304404" format="1.1" reprev="8" version="8"}%
 ---+!! %WEBLINK%
 
 ---++ %MAKETEXT{"Welcome"}%
@@ -17,7 +17,6 @@
 %STOPCHAPTER%
 ---
 ---++ %MAKETEXT{"Tags"}%
-<verbatim class="jqLoader {section:'tagcloud'}">
 %STARTSECTION{"tagcloud"}%<!-- -->
 <div class="hyphenate">
 %DBCALL{"Applications.ClassificationApp.RenderSolrTagCloud" 
@@ -27,7 +26,6 @@
 </div>
 %CLEAR%
 <!-- -->%ENDSECTION{"tagcloud"}%
-</verbatim>
 </div>
 %STOPCHAPTER%
 <div class="foswikiCol4 last">
@@ -84,7 +82,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquam molestie
 
 %STOPCHAPTER%
 
-<!-- %JQREQUIRE{"loader, infinitescroll"}% %REDDOT% %IMAGE% -->
+<!-- %JQREQUIRE{"hyphenator, loader, infinitescroll"}% %REDDOT% %IMAGE% -->
 <!--
    * Set CACHEEXPIRE = +5min
    * Set CACHEABLE = on

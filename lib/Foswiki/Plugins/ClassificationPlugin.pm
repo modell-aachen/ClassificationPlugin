@@ -102,7 +102,7 @@ sub initPlugin {
     exec=>\&OP_distance,
   );
 
-  Foswiki::Func::addToZone('head', 'CLASSIFICATIONPLUGIN', $css, 'JQUERYPLUGIN::FOSWIKI');
+  Foswiki::Func::addToZone('head', 'CLASSIFICATIONPLUGIN::CSS', $css, 'JQUERYPLUGIN::FOSWIKI');
 
   # SMELL this is not reliable as it depends on plugin order
   # if (Foswiki::Func::getContext()->{SolrPluginEnabled}) {

@@ -636,7 +636,7 @@ sub handleTAGINFO {
     my $url;
     if ($context->{SolrPluginEnabled}) {
       # SMELL: WikiWords are autolinked in parameter position ... wtf
-      $url = '<noautolink>%SOLRSCRIPTURL{topic="'.$thisWeb.'.'.$thisTopic.'"tag="'.$tag.'" web="'.$baseWeb.'" union="web" separator="&&"}%</noautolink>'; # && to please MAKETEXT :(
+      $url = '<noautolink>%SOLRSCRIPTURL{topic="'.$thisWeb.'.'.$thisTopic.'"tag="'.$tag.'" web="'.$baseWeb.'" union="web,tag" multivalue="tag" separator="&&"}%</noautolink>'; # && to please MAKETEXT :(
     } else {
       $url = Foswiki::Func::getScriptUrl($thisWeb, "WebTagCloud", "view", tag=>$tag);
     }
@@ -681,24 +681,28 @@ sub beforeSaveHandler {
     #writeDebug("creating a new meta object");
   }
 
-  my $formName = $meta->getFormName();
-  my ($theFormWeb, $theForm) = Foswiki::Func::normalizeWebTopicName($web, $formName);
-  my $formDef;
   my %isCatField = ();
   my %isTagField = ();
-  #writeDebug("form definition at $theFormWeb, $theForm");
-  if (Foswiki::Func::topicExists($theFormWeb, $theForm)) {
-    try {
-      $formDef = new Foswiki::Form($session, $theFormWeb, $theForm);
-    } catch Foswiki::OopsException with {
-      my $e = shift;
-      print STDERR "ERROR: can't read form definition $theForm in ClassificationPlugin::Core::beforeSaveHandler\n";
-    };
-    if ($formDef) {
-      foreach my $fieldDef (@{$formDef->getFields()}) {
-        #writeDebug("formDef field $fieldDef->{name} type=$fieldDef->{type}");
-        $isCatField{$fieldDef->{name}} = 1 if $fieldDef->{type} eq 'cat';
-        $isTagField{$fieldDef->{name}} = 1 if $fieldDef->{type} eq 'tag';
+
+  my $formName = $meta->getFormName();
+
+  if ($formName) {
+    my ($theFormWeb, $theForm) = Foswiki::Func::normalizeWebTopicName($web, $formName);
+    my $formDef;
+    writeDebug("form definition at $theFormWeb, $theForm");
+    if (Foswiki::Func::topicExists($theFormWeb, $theForm)) {
+      try {
+        $formDef = new Foswiki::Form($session, $theFormWeb, $theForm);
+      } catch Foswiki::OopsException with {
+        my $e = shift;
+        print STDERR "ERROR: can't read form definition $theForm in ClassificationPlugin::Core::beforeSaveHandler\n";
+      };
+      if ($formDef) {
+        foreach my $fieldDef (@{$formDef->getFields()}) {
+          #writeDebug("formDef field $fieldDef->{name} type=$fieldDef->{type}");
+          $isCatField{$fieldDef->{name}} = 1 if $fieldDef->{type} eq 'cat';
+          $isTagField{$fieldDef->{name}} = 1 if $fieldDef->{type} eq 'tag';
+        }
       }
     }
   }

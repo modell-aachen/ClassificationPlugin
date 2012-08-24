@@ -180,6 +180,11 @@ sub init {
   $this->{_prefs} = new Foswiki::Prefs($session);
 
   my $db = Foswiki::Plugins::DBCachePlugin::Core::getDB($this->{web});
+  unless ($db) {
+    print STDERR "ERROR: can't get web for $this->{web}\n";
+    delete $insideInit{$this->{web}};
+    return;
+  }
 
   # itterate over all topics and collect categories
   my $seenImport = {};
@@ -495,8 +500,10 @@ sub catDistance {
 sub getSimilarTopics {
   my ($this, $topicA, $threshold) = @_;
 
-  my @foundTopics = ();
   my $db = Foswiki::Plugins::DBCachePlugin::Core::getDB($this->{web});
+  return () unless $db;
+
+  my @foundTopics = ();
   my $tagsA = $this->getTagsOfTopic($topicA);
   my $catsA = $this->getCategoriesOfTopic($topicA);
   foreach my $topicB ($db->getKeys()) {
@@ -573,6 +580,7 @@ sub getTagsOfTopic {
     $topicObj = $topic;
   } else {
     my $db = Foswiki::Plugins::DBCachePlugin::Core::getDB($this->{web});
+    return undef unless $db;
     $topicObj = $db->fastget($topic);
   }
   return undef unless $topicObj;
@@ -600,6 +608,7 @@ sub getCategoriesOfTopic {
     $topic = $topicObj->fastget('topic');
   } else {
     my $db = Foswiki::Plugins::DBCachePlugin::Core::getDB($this->{web});
+    return undef unless $db;
     $topicObj = $db->fastget($topic);
   }
   return undef unless $topicObj;
@@ -649,6 +658,8 @@ sub getCatFields {
   my ($this, @topicTypes) = @_;
 
   #writeDebug("called getCatFields()"); 
+  my $db = Foswiki::Plugins::DBCachePlugin::Core::getDB($this->{web});
+  return () unless defined $db;
 
   my %allCatFields;
   foreach my $topicType (@topicTypes) {
@@ -667,7 +678,6 @@ sub getCatFields {
     $this->{gotUpdate} = 1;
 
     # looup form definition -> ASSUMPTION: TopicTypes must be DataForms too
-    my $db = Foswiki::Plugins::DBCachePlugin::Core::getDB($this->{web});
     my $formDef = $db->fastget($topicType);
     next unless $formDef;
 
@@ -687,6 +697,7 @@ sub getCatFields {
         Foswiki::Func::normalizeWebTopicName($this->{web}, $form->fastget('Target'));
 
       $db = Foswiki::Plugins::DBCachePlugin::Core::getDB($targetWeb);
+      next unless $db;
       $formDef = $db->fastget($targetTopic);
       next unless $formDef;# never reach
     }
@@ -899,6 +910,7 @@ sub checkAccessPermission {
 
   # get categories and gather access control lists
   my $db = Foswiki::Plugins::DBCachePlugin::Core::getDB($this->{web});
+  return undef unless $db;
   my $topicObj = $db->fastget($topic);
   return undef unless $topicObj;
 

@@ -32,7 +32,6 @@ See also: See CategorizedTopic, ClassifiedTopic, TaggedTopic, CategoryTemplate, 
   BUTTONS="bottom"
 }%
 <!-- -->%STOPINCLUDE%
-</verbatim>
 
 ---++ %TOPIC% form
 | *Name:*| *Type:* | *Size:* | *Values:* | *Description:* | *Attributes:* |

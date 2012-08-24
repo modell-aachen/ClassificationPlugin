@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="micha" comment="save topic" date="1334594495" format="1.1" reprev="13" version="17"}%
+%META:TOPICINFO{author="ProjectContributor" comment="save topic" date="1334594495" format="1.1" reprev="13" version="17"}%
 %META:TOPICPARENT{name="TopicView"}%
 %{<verbatim class="tml">}%
 %TMPL:INCLUDE{"Applications.WikiTopicEdit"}%
@@ -38,6 +38,7 @@
 <noautolink>
 <input type="hidden" name="%TMPL:P{"catfield"}%" value="%URLPARAM{"%TMPL:P{"catfield"}%" default="%ENCODE{"%FORMFIELD{"%TMPL:P{"catfield"}%"}%" type="entity"}%"}%" />
 </noautolink>
+%DBCALL{"Applications.ClassificationApp.RenderCategoryEditor" section="init"}%
 %ENDTAB%
 <!-- -->%TMPL:END%
 %{</verbatim>}%
