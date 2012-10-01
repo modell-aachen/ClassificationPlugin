@@ -636,7 +636,7 @@ sub handleTAGINFO {
     my $url;
     if ($context->{SolrPluginEnabled}) {
       # SMELL: WikiWords are autolinked in parameter position ... wtf
-      $url = '<noautolink>%SOLRSCRIPTURL{topic="'.$thisWeb.'.'.$thisTopic.'"tag="'.$tag.'" web="'.$baseWeb.'" union="web,tag" multivalue="tag" separator="&&"}%</noautolink>'; # && to please MAKETEXT :(
+      $url = '<noautolink>%SOLRSCRIPTURL{topic="'.$thisWeb.'.'.$thisTopic.'"tag="'.$tag.'" web="'.$thisWeb.'" union="web,tag" multivalue="tag" separator="&&"}%</noautolink>'; # && to please MAKETEXT :(
     } else {
       $url = Foswiki::Func::getScriptUrl($thisWeb, "WebTagCloud", "view", tag=>$tag);
     }

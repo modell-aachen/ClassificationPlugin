@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="save topic" date="1332748534" format="1.1" reprev="15" version="21"}%
+%META:TOPICINFO{author="ProjectContributor" comment="save topic" date="1347896066" format="1.1" version="23"}%
 %META:TOPICPARENT{name="TopicType"}%
 %TOC{depth="2"}%
 %DBCALL{"Applications.RenderTopicInstaller" TEXT="Install '%TOPIC%' TopicType" TYPE="TopicType" PARENT="TopicType"}%
@@ -67,7 +67,7 @@ See also: ClassifiedTopicTemplate, ClassifiedTopicViewTemplate
 
 ---++ Javascript
 <verbatim class="tml">
-%STARTSECTION{"javascript"}%
+%STARTSECTION{"javascript"}%<literal>
 <script>
 (function($) {
 $(function() {
@@ -75,7 +75,7 @@ $(function() {
 });
 })(jQuery);
 </script>
-%ENDSECTION{"javascript"}%
+</literal>%ENDSECTION{"javascript"}%
 </verbatim>
 
 ---++ <nop>%TOPIC% form

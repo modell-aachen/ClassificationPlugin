@@ -1,16 +1,10 @@
-%META:TOPICINFO{author="ProjectContributor" comment="none" date="1271669066" format="1.1" reprev="1.3" rev="3" version="1.3"}%
+%META:TOPICINFO{author="ProjectContributor" comment="none" date="1348825392" format="1.1" reprev="2" version="2"}%
 %TOC%
 
 ---+++ Naming
 Text to be displayed on the sitemap and in the headerbar describing this web
 using a kind of tagline:
    * Set WEBSUMMARY = Categorization and folksomony application
-
-Color to be displayed in the sitemap representing this web:
-   * Set WEBBGCOLOR = #D0D0D0
-
-Flag to enable/disable listing this web on the sitemap:
-   * Set SITEMAPLIST = on
 
 ---+++ Access rights
    * Set #DENYWEBVIEW =
@@ -20,17 +14,17 @@ Flag to enable/disable listing this web on the sitemap:
    * Set ALLOWTOPICCHANGE = %USERSWEB%.AdminGroup
 
 ---+++ Application Pointer
-<nop>DBCachePlugin settings registering the !WebDB
-implementation for this web (don't change):
    * Set CLASSIFICATIONPLUGIN_AUTOREPARENT  = 1
 
 ---+++ Misc
+<noautolink>
 Definition of DataForms:
    * Set WEBFORMS = Applications.ClassificationApp.Category, Applications.ClassificationApp.ClassifiedTopic, Applications.ClassificationApp.CategorizedTopic, Applications.ClassificationApp.TaggedTopic, Applications.WikiTopic, Applications.ApplicationTopic
 
+</noautolink>
 
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="ApplicationTopic, WebTool"}%
-%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="WebPreferences"}%
-%META:FIELD{name="Summary" attributes="" title="Summary" value="Preferences of the <nop>%25WEB%25 web"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Preferences of the <nop>%25WEB%25 web"}%
 %META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="WikiWorkbench"}%

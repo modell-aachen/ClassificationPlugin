@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="save topic" date="1334594495" format="1.1" reprev="13" version="17"}%
+%META:TOPICINFO{author="ProjectContributor" comment="save topic" date="1348667105" format="1.1" reprev="2" version="2"}%
 %META:TOPICPARENT{name="TopicView"}%
 %{<verbatim class="tml">}%
 %TMPL:INCLUDE{"Applications.WikiTopicEdit"}%
@@ -32,11 +32,11 @@
 %TMPL:DEF{"categoriestab"}%<!-- -->
 %TAB{
   "%TMPL:P{"categorieslabel"}%"
-  url="%SCRIPTURL{"rest"}%/RenderPlugin/tag?topic=%BASEWEB%.%BASETOPIC%;name=RENDERFOREDIT;field=%TMPL:P{"catfield"}%;form=%TMPL:P{"formdefinition"}%;%IF{"defined '%TMPL:P{"catfield"}%'" then="value=%URLPARAM{"%TMPL:P{"catfield"}%"}%;"}%render=on;t=%GMTIME{"$epoch"}%"
+  url="%SCRIPTURL{"rest"}%/RenderPlugin/tag?topic=%BASEWEB%.%BASETOPIC%;name=RENDERFOREDIT;field=%TMPL:P{"catfield"}%;form=%TMPL:P{"formdefinition"}%;%IF{"defined '%TMPL:P{"catfield"}%'" then="value=%URLPARAM{"%TMPL:P{"catfield"}%" multiple="on" encode="url"}%;"}%render=on;t=%GMTIME{"$epoch"}%"
 }%
 <span class="jqAjaxLoader">&nbsp;</span>
 <noautolink>
-<input type="hidden" name="%TMPL:P{"catfield"}%" value="%URLPARAM{"%TMPL:P{"catfield"}%" default="%ENCODE{"%FORMFIELD{"%TMPL:P{"catfield"}%"}%" type="entity"}%"}%" />
+<input type="hidden" name="%TMPL:P{"catfield"}%" value="%URLPARAM{"%TMPL:P{"catfield"}%" multiple="on" separator="," default="%ENCODE{"%FORMFIELD{"%TMPL:P{"catfield"}%"}%" type="entity"}%"}%" />
 </noautolink>
 %DBCALL{"Applications.ClassificationApp.RenderCategoryEditor" section="init"}%
 %ENDTAB%
@@ -47,7 +47,7 @@
 %TMPL:DEF{"tagstab"}%<!-- -->
 %TAB{
   "%TMPL:P{"tagslabel"}%" 
-  url="%SCRIPTURL{"rest"}%/RenderPlugin/tag?topic=%BASEWEB%.%BASETOPIC%;name=RENDERFOREDIT;field=Tag;form=%TMPL:P{"formdefinition"}%;%IF{"defined 'Tag'" then="value=%URLPARAM{"Tag"}%;"}%render=on;t=%GMTIME{"$epoch"}%"
+  url="%SCRIPTURL{"rest"}%/RenderPlugin/tag?topic=%BASEWEB%.%BASETOPIC%;name=RENDERFOREDIT;field=Tag;form=%TMPL:P{"formdefinition"}%;%IF{"defined 'Tag'" then="value=%URLPARAM{"Tag" multiple="on" separator="," encode="url"}%;"}%render=on;t=%GMTIME{"$epoch"}%"
 }%
 <span class="jqAjaxLoader">&nbsp;</span>
 %JQREQUIRE{"ui"}%<!-- -->
@@ -58,7 +58,7 @@
   requires="JQUERYPLUGIN::UI"
 }%<!-- -->
 <noautolink>
-<input type="hidden" name="Tag" value="%URLPARAM{"Tag" default="%ENCODE{"%FORMFIELD{"Tag"}%" type="entity"}%"}%" />
+<input type="hidden" name="Tag" value="%URLPARAM{"Tag" multiple="on" separator="," default="%ENCODE{"%FORMFIELD{"Tag"}%" type="entity"}%"}%" />
 </noautolink>
 %ENDTAB%
 <!-- -->%TMPL:END%
