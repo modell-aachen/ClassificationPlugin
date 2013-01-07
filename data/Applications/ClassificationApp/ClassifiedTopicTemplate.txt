@@ -1,4 +1,6 @@
-%META:TOPICINFO{author="ProjectContributor" date="1184833973" format="1.1" version="$Rev$"}%
+%META:TOPICINFO{author="BaseUserMapping_999" comment="autosave" date="1357565279" format="1.1" version="2"}%
+
+
 %META:TOPICPARENT{name="TopicTemplate"}%
 %STARTSECTION{type="templateonly"}%
 %RED%Note, this is only a template.%ENDCOLOR%

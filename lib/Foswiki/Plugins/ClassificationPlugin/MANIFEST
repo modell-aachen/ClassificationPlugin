@@ -96,7 +96,6 @@ data/Applications/ClassificationApp/RenderKnownTags.txt 0644
 data/Applications/ClassificationApp/RenderSideBar.txt 0644
 data/Applications/ClassificationApp/RenderSolrTagCloud.txt 0644
 data/Applications/ClassificationApp/RenderTagEditor.txt 0644
-data/Applications/ClassificationApp/RenderWebTagCloudHitList.txt 0644
 data/Applications/ClassificationApp/RenderWebTagCloud.txt 0644
 data/Applications/ClassificationApp/SalesCategory.txt 0644
 data/Applications/ClassificationApp/SalesForecastCategory.txt 0644
@@ -147,7 +146,6 @@ data/Applications/ClassificationApp/UpgradingForum.txt 0644
 data/Applications/ClassificationApp/WebAtom.txt 0644
 data/Applications/ClassificationApp/WebChanges.txt 0644
 data/Applications/ClassificationApp/WebHome.txt 0644
-data/Applications/ClassificationApp/WebLeftBar.txt 0644
 data/Applications/ClassificationApp/WebLinks.txt 0644
 data/Applications/ClassificationApp/WebNotify.txt 0644
 data/Applications/ClassificationApp/WebPreferences.txt 0644
@@ -155,7 +153,6 @@ data/Applications/ClassificationApp/WebRss.txt 0644
 data/Applications/ClassificationApp/WebSearchAdvanced.txt 0644
 data/Applications/ClassificationApp/WebSearch.txt 0644
 data/Applications/ClassificationApp/WebStatistics.txt 0644
-data/Applications/ClassificationApp/WebTagCloud.txt 0644
 data/Applications/ClassificationApp/WebTool.txt 0644
 data/Applications/ClassificationApp/WebTopicList.txt 0644
 data/Applications/ClassificationApp/WebTopicViewTemplate.txt 0644
@@ -320,9 +317,6 @@ pub/System/ClassificationPlugin/jquery.catselector.uncompressed.js 0644
 pub/System/ClassificationPlugin/jquery.classifiedtopic.js 0644
 pub/System/ClassificationPlugin/jquery.classifiedtopic.js.gz 0644
 pub/System/ClassificationPlugin/jquery.classifiedtopic.uncompressed.js 0644
-pub/System/ClassificationPlugin/jquery.tagcloud.js 0644
-pub/System/ClassificationPlugin/jquery.tagcloud.js.gz 0644
-pub/System/ClassificationPlugin/jquery.tagcloud.uncompressed.js 0644
 pub/System/ClassificationPlugin/jquery.tagselector.js 0644
 pub/System/ClassificationPlugin/jquery.tagselector.js.gz 0644
 pub/System/ClassificationPlugin/jquery.tagselector.uncompressed.js 0644
@@ -336,5 +330,4 @@ pub/System/ClassificationPlugin/renametag.uncompressed.js 0644
 pub/System/ClassificationPlugin/styles.css 0644
 pub/System/ClassificationPlugin/styles.css.gz 0644
 pub/System/ClassificationPlugin/styles.uncompressed.css 0644
-pub/System/ClassificationPlugin/wikiringlogo40x40.png 0644
 templates/classificationplugin.tmpl 0644

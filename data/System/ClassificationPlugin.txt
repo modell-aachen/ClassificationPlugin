@@ -1,10 +1,8 @@
-%META:TOPICINFO{author="ProjectContributor" comment="save topic" date="1250861344" format="1.1" reprev="1.2" version="1.2"}%
+%META:TOPICINFO{author="BaseUserMapping_999" comment="autosave" date="1357565283" format="1.1" version="4"}%
+
+
 ---+!! ClassificationPlugin
 %TOC%
-<div class="foswikiRight" style="padding:10px 10px 10px 50px;background:0% 50% url(%ATTACHURLPATH%/wikiringlogo40x40.png) no-repeat;">
-<a href="http://wikiring.com" title="Make your Wiki ring!" style="text-decoration:none">
-   Powered by <br /> <nop>WikiRing Consultants </a>
-</div>
 
 ---++ Description
 The ClassificationPlugin is a taxonomy and folksonomy extension for Foswiki that allows you to 
@@ -141,5 +139,3 @@ weighted matching coefficient.
 |  Perl Version: | 5.005 |
 |  Plugin Home: | Foswiki:Extensions/%TOPIC% |
 |  Feedback: | Foswiki:Support/%TOPIC% |
-
-%META:FILEATTACHMENT{name="wikiringlogo40x40.png" attachment="wikiringlogo40x40.png" attr="h" comment="" date="1189787359" path="wikiringlogo40x40.png" size="2571" stream="wikiringlogo40x40.png" tmpFilename="" user="ProjectContributor" version="1"}%

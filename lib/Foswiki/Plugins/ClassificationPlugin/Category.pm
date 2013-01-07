@@ -1,6 +1,6 @@
 # Plugin for Foswiki - The Free and Open Source Wiki, http://foswiki.org/
 #
-# Copyright (C) 2006-2010 Michael Daum http://michaeldaumconsulting.com
+# Copyright (C) 2006-2012 Michael Daum http://michaeldaumconsulting.com
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -787,7 +787,10 @@ sub traverse {
     $isOpener = ($openers{$this->{name}})?1:0;
     foreach my $opener (keys %openers) {
       #writeDebug("checking at $this->{name} opener '$opener'");
-      if ($this->subsumes($opener)) {
+      my $distance = $this->distance($opener);
+      #if ($this->subsumes($opener)) {
+      # open thos that show up within the given depth
+      if (defined $distance && $distance >= 0 && (!$maxDepth || $distance <= $maxDepth)) {
         #writeDebug("$this->{name} opened by $opener");
         $doChildren = 1;
         $isExpanded = 1;

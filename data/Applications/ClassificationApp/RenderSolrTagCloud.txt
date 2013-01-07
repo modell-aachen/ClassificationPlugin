@@ -1,4 +1,5 @@
-%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1333566114" format="1.1" reprev="18" version="18"}%
+%META:TOPICINFO{author="BaseUserMapping_999" comment="autosave" date="1357565281" format="1.1" version="21"}%
+
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -10,6 +11,7 @@
    * DAYS: number of recent days of changes to take under consideration, defaults to unlimited
    * RECENCY: maximum number of topics to harvest tags from, defaults to 100
    * LIMIT: maximum number of tags in the could, defaults to 100
+   * MIN: minimum frequency of a tags to be shown
    * TAG: comma separated list of tags to be searched for in the archive
    * CAT: restrict tag cloud to this category; displays all tags of all categories if unspecified
    * KEYWORDS: keywords to filter for
@@ -27,7 +29,7 @@
   type="dismax"
   fields=""
   web="%IF{"defined THEWEB" then="%THEWEB%" else="all"}%"
-  filter="%IF{"defined THEWEB and $THEWEB!='all'" 
+  filter="type:topic %IF{"defined THEWEB and $THEWEB!='all'" 
             then="web:%THEWEB%"
           }%
           %IF{"defined TAG" 
@@ -52,7 +54,7 @@
     format_tag="$key:$count"
     separator_tag=", "
   }%"
-  header="<div class='solrTagCloud tagCloud'>"
+  header="<div class='solrTagCloud clsTagCloud'>"
   format="<span style='font-size:$weightpx;line-height:110%'><a href='#' style='color:$fadeRGB(104,144,184,0,102,255);' class='solrFacetValue' name='tag_$term' value='$term'>$term</a></span>"
   footer="</div>"
   group="<strong>$group</strong>&nbsp;"
@@ -60,20 +62,21 @@
   buckets="20"
   offset="11"
   warn="off"
+  min="%IF{"not isempty 'MIN'" then="%MIN%" else="1"}%"
 }%
 %ADDTOZONE{"script" tag="SOLRTAGCLOUD::JS" requires="JQUERYPLUGIN" 
 text="<literal>
 <script>
 jQuery(function($) {
   $('.solrTagCloud a').click(function() {
-    var $this = $(this);
-    var href = '%SCRIPTURLPATH{"view"}%/%IF{"defined THEWEB and $THEWEB != 'all'" then="%THEWEB%" else="%BASEWEB%"}%/WebSearch?origtopic=%BASEWEB%.%BASETOPIC%';
-    href += '#fq=tag:('+escape($this.attr('value'))+')';
-    href += '&fq=web:'+'%IF{"defined THEWEB" then="%THEWEB%" else="all"}%';
+    var $this = $(this),
+        href = '%SCRIPTURL{"view"}%/%IF{"defined THEWEB and not isempty THEWEB and $THEWEB != 'all'" then="%THEWEB%" else="%BASEWEB%"}%/WebSearch';
+
+    href += '#fq=tag:'+escape($this.attr('value'));
     var tags = '%IF{"defined TAG" then="%TAG%"}%'.split(/\s*,\s*/);
     for (var i = 0; i < tags.length; i++) {
       if (tags[i] !='') {
-        href += '&fq=tag:('+escape(tags[i])+')';
+        href += '&fq=tag:'+escape(tags[i])+'';
       }
     }
     var cats = '%IF{"defined CAT" then="%CAT%"}%'.split(/\s*,\s*/);
@@ -82,12 +85,6 @@ jQuery(function($) {
         href += '&fq=category:'+escape(cats[i]);
       }
     }
-    /*
-    if ('%IF{"defined TYPE" then="%TYPE%"}%'!='') {
-      href += '&fq=type:%TYPE%';
-    }
-    */
-    href += '&q='+escape('%IF{"defined KEYWORDS" then="%KEYWORDS%"}%');
     window.location.href = href;
     return false;
   });

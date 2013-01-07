@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1329896281" format="1.1" reprev="10" version="12"}%
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357564984" format="1.1" version="14"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -67,35 +67,31 @@ See the CategoryTemplate.
 <verbatim class="tml">
 %STARTSECTION{"toolbar"}%<!-- -->
 <div class="toolbar">
-%~~ BUTTON{"New Topic" href="%SCRIPTURLPATH{view}%/%BASEWEB%/ClassifiedTopic?cat=%URLPARAM{"catname" default="%BASETOPIC%"}%
-*~~
-%~~   IF{"defined TEMPLATE" 
-~~~     then=";tmpl=%TEMPLATE%" 
-~~~     else="$percntIF{\"istopic '%BASEWEB%.%URLPARAM{"catname" default="%BASETOPIC%"}%Template'\"
-~~~         then=\";tmpl=%BASEWEB%.%URLPARAM{"catname" default="%BASETOPIC%"}%Template\"
-~~~         else=\"\"
-~~~       }$percnt"
-~~~   }%" 
-~~~   title="Create a new topic in %CATINFO{cat="%BASEWEB%.%URLPARAM{"catname" default="%BASETOPIC%"}%" format="<nop>$title"}%"
-~~~ }%  
+%BUTTON{"New Topic" href="%SCRIPTURLPATH{view}%/%BASEWEB%/ClassifiedTopic?cat=%URLPARAM{"catname" default="%BASETOPIC%"}%%IF{
+  "defined TEMPLATE" 
+  then=";tmpl=%TEMPLATE%" 
+  else="$percntIF{\"istopic '%BASEWEB%.%URLPARAM{"catname" default="%BASETOPIC%"}%Template'\"
+    then=\";tmpl=%BASEWEB%.%URLPARAM{"catname" default="%BASETOPIC%"}%Template\"
+    else=\"\"
+    }$percnt"
+  }%" 
+  title="Create a new topic in %CATINFO{cat="%BASEWEB%.%URLPARAM{"catname" default="%BASETOPIC%"}%" format="<nop>$title"}%"
+}%
 %IF'%USERSWEB%.AdminGroup' allows 'change'"
   then="%BUTTON{"Manage" href="%SCRIPTURLPATH{view}%/%BASEWEB%/Category" title="Manage categories"}%  
         %BUTTON{"Browse" href="%SCRIPTURLPATH{view}%/%BASEWEB%/CategoryBrowser" title="Browse the hierarchy"}%"
 }%
 </div>
-<br clear='both' />
-<!--  -->%ENDSECTION{"toolbar"}%
+%CLEAR%%ENDSECTION{"toolbar"}%
 </verbatim>
 
 ---++ Test
-<div class="alt">
 %DBCALL{"%TOPIC%"}%
-</div>
 
 %DBCALL{"Applications.RenderFunctionCallers"}%
 
 ---++ Copyright
-&copy; 2006-2010 Michael Daum http://michaeldaumconsulting.com
+&copy; 2006-2013 Michael Daum http://michaeldaumconsulting.com
 
 %DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
 

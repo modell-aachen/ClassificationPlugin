@@ -1,148 +1,85 @@
-%META:TOPICINFO{author="ProjectContributor" date="1324299999" format="1.1" version="15"}%
+%META:TOPICINFO{author="BaseUserMapping_999" comment="autosave" date="1357565281" format="1.1" version="18"}%
+
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 ---++ Documentation
 %STARTSECTION{"documentation"}%
-
-%RED%Deprecated: please use Foswiki:Extensions/SolrPlugin for a decent tag cloud search interface%ENDCOLOR%
 
 ---+++++ Parameters
    * TAG: comma separated list of tags to be searched for in the archive
    * CAT: restrict tag cloud to this category; displays all tags of all categories if unspecified
    * KEYWORDS: keywords to filter for
    * MIN: minimum frequency of a tags to be shown
-   * TAGCLOUDTOPIC: topic where to jump to when a tag is clicked, defaults to BASETOPIC
-   * RECENCY: limit search for tags on most recently changed topics
+   * LIMIT: maximum number of tags in the could, defaults to 100
    * TOPICTYPE: limit search for tags of topics of the given type
-   * CATTITLE: title of the category filter, defaults to 'Category'
-   * TOPCAT: optional top category to display the category filter for
-   * EXCLUDECAT: optionally exclude a category category from filter, defaults to <nop>TopCategory
-   * FROMCOLOR: start color for most significant tags, this must be a set of three integers specifying RGB,
-                fades over to TOCOLOR, defaults to "194,199,204"
-   * TOCOLOR: end color for least significant tags, defaults to "0,102,204"
+   * THEWEB: web to restrict search to, defaults to current
 
-%ENDSECTION{name="documentation" type="section"}%
+%ENDSECTION{"documentation"}%
 
 ---++ Implementation
 <verbatim class="tml">
-%STARTINCLUDE%<!-- renderwebtagcloud -->
-%JQREQUIRE{"form"}%<!-- jqrequire form -->
-%ADDTOZONE{
-  "script"
-  tag="TAGCLOUD" 
-  text="<script src='%PUBURLPATH%/%SYSTEMWEB%/ClassificationPlugin/jquery.tagcloud.js'></script>" 
-  requires="JQUERYPLUGIN::FOSWIKI"
-}%<!-- add to zone tagcloud -->
+%STARTINCLUDE%<!-- -->
 <noautolink>
-<form class="tagCloudForm" action="%SCRIPTURLPATH{"view"}%/%BASEWEB%/%IF{"not isempty 'TAGCLOUDTOPIC'" then="%TAGCLOUDTOPIC%" else="%BASETOPIC%"}%">
-<input type="hidden" name="tag" value="%IF{"not isempty 'TAG'" then="%TAG%"}%" />
-<input type="hidden" name="cat" value="%IF{"not isempty 'CAT'" then="%CAT%"}%" />
-<input type="hidden" name="search" value="%IF{"not isempty 'KEYWORDS'" then="%KEYWORDS%"}%" />
-<input type="hidden" name="recency" value="%IF{"not isempty 'RECENCY'" then="%RECENCY%"}%" />
-<input type="hidden" name="min" value="%IF{"not isempty 'MIN'" then="%MIN%"}%" />
-<input type="hidden" name="topictype" value="%IF{"not isempty 'TOPICTYPE'" then="%TOPICTYPE%"}%" />
-<input type="submit" style="display:none" />
-%TAGCLOUD{
-   "$percntDBQUERY{
-     \"TopicType=~'.*\b(Tagged|Classified)Topic\b.*'
-       %FORMATLIST{"%IF{"not isempty 'TOPICTYPE'" then=", %TOPICTYPE%"}%" 
-         split="\s*,\s*"
-         header="AND" 
-         format=" TopicType=~'\b$1\b' "
-         separator="AND"
-       }% %FORMATLIST{"%IF{"not isempty 'TAG'" then="%TAG%"}%" 
-         split="\s*, \s*"
-         header="AND" 
-         format=" Tag=~'\b$1\b' "
-         separator="AND"
-       }% %FORMATLIST{"%IF{"not isempty 'KEYWORDS'" then="%KEYWORDS%"}%" 
-         split="\s"
-         header="AND" 
-         format=" (lc(all) =~ lc('$1') OR lc(topic)=~lc('$1')"
-         separator="AND"
-       }% %FORMATLIST{"%IF{"not isempty 'CAT'" then="%CAT%"}%" 
-         split="\s*,\s*" 
-         header="AND" 
-         format=" topic ISA '$1'" 
-         separator="AND"
-       }%
-     \"
-     order=\"modified\"
-     reverse=\"on\"
-     limit=\"%IF{"not isempty 'RECENCY'" then="%RECENCY%"}%\"
-     web=\"%BASEWEB%\"
-     format=\"$formfield(Tag)\" separator=\", \"
-   }$percnt"
-   buckets="200"
-   warn="off"
-   offset="100"
-   split=","
-   min="%IF{"not isempty 'MIN'" then="%MIN%" else="0"}%"
-   header="<div class='clsTagCloud'>"
-   group="<strong>$group</strong>&nbsp;"
-   format="<a rel='nofollow' name='$term' \
-     style='font-size:$weight%; \
-       color:$fadeRGB(\
-         %IF{"not isempty 'FROMCOLOR'" then="%FROMCOLOR%" else="194,199,204"}%,\
-         %IF{"not isempty 'TOCOLOR'" then="%TOCOLOR%" else="0,102,204"}%);'\
-     href='#' \
-     $percntIF{\"'$percntENCODE{\"%TAG%\"}$percnt' =~ '\b$percntENCODE{\"$term\"}$percnt\b'\" then=\"class='current'\"}$percnt\
-     title='found $count time(s)'>$term</a>"
-   footer="</ul></div>"
-}%<!-- tagcloud -->
-</form>
-<a name="results"></a>
-%IF{"not isempty 'TAG' or not isempty 'KEYWORDS' or not isempty 'TOPICTYPE'" DIS="or not isempty 'CAT' "
-  then="$percntDBCALL{
-          \"Applications.ClassificationApp.RenderWebTagCloudHitList\"
-          THEQUERY=\"TopicType='.*' 
-             %FORMATLIST{"%IF{"not isempty 'TOPICTYPE'" then=", %TOPICTYPE%"}%" 
-               split="\s*,\s*"
-               format=" TopicType=~'\b$1\b' "
-               header="AND" 
-               separator="AND"
-             }% %FORMATLIST{"%IF{"not isempty 'TAG'" then="%TAG%"}%" 
-               split="\s*, \s*"
-               header="AND" 
-               format=" Tag=~'\b$1\b' "
-               separator="AND"
-             }% %FORMATLIST{"%IF{"not isempty 'KEYWORDS'" then="%KEYWORDS%"}%" 
-               split="\s"
-               header="AND" 
-               format=" (lc(all) =~ lc('$1') OR lc(topic)=~lc('$1'))"
-               separator="AND"
-             }% %FORMATLIST{"%IF{"not isempty 'CAT'" then="%CAT%"}%" 
-               split="\s*,\s*" 
-               header="AND" 
-               format=" topic ISA '$1'" 
-               separator="AND"
-             }%\"
-        }$percnt"
-}%<!-- results -->
-</noautolink>
-<!-- //renderwebtagcloud -->%STOPINCLUDE%
+%TAGCLOUD{ 
+  terms="%DBSTATS{
+    "TopicType=~'\b(Tagged|Classified)Topic\b'"
+    format="$key:$count" 
+    separator=", "
+    field="Tag"
+    sort="modifiedto"
+    reverse="on"
+    limit="%IF{"defined LIMIT" then="%LIMIT%" else="100"}%"
+    web="%IF{"defined THEWEB" then="%THEWEB%"}%" 
+  }%" 
+  header="<div class='clsTagCloud'>" 
+  format="<span style='font-size:$weightpx;line-height:110%'><a href='#' style='color:$fadeRGB(104,144,184,0,102,255);' name='tag_$term' value='$term'>$term</a></span>" 
+  footer="</div>" 
+  group="<strong>$group</strong>&nbsp;" 
+  split="\s*,\s*" 
+  buckets="19" 
+  offset="10" 
+  warn="off" 
+  min="%IF{"not isempty 'MIN'" then="%MIN%" else="1"}%"
+}%
+%ADDTOZONE{"script" tag="TAGCLOUD::JS" requires="JQUERYPLUGIN"  
+text="<literal> 
+<script> 
+jQuery(function($) { 
+  $('.clsTagCloud a').click(function() { 
+    var $this = $(this), 
+        href = '%SCRIPTURL{"view"}%/%IF{"defined THEWEB and not isempty THEWEB and $THEWEB != 'all'" then="%THEWEB%" else="%BASEWEB%"}%/WebSearch'; 
+
+    href += '#fq=tag:'+escape($this.attr('value')); 
+    var tags = '%IF{"defined TAG" then="%TAG%"}%'.split(/\s*,\s*/); 
+    for (var i = 0; i < tags.length; i++) { 
+      if (tags[i] !='') { 
+        href += '&fq=tag:'+escape(tags[i])+''; 
+      } 
+    } 
+    var cats = '%IF{"defined CAT" then="%CAT%"}%'.split(/\s*,\s*/); 
+    for (var i = 0; i < cats.length; i++) { 
+      if (cats[i]!='') { 
+        href += '&fq=category:'+escape(cats[i]); 
+      } 
+    } 
+    window.location.href = href; 
+    return false; 
+  }); 
+}); 
+</script> 
+</literal>" 
+}%</noautolink>%STOPINCLUDE%
 </verbatim>
 
 ---++ Test
-<div class="alt">
-%DBCALL{"%TOPIC%" 
-  TAG="%URLPARAM{"tag"}%" 
-  TAG="%URLPARAM{"search"}%" 
-  CAT="%URLPARAM{"cat"}%" 
-  RECENCY="%URLPARAM{"recency"}%"
-  MIN="%URLPARAM{"min"}%"
-  FROMCOLOR="255,0,0"
-  TOCOLOR="0,0,255"
-}%
-</div>
+%DBCALL{"%TOPIC%" THEWEB="%URLPARAM{"theweb"}%"}%
 
 %DBCALL{"Applications.RenderFunctionCallers"}%
 
 ---++ Copyright
-&copy; 2007-2011 Michael Daum http://michaeldaumconsulting.com
+&copy; 2007-2013 Michael Daum http://michaeldaumconsulting.com
 
 %DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
-
 
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%

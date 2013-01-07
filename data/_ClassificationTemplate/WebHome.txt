@@ -1,4 +1,6 @@
-%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1343304404" format="1.1" reprev="8" version="8"}%
+%META:TOPICINFO{author="BaseUserMapping_999" comment="autosave" date="1357565283" format="1.1" version="12"}%
+
+
 ---+!! %WEBLINK%
 
 ---++ %MAKETEXT{"Welcome"}%
@@ -82,7 +84,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquam molestie
 
 %STOPCHAPTER%
 
-<!-- %JQREQUIRE{"hyphenator, loader, infinitescroll"}% %REDDOT% %IMAGE% -->
+<!-- %JQREQUIRE{"hyphenator, loader, infinitescroll"}% %REDDOTINIT% %IMAGE% -->
 <!--
    * Set CACHEEXPIRE = +5min
    * Set CACHEABLE = on
@@ -91,3 +93,4 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquam molestie
 
 %META:PREFERENCE{name="NATSKIN_SIDEBAR" title="NATSKIN_SIDEBAR" type="Local" value="off"}%
 %META:PREFERENCE{name="DISPLAYREVISIONINFO" title="DISPLAYREVISIONINFO" type="Local" value="off"}%
+%META:PREFERENCE{name="NOWYSIWYG" title="NOWYSIWYG" type="Set" value="on"}%

@@ -154,11 +154,11 @@ jQuery(function($) {
 	  var $cat = $(this), opts = $.extend({}, $cat.metadata());
           if (opts.depth > self.opts.depth) {
             var $li = $cat.parent().parent();
-	    $li.removeClass("hasChildren expandable")
+	    $li.removeClass("hasChildren expandable collapsable")
             if ($li.is(".lastExpandable")) {
 	      $li.removeClass("lastExpandable").addClass("last");
             }
-            $li.children(".hitarea").remove();
+            $li.children(".hitarea, ul").remove();
 	    //console.log("reached max depth at ", $li, "class=",$li.attr("class"));
           }
         });

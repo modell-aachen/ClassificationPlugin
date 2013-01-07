@@ -21,7 +21,7 @@ use vars qw(
   $doneInitCore $doneInitServices $baseTopic $baseWeb $css
 );
 
-$VERSION = '$Rev: 1340 $';
+$VERSION = '1.00';
 $RELEASE = '1.00';
 $NO_PREFS_IN_TOPIC = 1;
 $SHORTDESCRIPTION = 'A topic classification plugin and application';
@@ -81,6 +81,11 @@ sub initPlugin {
   Foswiki::Func::registerRESTHandler('normalizetags', sub {
     initServices();
     return Foswiki::Plugins::ClassificationPlugin::Services::normalizeTags(@_);
+  });
+
+  Foswiki::Func::registerRESTHandler('deployTopicType', sub {
+    initServices();
+    return Foswiki::Plugins::ClassificationPlugin::Services::deployTopicType(@_);
   });
 
   Foswiki::Contrib::DBCacheContrib::Search::addOperator(

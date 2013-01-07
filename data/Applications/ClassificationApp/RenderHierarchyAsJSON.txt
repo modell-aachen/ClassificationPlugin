@@ -1,4 +1,5 @@
-%META:TOPICINFO{author="ProjectContributor" date="1314780575" format="1.1" version="1.6"}%
+%META:TOPICINFO{author="BaseUserMapping_999" comment="autosave" date="1357565281" format="1.1" version="21"}%
+
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -67,94 +68,46 @@ $indent}"
 
 ---++ Browser format
 <verbatim class="tml">
-%STARTSECTION{"browser"}%
-*~~  <a href='$url' 
-~~~     title='$percntENCODE{\"$summary\" type=\"entity\"}$percnt'>
-~~~    <img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' />
-~~~    $percntENCODE{\"$title\" type=\"quote\"}$percnt
-~~~  </a>
-~~~  $percntIF{\"'$cyclic' = '1'\"
-~~~    then=\" <span class='foswikiAlert'>C</span>\"
-~~~  }$percnt
-~~~  $percntIF{\"'$count' != '0'\" then=\" ($count)\"}$percnt
-*~~
-%ENDSECTION{"browser"}%
+%STARTSECTION{"browser"}%<a href='$url' title='$percntENCODE{\"$summary\" type=\"entity\"}$percnt'><img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' />$percntENCODE{\"$title\" type=\"quote\"}$percnt</a>$percntIF{
+  \"'$cyclic' = '1'\" 
+  then=\" <span class='foswikiAlert'>C</span>\"}$percnt$percntIF{
+  \"'$count' != '0'\" 
+  then=\" ($count)\"
+}$percnt%ENDSECTION{"browser"}%
 </verbatim>
 
 ---++ Plain format
 <verbatim class="tml">
-%STARTSECTION{"plain"}%
-*~~  <a href='$url' title='$percntENCODE{\"$summary\" type=\"entity\"}$percnt'>
-~~~    <noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink>
-~~~  </a>
-*~~
-%ENDSECTION{"plain"}%
+%STARTSECTION{"plain"}%<a href='$url' title='$percntENCODE{\"$summary\" type=\"entity\"}$percnt'><noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink></a>%ENDSECTION{"plain"}%
 </verbatim>
 
 ---++ Sidebar format
 <verbatim class="tml">
-%STARTSECTION{"sidebar"}%
-*~~      <a class='clsCategoryLink' style='background-image:url($icon);'
-~~~         href='$url' title='$percntENCODE{\"$summary\" type=\"entity\"}$percnt'
-~~~      >
-~~~      <noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink>
-~~~      </a>
-*~~
-%ENDSECTION{"sidebar"}%
+%STARTSECTION{"sidebar"}%<a class='clsCategoryLink' style='background-image:url($icon);' href='$url' title='$percntENCODE{\"$summary\" type=\"entity\"}$percnt'><noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink></a>%ENDSECTION{"sidebar"}%
 </verbatim>
 
 ---++ Editor format
 <verbatim class="tml">
-%STARTSECTION{"editor"}%
-*~~  <a href='#'
-~~~     class='$name clsCategory {depth:$depth}'
-~~~     title='$title'
-~~~     value='$name'>
-~~~    <img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' />
-~~~    <noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink></a> 
-*~~
-%ENDSECTION{"editor"}%
+%STARTSECTION{"editor"}%<a href='#' class='$name clsCategory {depth:$depth}' title='$title' value='$name'><img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' /><noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink></a>%ENDSECTION{"editor"}%
 </verbatim>
 
 ---++ Leaf select format
 <verbatim class="tml">
-%STARTSECTION{"leafselect"}%$percntIF{\"$leafs>0\"
+%STARTSECTION{"leafselect"}%$percntIF{\"$leafs>0 and $depth <= %depth%\"
   then=\"<img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' /><noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink>\"
-  else=\"<a href='#'
-~~~         title='$title'
-~~~         value='$name' class='$name clsCategory'>
-~~~         <img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' />
-~~~         <noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink></a>\"
+  else=\"<a href='#' title='$title' value='$name' class='$name clsCategory {depth:$depth}'><img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' /><noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink></a>\"
 }%%ENDSECTION{"leafselect"}%
 </verbatim>
 
 ---++ Solr facet format
 <verbatim class="tml">
-%STARTSECTION{"solrfacet"}%
-*~~  <a href='#'
-~~~     class='$name clsCategory solrFacetValue {depth:$depth}'
-~~~     title='$title'
-~~~     value='category:$name'>
-~~~    <img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' />
-~~~    <noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink></a> 
-~~~    $percntIF{\"$count>0\" then=\"($count)\"}$percnt
-*~~
-%ENDSECTION{"solrfacet"}%
+%STARTSECTION{"solrfacet"}%<a href='#' class='$name clsCategory solrFacetValue {depth:$depth}' title='$title' value='category:$name'><img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' /><noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink></a> $percntIF{\"$count>0\" then=\"($count)\"}$percnt%ENDSECTION{"solrfacet"}%
 </verbatim>
 
 ---++ Solr facet format (no counts)
 <verbatim class="tml">
-%STARTSECTION{"solrfacet_nocounts"}%
-*~~  <a href='#'
-~~~     class='$name clsCategory solrFacetValue {depth:$depth}'
-~~~     title='$title'
-~~~     value='category:$name'>
-~~~    <img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' />
-~~~    <noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink></a> 
-*~~
-%ENDSECTION{"solrfacet_nocounts"}%
+%STARTSECTION{"solrfacet_nocounts"}%<a href='#' class='$name clsCategory solrFacetValue {depth:$depth}' title='$title' value='category:$name'><img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' /><noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink></a>%ENDSECTION{"solrfacet_nocounts"}%
 </verbatim>
-
 
 ---++ Test
 ---+++ Plain
@@ -174,7 +127,7 @@ $indent}"
 
 ---+++ Leaf select
 <pre>
-%DBCALL{"%TOPIC%" format="leafselect" root="TestCategory2"}%
+%DBCALL{"%TOPIC%" format="leafselect" root="TestCategory2" depth="2"}%
 </pre>
 
 ---+++ Solr facet

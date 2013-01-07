@@ -1,4 +1,5 @@
-%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1347547146" format="1.1" reprev="13" version="2"}%
+%META:TOPICINFO{author="BaseUserMapping_999" comment="autosave" date="1357565279" format="1.1" version="18"}%
+
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -32,7 +33,7 @@ a summary for an object of type ClassifiedTopic.
         footer=\"\\"}$dollarpercnt</span>\"
       }$percnt<!-- -->
       <div class='clsAuthorDateInfo'>
-        $formatTime(info.date),
+        <!-- -->$formatTime(info.date),
         <nop>$percntGETTOPICTITLE{\"
              $percntUSERINFO{\"$expand(info.author)\"
                format=\"$wikiusername\"
@@ -46,17 +47,16 @@ a summary for an object of type ClassifiedTopic.
 </verbatim>
 
 ---++ Test
-<div class="alt">
 %DBCALL{"%TOPIC%" OBJECT="TestTopic0"}%
-</div>
+
+%DBCALL{"%TOPIC%" OBJECT="TestCategorizedTopic1"}%
 
 %DBCALL{"Applications.RenderFunctionCallers"}%
 
 ---++ Copyright
-&copy; 2008-2012 Michael Daum http://michaeldaumconsulting.com
+&copy; 2008-2013 Michael Daum http://michaeldaumconsulting.com
 
 %DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
-
 
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%

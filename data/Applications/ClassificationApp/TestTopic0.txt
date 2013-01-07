@@ -1,4 +1,6 @@
-%META:TOPICINFO{author="ProjectContributor" date="1329396794" format="1.1" version="6"}%
+%META:TOPICINFO{author="BaseUserMapping_999" comment="autosave" date="1357565282" format="1.1" version="8"}%
+
+
 %META:TOPICPARENT{name="ContactsCategory"}%
    * DISTANCE{from="TopCategory" to="BottomCategory" format="min=$min, max=$max"} = %DISTANCE{from="TopCategory" to="BottomCategory" format="min=$min, max=$max"}%
    * DISTANCE{from="%TOPIC%" to="PlansAndPresentations"}: %DISTANCE{from="%TOPIC%" to="PlansAndPresentations"}%

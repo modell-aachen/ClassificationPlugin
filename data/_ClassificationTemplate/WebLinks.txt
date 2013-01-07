@@ -1,4 +1,6 @@
-%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1282589522" format="1.1" reprev="4" version="4"}%
+%META:TOPICINFO{author="BaseUserMapping_999" comment="autosave" date="1357565283" format="1.1" version="8"}%
+
+
 %META:TOPICPARENT{name="WebPreferences"}%
 ---+ %TOPIC%
 <verbatim class="tml">
@@ -25,8 +27,7 @@
        $percntDBCALL{\"Applications.RenderTopicThumbnail\"
          OBJECT=\"$web.$topic\"
          TYPE=\"plain\"
-       }$percnt<!-- -->
-       $expand(topictitle)<br />
+       }$percnt<!-- -->$expand(topictitle)<br />
        <span class='foswikiTopicInfo foswikiSmallish'>$formfield(Summary)</span>
        %CLEAR%
      </a>

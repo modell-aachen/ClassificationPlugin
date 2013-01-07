@@ -1,4 +1,5 @@
-%META:TOPICINFO{author="ProjectContributor" comment="save topic" date="1340790848" format="1.1" reprev="11" version="11"}%
+%META:TOPICINFO{author="BaseUserMapping_999" comment="autosave" date="1357565281" format="1.1" version="14"}%
+
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -26,33 +27,21 @@
 <verbatim class="tml">
 %STARTINCLUDE%<!-- --> 
 <noautolink>
-<div id="clsCatSelector_%IF{"defined NAME" then="%NAME%" else="Category"}%" 
-~~~ class="clsCatSelector {
-~~~   nothingFound:'%MAKETEXT{"Nothing found"}%', 
-~~~   web:'%IF{"defined THEWEB" then="%THEWEB%" else="%BASEWEB%"}%',
-~~~   topic:'%BASEWEB%.%BASETOPIC%',
-~~~   fieldname:'%IF{"defined NAME" then="%NAME%" else="Category"}%',
-~~~   hidenull: '%IF{"defined HIDENULL" then="%HIDENULL%" else="off"}%',
-~~~   root:'%IF{"defined TOP" then="%TOP%" else="TopCategory"}%',
-~~~   exclude:'%IF{"defined EXCLUDE" then="%EXCLUDE%"}%',
-~~~   format:'%IF{"defined THEFORMAT" then="%THEFORMAT%" else="editor"}%'
-~~~
-%~~   IF{"defined DEPTH" 
-~~~     then=", depth: '%DEPTH%'"
-~~~   }%
-~~~
-%~~   IF{"defined NRLEAFS" 
-~~~     then=", nrleafs: '%NRLEAFS%'"
-~~~   }%
-~~~
-%~~   IF{"defined NRTOPICS" 
-~~~     then=", nrtopics: '%NRTOPICS%'"
-~~~   }%
-~~~
-%~~   IF{"defined ONCLICK" 
-~~~     then=", onclick: function(elem, editor) {$percntONCLICK$percnt}"
-~~~   }%
-~~~ }">
+<div id="clsCatSelector_%IF{"defined NAME" then="%NAME%" else="Category"}%" \
+ class="clsCatSelector { \
+   nothingFound:'%MAKETEXT{"Nothing found"}%', \
+   web:'%IF{"defined THEWEB" then="%THEWEB%" else="%BASEWEB%"}%', \
+   topic:'%BASEWEB%.%BASETOPIC%', \
+   fieldname:'%IF{"defined NAME" then="%NAME%" else="Category"}%', \
+   hidenull: '%IF{"defined HIDENULL" then="%HIDENULL%" else="off"}%', \
+   root:'%IF{"defined TOP" then="%TOP%" else="TopCategory"}%', \
+   exclude:'%IF{"defined EXCLUDE" then="%EXCLUDE%"}%', \
+   format:'%IF{"defined THEFORMAT" then="%THEFORMAT%" else="editor"}%' \
+   %IF{"defined DEPTH" then=", depth: '%DEPTH%'"}% \
+   %IF{"defined NRLEAFS" then=", nrleafs: '%NRLEAFS%'"}% \
+   %IF{"defined NRTOPICS" then=", nrtopics: '%NRTOPICS%'"}% \
+   %IF{"defined ONCLICK" then=", onclick: function(elem, editor) {$percntONCLICK$percnt}"}% \
+ }">
 <input type="hidden" name="%IF{"defined NAME" then="%NAME%" else="Category"}%" class="clsCategoryField" value="%IF{"defined VALUE" then="%VALUE%"}%" />
   %IF{"$'BUTTONS'='top' or $'BUTTONS'='on' or not defined BUTTONS" 
     then="$percntDBCALL{\"%WEB%.%TOPIC%\" section=\"buttons\"}$percnt"
@@ -105,6 +94,7 @@
 </verbatim>
 
 ---++ Test
+%JQREQUIRE{"debug"}%
 <div class="foswikiFormSteps">
 <div class="foswikiFormStep">
 %DBCALL{"%TOPIC%" NAME="Cat1" ONCLICK="showConfirm()" NRLEAFS="TestCategory:10"}%
@@ -128,7 +118,7 @@ function showConfirm(cat) {
 %DBCALL{"Applications.RenderFunctionCallers"}%
 
 ---++ Copyright
-&copy; 2006-2011 Michael Daum http://michaeldaumconsulting.com
+&copy; 2006-2013 Michael Daum http://michaeldaumconsulting.com
 
 %DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
 

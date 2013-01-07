@@ -1,6 +1,5 @@
 FOSWIKI_ROOT?=~/foswiki/trunk/core
 TARGET=\
-  jquery.tagcloud.js \
   jquery.tagselector.js \
   jquery.tagsuggestion.js \
   jquery.catselector.js \
