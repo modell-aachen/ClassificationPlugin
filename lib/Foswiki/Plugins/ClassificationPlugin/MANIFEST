@@ -19,13 +19,13 @@ data/Applications/ClassificationApp/CategoryTemplate.txt 0644
 data/Applications/ClassificationApp/Category.txt 0644
 data/Applications/ClassificationApp/CategoryViewTemplate.txt 0644
 data/Applications/ClassificationApp/ChannelManagementCategory.txt 0644
-data/Applications/ClassificationApp/CompleteDocumentation.txt 0644
 data/Applications/ClassificationApp/ClassifiedTopicEditTemplate.txt 0644
 data/Applications/ClassificationApp/ClassifiedTopicRenderIndexItem.txt 0644
 data/Applications/ClassificationApp/ClassifiedTopicTemplate.txt 0644
 data/Applications/ClassificationApp/ClassifiedTopic.txt 0644
 data/Applications/ClassificationApp/ClassifiedTopicViewTemplate.txt 0644
 data/Applications/ClassificationApp/CompetitionCategory.txt 0644
+data/Applications/ClassificationApp/CompleteDocumentation.txt 0644
 data/Applications/ClassificationApp/ContactsCategory.txt 0644
 data/Applications/ClassificationApp/CorporateCategory.txt 0644
 data/Applications/ClassificationApp/CustomersCategory.txt 0644
@@ -163,6 +163,8 @@ data/Applications/ClassificationApp/WikiTopic.txt 0644
 data/Applications/ClassificationApp/WishListForum.txt 0644
 data/_ClassificationTemplate/Category.txt 0644
 data/_ClassificationTemplate/ClassifiedTopic.txt 0644
+data/_ClassificationTemplate/TestCategory.txt 0644
+data/_ClassificationTemplate/TestTopic.txt 0644
 data/_ClassificationTemplate/TopCategory.txt 0644
 data/_ClassificationTemplate/TopicType.txt 0644
 data/_ClassificationTemplate/WebAtom.txt 0644
@@ -310,6 +312,13 @@ pub/Applications/ClassificationApp/IconSet/webcam.png 0644
 pub/Applications/ClassificationApp/IconSet/world.png 0644
 pub/Applications/ClassificationApp/IconSet/wrench_orange.png 0644
 pub/Applications/ClassificationApp/IconSet/wrench.png 0644
+pub/System/ClassificationPlugin/ClassificationPluginSnap1.png 0644
+pub/System/ClassificationPlugin/ClassificationPluginSnap2.png 0644
+pub/System/ClassificationPlugin/ClassificationPluginSnap3.png 0644
+pub/System/ClassificationPlugin/ClassificationPluginSnap4.png 0644
+pub/System/ClassificationPlugin/ClassificationPluginSnap5.png 0644
+pub/System/ClassificationPlugin/ClassificationPluginSnap6.png 0644
+pub/System/ClassificationPlugin/ClassificationPluginSnap7.png 0644
 pub/System/ClassificationPlugin/close.gif 0644
 pub/System/ClassificationPlugin/jquery.catselector.js 0644
 pub/System/ClassificationPlugin/jquery.catselector.js.gz 0644

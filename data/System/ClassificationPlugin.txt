@@ -1,11 +1,9 @@
-%META:TOPICINFO{author="BaseUserMapping_999" comment="autosave" date="1357565283" format="1.1" version="4"}%
-
-
+%META:TOPICINFO{author="micha" comment="reprev" date="1357569946" format="1.1" reprev="6" version="6"}%
 ---+!! ClassificationPlugin
 %TOC%
 
 ---++ Description
-The ClassificationPlugin is a taxonomy and folksonomy extension for Foswiki that allows you to 
+ClassificationPlugin is a taxonomy and folksonomy extension for Foswiki that allows you to 
 manage knowledge assets stored in your wiki. Users can organize their content by filing 
 topics into categories and by adding offhand tags. Classifying content using categories and tags
 are the key factors to foster sustainable knowledge management. This becomes even more important
@@ -26,7 +24,7 @@ categories narrowing down search results interactively in addition to the normal
      categories at the same time.
 
    * *Multidimensional classification*: A wiki document may participate in multiple taxonomies and folksonomies
-     at the same time. That way different facets of a document can be separated in a clean way.
+     at the same time. Different facets of a document can be separated in a clean way.
 
    * *Reusing and merging taxonomies*: A category tree once defined in one web space can be imported into another
      web space effortless. You are free to chose which part of a tree you want to import. Multiple category trees
@@ -50,25 +48,19 @@ categories narrowing down search results interactively in addition to the normal
      document types can be derived with ease. These will automatically participate in the overall knowledge management
      framework.
 
+   * *Facetted Search*: <nop>ClassificationPlugin integrates well into Foswiki:Extensions/SolrPlugin using tags and 
+     categories to drill down into search results.
+
+For further information please contact foswiki@michaeldaumconsulting.com.
+
 ---++ Screenshots
-<verbatim class="foswikiHidden">
-%IMAGE{"ClassificationPluginSnap1.png|500px" caption="Frontpage showing top categories and recently used tags" type="frame"}%
-
-%IMAGE{"ClassificationPluginSnap10.png|500px" caption="Assigning tags to a topic using autocompletion and a tag cloud" type="frame"}%
-
-%IMAGE{"ClassificationPluginSnap12.png|500px" caption="Tag search drill down" type="frame"}%
-
-%IMAGE{"ClassificationPluginSnap13.png|500px" caption="Use category trees explore your content" type="frame"}%
-
-%IMAGE{"ClassificationPluginSnap14.png|500px" caption="Display document types in category overviews" type="frame"}%
-
-%IMAGE{"ClassificationPluginSnap4.png|500px" caption="Display documents as filed into categories and tags" type="frame"}%
-
-%IMAGE{"ClassificationPluginSnap5.png|500px" caption="Filing a topic into a set of categories" type="frame"}%
-
-%IMAGE{"ClassificationPluginSnap8.png|500px" caption="Provide similar content dynamically" type="frame"}%
-</verbatim>
-
+%IMAGE{"ClassificationPluginSnap1.png" size="150" crop="on"}%
+%IMAGE{"ClassificationPluginSnap2.png" size="150" crop="on"}%
+%IMAGE{"ClassificationPluginSnap3.png" size="150" crop="on"}%
+%IMAGE{"ClassificationPluginSnap4.png" size="150" crop="on"}%
+%IMAGE{"ClassificationPluginSnap5.png" size="150" crop="on"}%
+%IMAGE{"ClassificationPluginSnap6.png" size="150" crop="on"}%
+%IMAGE{"ClassificationPluginSnap7.png" size="150" crop="on"}%
 
 ---++ Syntax Rules
 =%<nop>HIERARCHY{...}%=
@@ -97,7 +89,7 @@ similar and 0% means that the compared topics aren't corelated at all. The simil
 is computed on the base of the categorization and tagging information using a
 weighted matching coefficient.
 
----++ Plugin Installation Instructions
+---++ Installation Instructions
 %$INSTALL_INSTRUCTIONS%
 
 ---++ Plugin Info
@@ -111,6 +103,7 @@ weighted matching coefficient.
 |  Release: | %$RELEASE% |
 |  Version: | %$VERSION% |
 |  Change History: | <!-- versions below in reverse order -->&nbsp; |
+|  07 Jan 2013: | first public releaes |
 |  30 Oct 2007: | first check-in to svn |
 |  30 Oct 2006: | Initial version |
 |  Dependency: | $Foswiki::Plugins::VERSION 1.1 |
@@ -119,3 +112,11 @@ weighted matching coefficient.
 |  Perl Version: | 5.005 |
 |  Plugin Home: | Foswiki:Extensions/%TOPIC% |
 |  Feedback: | Foswiki:Support/%TOPIC% |
+
+%META:FILEATTACHMENT{name="ClassificationPluginSnap7.png" attachment="ClassificationPluginSnap7.png" attr="" comment="" date="1357569579" size="233626" user="micha" version="1"}%
+%META:FILEATTACHMENT{name="ClassificationPluginSnap6.png" attachment="ClassificationPluginSnap6.png" attr="" comment="" date="1357569581" size="108342" user="micha" version="1"}%
+%META:FILEATTACHMENT{name="ClassificationPluginSnap5.png" attachment="ClassificationPluginSnap5.png" attr="" comment="" date="1357569582" size="32247" user="micha" version="1"}%
+%META:FILEATTACHMENT{name="ClassificationPluginSnap4.png" attachment="ClassificationPluginSnap4.png" attr="" comment="" date="1357569583" size="113934" user="micha" version="1"}%
+%META:FILEATTACHMENT{name="ClassificationPluginSnap3.png" attachment="ClassificationPluginSnap3.png" attr="" comment="" date="1357569585" size="337629" user="micha" version="1"}%
+%META:FILEATTACHMENT{name="ClassificationPluginSnap2.png" attachment="ClassificationPluginSnap2.png" attr="" comment="" date="1357569586" size="30485" user="micha" version="1"}%
+%META:FILEATTACHMENT{name="ClassificationPluginSnap1.png" attachment="ClassificationPluginSnap1.png" attr="" comment="" date="1357569587" size="55821" user="micha" version="1"}%
