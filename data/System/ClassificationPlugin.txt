@@ -106,31 +106,11 @@ weighted matching coefficient.
 -->
 
 |  Plugin Author: | Michael Daum |
-|  Copyright &copy;: | 2006-2010, Michael Daum http://michaeldaumconsulting.com |
+|  Copyright &copy;: | 2006-2013, Michael Daum http://michaeldaumconsulting.com |
 |  License: | GPL ([[http://www.gnu.org/copyleft/gpl.html][GNU General Public License]]) |
 |  Release: | %$RELEASE% |
 |  Version: | %$VERSION% |
 |  Change History: | <!-- versions below in reverse order -->&nbsp; |
-|  10 May 2009: | improved tagging widget using jquery.textboxlist |
-|  26 Mar 2009: | renamed TAGRELATEDTOPICS to SIMILARTOPICS; \
-                  improved algorithm to compute similarity; \
-                  various performance optimizations |
-|  12 Dec 2008: | disable memory cache by default |
-|  17 Jan 2008: | new TAGCOOCURRENCE; \
-                  new HIERARCHY tag; \
-                  Top category can be mapped onto a real topic now; \
-                  new jquery.tagselector plugin; \
-                  reworked view for topictypes making use of new MAKEINDEX of \
-                  Foswiki:Extensions/FilterPlugin; \
-                  added category and tag search; \
-                  speedup for tag clouds |
-|  13 Nov 2007: | added semantic predicates ISA, SUBSUMES, COMPATIBLE to DBQUERY, \
-                  fixed exclude parameter to cat formfield, \
-                  fixed registering topics to Top category, \
-                  rewrite of detecting which categories a <nop>TopicType has, \
-                  normalized topic documentation according to <nop>WikiWorkbench standards, \
-                  removed pagination in tag cloud selections, \
-                  added support for displaying "recent" tags |
 |  30 Oct 2007: | first check-in to svn |
 |  30 Oct 2006: | Initial version |
 |  Dependency: | $Foswiki::Plugins::VERSION 1.1 |

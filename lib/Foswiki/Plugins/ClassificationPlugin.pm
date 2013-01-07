@@ -1,6 +1,6 @@
 # Plugin for Foswiki - The Free and Open Source Wiki, http://foswiki.org/
 #
-# Copyright (C) 2006-2010 Michael Daum http://michaeldaumconsulting.com
+# Copyright (C) 2006-2013 Michael Daum http://michaeldaumconsulting.com
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -14,19 +14,19 @@
 
 package Foswiki::Plugins::ClassificationPlugin;
 use strict;
+use warnings;
 use Foswiki::Contrib::DBCacheContrib::Search ();
 
-use vars qw( 
-  $VERSION $RELEASE $NO_PREFS_IN_TOPIC $SHORTDESCRIPTION
-  $doneInitCore $doneInitServices $baseTopic $baseWeb $css
-);
+our $VERSION = '1.00';
+our $RELEASE = '1.00';
+our $NO_PREFS_IN_TOPIC = 1;
+our $SHORTDESCRIPTION = 'A topic classification plugin and application';
 
-$VERSION = '1.00';
-$RELEASE = '1.00';
-$NO_PREFS_IN_TOPIC = 1;
-$SHORTDESCRIPTION = 'A topic classification plugin and application';
-
-$css = '<link rel="stylesheet" href="%PUBURLPATH%/%SYSTEMWEB%/ClassificationPlugin/styles.css" media="all" />';
+our $doneInitCore;
+our $doneInitServices;
+our $baseTopic;
+our $baseWeb;
+our $css = '<link rel="stylesheet" href="%PUBURLPATH%/%SYSTEMWEB%/ClassificationPlugin/styles.css" media="all" />';
   
 ###############################################################################
 sub initPlugin {
