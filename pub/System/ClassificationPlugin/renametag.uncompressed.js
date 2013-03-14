@@ -1,4 +1,5 @@
 jQuery(function($) {
+  "use strict";
 
   $(".jqRenameTag").each(function() {
     // ajaxification of renametagform

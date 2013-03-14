@@ -1,4 +1,6 @@
 (function($) {
+  "use strict";
+
   function toggleItem(list, opts) {
     var split = opts.split;
     var remove = opts.remove;

@@ -7,21 +7,17 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Michael Daum <daum@michaeldaumconsulting.com>\n"
 "Language-Team: Foswiki German Translation Team <none>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: de\n"
-
-#: data/_ClassificationTemplate/WebLeftBar.txt:3
-msgid "%1 Web"
-msgstr ""
 
 #: data/Applications/ClassificationApp/WelcomeMessage.txt:12
 msgid "... and finally delete this message."
 msgstr ""
 
-#: data/Applications/ClassificationApp/NatSkinSearchViewTemplate.txt:21
+#: data/Applications/ClassificationApp/NatSkinSearchViewTemplate.txt:23
 msgid "<span>%1</span> topics found"
 msgstr ""
 
@@ -30,21 +26,12 @@ msgid "Add more text here"
 msgstr ""
 
 #: data/Applications/ClassificationApp/ClassifiedTopicEditTemplate.txt:24
-#: data/Applications/ClassificationApp/WebLeftBar.txt:11
-#: data/_ClassificationTemplate/WebHome.txt:9
+#: data/_ClassificationTemplate/WebHome.txt:11
 msgid "Categories"
 msgstr ""
 
-#: data/_ClassificationTemplate/WebLeftBar.txt:7
-msgid "Changes"
-msgstr ""
-
-#: data/Applications/ClassificationApp/RenderCategoryEditor.txt:86
+#: data/Applications/ClassificationApp/RenderCategoryEditor.txt:80
 msgid "Clear"
-msgstr ""
-
-#: data/_ClassificationTemplate/WebLeftBar.txt:4
-msgid "Create New Topic"
 msgstr ""
 
 #: data/Applications/ClassificationApp/WelcomeMessage.txt:10
@@ -89,7 +76,7 @@ msgstr ""
 msgid "Filed in %1"
 msgstr ""
 
-#: data/Applications/ClassificationApp/RenderCategoryEditor.txt:88
+#: data/Applications/ClassificationApp/RenderCategoryEditor.txt:82
 msgid "Filter"
 msgstr ""
 
@@ -106,10 +93,6 @@ msgstr ""
 #: data/Applications/ClassificationApp/CategoryEditTemplate.txt:27
 #: data/Applications/ClassificationApp/RenderCategorySettings.txt:26
 msgid "Imported Categories"
-msgstr ""
-
-#: data/_ClassificationTemplate/WebLeftBar.txt:5
-msgid "Index"
 msgstr ""
 
 #: data/Applications/ClassificationApp/WelcomeMessage.txt:9
@@ -129,10 +112,6 @@ msgstr ""
 msgid "Nothing found"
 msgstr ""
 
-#: data/_ClassificationTemplate/WebLeftBar.txt:8
-msgid "Notifications"
-msgstr ""
-
 #: data/Applications/ClassificationApp/CategoryEditTemplate.txt:23
 msgid "Order"
 msgstr ""
@@ -145,16 +124,8 @@ msgstr ""
 msgid "Parent topic"
 msgstr ""
 
-#: data/_ClassificationTemplate/WebLeftBar.txt:11
-msgid "Preferences"
-msgstr ""
-
 #: data/_ClassificationTemplate/WebHome.txt:56
 msgid "Quick links"
-msgstr ""
-
-#: data/_ClassificationTemplate/WebLeftBar.txt:9
-msgid "RSS Feed"
 msgstr ""
 
 #: data/_ClassificationTemplate/WebLinks.txt:21
@@ -165,16 +136,11 @@ msgstr ""
 msgid "Recent changes"
 msgstr ""
 
-#: data/Applications/ClassificationApp/RenderTagEditor.txt:54
+#: data/Applications/ClassificationApp/RenderTagEditor.txt:42
 msgid "Related tags"
 msgstr ""
 
-#: data/Applications/ClassificationApp/WebTagCloud.txt:22
-#: data/_ClassificationTemplate/WebLeftBar.txt:6
-msgid "Search"
-msgstr ""
-
-#: data/Applications/ClassificationApp/NatSkinSearchViewTemplate.txt:5
+#: data/Applications/ClassificationApp/NatSkinSearchViewTemplate.txt:7
 msgid "Search result for %1"
 msgstr ""
 
@@ -202,15 +168,10 @@ msgstr ""
 msgid "Some tips:"
 msgstr ""
 
-#: data/_ClassificationTemplate/WebLeftBar.txt:10
-msgid "Statistics"
-msgstr ""
-
 #: data/Applications/ClassificationApp/CategorizedTopic.txt:40
 #: data/Applications/ClassificationApp/ClassifiedTopic.txt:53
 #: data/Applications/ClassificationApp/RenderCategoryFactory.txt:66
 #: data/Applications/ClassificationApp/TaggedTopic.txt:33
-#: data/Applications/ClassificationApp/WebTagCloud.txt:27
 msgid "Submit"
 msgstr ""
 
@@ -219,18 +180,18 @@ msgid "Summary"
 msgstr ""
 
 #: data/Applications/ClassificationApp/ClassifiedTopicEditTemplate.txt:28
-#: data/_ClassificationTemplate/WebHome.txt:19
+#: data/_ClassificationTemplate/WebHome.txt:21
 msgid "Tags"
 msgstr ""
 
-#: data/Applications/ClassificationApp/WebAtom.txt:3
-#: data/Applications/ClassificationApp/WebRss.txt:5
-#: data/_ClassificationTemplate/WebAtom.txt:3
-#: data/_ClassificationTemplate/WebRss.txt:5
+#: data/Applications/ClassificationApp/WebAtom.txt:5
+#: data/Applications/ClassificationApp/WebRss.txt:7
+#: data/_ClassificationTemplate/WebAtom.txt:5
+#: data/_ClassificationTemplate/WebRss.txt:7
 msgid "The %1 web of Foswiki, the Free and Open Source Wiki."
 msgstr ""
 
-#: data/_ClassificationTemplate/WebNotify.txt:2
+#: data/_ClassificationTemplate/WebNotify.txt:4
 msgid ""
 "This is a subscription service to be automatically notified by e-mail when "
 "topics change in this %1 web. This is a convenient service, so you do not "
@@ -242,10 +203,6 @@ msgstr ""
 #: data/Applications/ClassificationApp/ClassifiedTopic.txt:28
 #: data/Applications/ClassificationApp/RenderCategoryFactory.txt:27
 msgid "Title"
-msgstr ""
-
-#: data/Applications/ClassificationApp/WebLeftBar.txt:13
-msgid "Tools"
 msgstr ""
 
 #: data/Applications/ClassificationApp/RenderCategoryFactory.txt:34
@@ -260,11 +217,11 @@ msgstr ""
 msgid "Topics tagged \"%1\""
 msgstr ""
 
-#: data/Applications/ClassificationApp/RenderCategoryEditor.txt:87
+#: data/Applications/ClassificationApp/RenderCategoryEditor.txt:81
 msgid "Undo"
 msgstr ""
 
-#: data/_ClassificationTemplate/WebHome.txt:4
+#: data/_ClassificationTemplate/WebHome.txt:6
 msgid "Welcome"
 msgstr ""
 
@@ -288,7 +245,7 @@ msgstr ""
 msgid "classified topic"
 msgstr ""
 
-#: data/Applications/ClassificationApp/RenderTagEditor.txt:56
+#: data/Applications/ClassificationApp/RenderTagEditor.txt:44
 msgid "found in %1 other topic(s)"
 msgstr ""
 

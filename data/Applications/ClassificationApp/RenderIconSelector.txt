@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565060" format="1.1" version="5"}%
+%META:TOPICINFO{author="micha" comment="reprev" date="1357824864" format="1.1" reprev="7" version="7"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -17,28 +17,50 @@ This function renders a selection widget to chose an icon
 <verbatim class="tml">
 %STARTINCLUDE%<!-- render photo selector -->
 <div class="clsIconSelector">
+<input type="hidden" class="clsIconInput" name="Icon" value="%IF{"defined VALUE" then="%VALUE%"}%" />
 %ATTACHMENTS{
    topic="%IF{"defined SOURCE" then="%SOURCE%" else="Applications.ClassificationApp.IconSet"}%"
    name=".*\.(jpe?g|JPE?G|gif|GIF|png|PNG)$"
    sort="name"
-   format="<div class='clsIconContainer $percntIF{\"$VALUE='$name'\" then=\"selected\"}$percnt '>
-      <input type='radio' class='foswikiRadioButton clsIconInput ' id='clsIconInput$index' name='Icon' value='$name' $percntIF{\"$VALUE='$name'\" then=\" checked='checked'\"}$percnt />
-      <label for='clsIconInput$index' class='foswikiLabel'>
-        <img class='clsIcon $percntIF{\"'%VALUE%'='$name'\" then=\" selected orig\"}$percnt' src='$urlpath' alt='$name' title='$name' height='16px' />
-      </label></div>"
+   format="<div class='clsIconContainer'><img class='clsIcon' src='$url' alt='$name' title='$name' height='16px' /></div>"
 }%
 %CLEAR%
-<input type="hidden" name="Icon" value="" />
 </div>
 <literal>
 <script>
 jQuery(function($) {
-  // click handler for icons
-  $("input.clsIconInput").change(function() {
-    var $this = $(this);
-    var $container = $this.parent();
-    $(".clsIconContainer").removeClass("selected");
-    $container.addClass("selected");
+  $(".clsIconSelector").each(function() {
+    var $selector = $(this), 
+    $input = $selector.find(".clsIconInput");
+
+    function updateSelection(name) {
+      $selector.find(".clsIconContainer").removeClass("selected")
+
+      if (typeof(name) === 'undefined') {
+        name = $(".clsIconInput").val();
+      }
+
+      if (name) {
+        $selector.find("img[alt='"+name+"']").parent().addClass("selected");
+      }
+      $input.val(name);
+    }
+
+    $selector.find(".clsIcon").click(function(e) {
+      var $this = $(this),
+          $container = $this.parent(),
+          name = $this.attr("alt");
+
+      if ($container.is(".selected")) {
+        updateSelection("");
+      } else {
+        updateSelection(name);
+      }
+      e.preventDefault();
+      return false;
+    });
+
+    updateSelection()
   });
 });
 </script>

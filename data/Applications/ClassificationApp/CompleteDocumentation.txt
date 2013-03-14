@@ -1,6 +1,4 @@
-%META:TOPICINFO{author="BaseUserMapping_999" comment="autosave" date="1357565279" format="1.1" version="8"}%
-
-
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565279" format="1.1" version="8"}%
 %META:TOPICPARENT{name="WikiApplication"}%
 %TOC{depth="4"}%
 ---++ Description

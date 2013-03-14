@@ -1,4 +1,6 @@
 jQuery(function($) {
+  "use strict";
+
   $(".clsTagSuggestion:not(.jqInitedTagSuggestion)").livequery(function() {
     var $this = $(this);
     $this.addClass("jqInitedTagSuggestion");

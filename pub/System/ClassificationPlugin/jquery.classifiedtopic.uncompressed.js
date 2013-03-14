@@ -1,4 +1,6 @@
 jQuery(function($) {
+  "use strict";
+
   $('.clsTopicInfoMore').live("click", function() {
     var $this = $(this),
         $container = $this.parent(),

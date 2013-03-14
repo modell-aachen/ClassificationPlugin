@@ -1,6 +1,4 @@
-%META:TOPICINFO{author="BaseUserMapping_999" comment="autosave" date="1357565279" format="1.1" version="8"}%
-
-
+%META:TOPICINFO{author="micha" comment="reprev" date="1357646398" format="1.1" reprev="9" version="9"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -26,10 +24,10 @@ a summary for an object of type ClassifiedTopic.
      <a href='$url'>%IF{"defined TITLE" then="%TITLE%" else="$title"}%</a>$percntIF{
        \"'$count'>'0'\" then=\"&nbsp;($count)\"
      }$percnt<!-- -->
-     <div class='foswikiTopicInfo'>$summary</div>
+     $percntIF{\"'$summary'!=''\" then=\"<div class='foswikiTopicInfo'>$summary</div>\"}$percnt<!-- -->
      <div class='clsSubCategories'>$children $more</div>
    </div>"
-}%</noautolink><!-- -->%STOPINCLUDE%
+}%%CLEAR%</noautolink><!-- -->%STOPINCLUDE%
 </verbatim>
 
 ---++ Test
