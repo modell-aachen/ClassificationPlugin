@@ -1,48 +1,21 @@
-%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565279" format="1.1" version="9"}%
+%META:TOPICINFO{author="micha" comment="reprev" date="1366625390" format="1.1" reprev="10" version="10"}%
 %META:TOPICPARENT{name="TopicType"}%
 %TOC{depth="2"}%
 
 %DBCALL{"Applications.RenderTopicInstaller" TYPE="TopicType" PARENT="TopicType"}%
 
 ---++ Documentation
-%STARTSECTION{name="documentation" type="section"}%
+%STARTSECTION{"documentation"}%
 This is a TopicType for categorization only. 
 
-See also: CategorizedTopicTemplate, ClassifiedTopic, TaggedTopic
-%ENDSECTION{name="documentation" type="section"}%
+See also: ClassifiedTopic, TaggedTopic
+%ENDSECTION{"documentation"}%
 
 ---++ Topics of type '%TOPIC%'
 %STARTINCLUDE%<!-- -->
-%TWISTY{link="%BUTTON{
-  "%IF{"defined 'LABEL'"
-    then="%LABEL%"
-    else="%MAKETEXT{"New"}%"
-  }%" 
-  icon="add"
-}%%CLEAR%"}%
-
-<div class="foswikiFormSteps">
-<form action="%SCRIPTURLPATH{"edit"}%/%BASEWEB%/" method="post">
-<input type="hidden" name="topicparent" value="%BASEWEB%.%BASETOPIC%" />
-<input type="hidden" name="web" value="%BASEWEB%" />
-<input type="hidden" name="onlynewtopic" value="on" />
-<input type="hidden" name="formtemplate" value="Applications.ClassificationApp.CategorizedTopic" />
-<input type="hidden" name="templatetopic" value="Applications.ClassificationApp.CategorizedTopicTemplate" />
-<input type="hidden" name="template" value="Applications.ClassificationApp.CategorizedTopicEdit" />
-<input type="hidden" name="TopicType" value="CategorizedTopic" />
-<input type="hidden" name="Summary" value="" />
-<input type="hidden" name="Category" value="%IF{"defined CAT" then="%CAT%" else="TopCategory"}%" />
-<div class="foswikiFormStep">
-  <h3>Name:</h3>
-  <input class="foswikiInputField" type="text" name="topic" size="40" />
-</div>
-<div class="foswikiFormStep foswikiFormButtons foswikiFormLast">
-    %BUTTON{"%MAKETEXT{"Submit"}%" type="submit" icon="tick"}%
-    %CLEAR%
-</div>
-</form>
-</div>
-%ENDTWISTY%
+%DBCALL{"Applications.RenderSimpleTopicCreator"
+  EDITOR="Applications.ClassificationApp.CategorizedTopicEdit"
+}%
 
 %DBCALL{"Applications.RenderTopicsOfType"
   FIELDS="TopicTitle, Summary, Category"
@@ -59,7 +32,7 @@ See also: CategorizedTopicTemplate, ClassifiedTopic, TaggedTopic
 
 %META:FORM{name="Applications.TopicType"}%
 %META:FIELD{name="TopicType" title="TopicType" value="TopicType, DataForm, DocuTopic"}%
-%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="CategorizedTopic"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
 %META:FIELD{name="Inheritance" attributes="" title="Inheritance" value="ApplicationTopic"}%
-%META:FIELD{name="Summary" attributes="" title="Summary" value="Categorized topics"}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Categorized topics"}%
 %META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

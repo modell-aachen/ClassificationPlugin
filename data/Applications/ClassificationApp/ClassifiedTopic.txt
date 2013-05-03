@@ -1,63 +1,21 @@
-%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565279" format="1.1" version="25"}%
+%META:TOPICINFO{author="micha" comment="reprev" date="1366625302" format="1.1" reprev="26" version="26"}%
 %META:TOPICPARENT{name="TopicType"}%
 %TOC{depth="2"}%
 %DBCALL{"Applications.RenderTopicInstaller" TEXT="Install '%TOPIC%' TopicType" TYPE="TopicType" PARENT="TopicType"}%
 
 ---++ Documentation
-%STARTSECTION{name="documentation" type="section"}%
+%STARTSECTION{"documentation"}%
 This TopicType inherits the properties of CategorizedTopic and TaggedTopic. Take those types if
 you want to categorize or tag content solely.
 
-See also: ClassifiedTopicTemplate, ClassifiedTopicViewTemplate
-%ENDSECTION{name="documentation" type="section"}%
+See also: ClassifiedTopicViewTemplate
+%ENDSECTION{"documentation"}%
 
 ---++ Topics of type '%TOPIC%'
 %STARTINCLUDE%<!--  -->
-%TWISTY{link="%BUTTON{"%IF{"defined 'LABEL'" then="%LABEL%" else="%MAKETEXT{"New"}%"}%" icon="add"}%%CLEAR%"}%
-
-<form action="%SCRIPTURLPATH{"edit"}%/%BASEWEB%/" method="post" >
-<input type="hidden" name="topicparent" value="%BASEWEB%.%HOMETOPIC%" />
-<input type="hidden" name="onlynewtopic" value="on" />
-<input type="hidden" name="formtemplate" value="Applications.ClassificationApp.ClassifiedTopic" />
-<input type="hidden" name="template" value="Applications.ClassificationApp.ClassifiedTopicEdit" />
-<input type="hidden" name="TopicType" value="<nop>ClassifiedTopic, <nop>CategorizedTopic, <nop>TaggedTopic" />
-<input type="hidden" name="Summary" value="" />
-<input type="hidden" name="topic" id="classifiedtopic" value="" />
-<div class="foswikiFormSteps">
-  <div class="foswikiFormStep">
-    <h3>%MAKETEXT{"Title"}%:</h3>
-    <input class="foswikiInputField" type="text" name="TopicTitle" id="classifiedtitle" size="40" />
-  </div>
-  %TWISTY{
-    showlink="%MAKETEXT{"Show advanced options"}%"
-    hidelink="%MAKETEXT{"Hide advanced options"}%"
-    showimgleft="%TMPL:P{"iconpath:toggle"}%"
-    hideimgleft="%TMPL:P{"iconpath:toggleopen"}%"
-  }%
----
-  <div class="foswikiFormStep">
-    <h3>Template:</h3>
-    <select class="foswikiSelectField" name="templatetopic">
-      <option value="Applications.ClassificationApp.ClassifiedTopicTemplate">Default template</option>
-      %DBQUERY{"TopicType=~'\bTopicTemplate\b'"
-        web="%BASEWEB%"
-        format="<option value='$web.$topic' $percntIF{
-          \"'%URLPARAM{"tmpl" default="%TEMPLATE%"}%'='$topic'\" 
-          then=\" selected\"
-        }$percnt>$expand(topictitle)</option>"
-      }%
-    </select>
-  </div>
-  %ENDTWISTY%
-  <div class="foswikiFormStep foswikiFormButtons">
-    %BUTTON{"%MAKETEXT{"Submit"}%" type="submit" icon="tick"}%
-    %CLEAR%
-  </div>
-</div>
-</form> 
-%ENDTWISTY%
-%JQREQUIRE{"wikiword"}%
-%ADDTOZONE{"script" section="javascript" requires="JQUERYPLUGIN::WIKIWORD"}%
+%DBCALL{"Applications.RenderSimpleTopicCreator"
+  EDITOR="Applications.ClassificationApp.ClassifiedTopicEdit"
+}%
 
 %DBCALL{"Applications.RenderTopicsOfType" 
   FIELDS="TopicTitle, Summary, Tag, Category, Changed"
@@ -65,23 +23,10 @@ See also: ClassifiedTopicTemplate, ClassifiedTopicViewTemplate
 }%
 <!--  -->%STOPINCLUDE%
 
----++ Javascript
-<verbatim class="tml">
-%STARTSECTION{"javascript"}%<literal>
-<script>
-(function($) {
-$(function() {
-  $("#classifiedtopic").wikiword("#classifiedtitle");
-});
-})(jQuery);
-</script>
-</literal>%ENDSECTION{"javascript"}%
-</verbatim>
-
 ---++ <nop>%TOPIC% form
 | *Name:*| *Type:* | *Size:* | *Values:* | *Description:* | *Attributes:* |
 | TopicType | label | 1 |ClassifiedTopic, CategorizedTopic, TaggedTopic| Document type  |  |
-| <nop>TopicTitle | text | 75 | | title of this topic | |
+| <nop>TopicTitle | text | 75 | | title of this topic |  |
 | Summary | text | 75 | | short description of the role of this topic | |
 | Tag | tag | 30 | | keywords for this topic | |
 | Category | cat | 1 |  | categories this topic is field to |  |

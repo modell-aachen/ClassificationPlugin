@@ -165,7 +165,7 @@ jQuery(function($) {
         });
 
         // hilight current values
-        var values = self.inputField.val() || '';
+        var values = $.trim(self.inputField.val() || '');
         values = values.split(/\s*,\s*/);
         var len = values.length;
         for (var i = 0; i < len; i++) {
@@ -218,7 +218,7 @@ jQuery(function($) {
     var self = this;
 
     $.log("CATSELECTOR: adding value "+val);
-    var values = self.inputField.val() || '';
+    var values = $.trim(self.inputField.val() || '');
     values = values.split(/\s*,\s*/);
     var newValues = [];
     for (var i = 0; i < values.length; i++)  {
@@ -239,7 +239,7 @@ jQuery(function($) {
   $.CatSelector.prototype.removeVal = function(val) {
     var self = this;
 
-    var values = self.inputField.val() || '';
+    var values = $.trim(self.inputField.val() || '');
     values = values.split(/\s*,\s*/);
     var newValues = [];
     for (var i = 0; i < values.length; i++)  {

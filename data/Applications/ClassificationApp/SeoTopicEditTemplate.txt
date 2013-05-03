@@ -1,0 +1,83 @@
+%META:TOPICINFO{author="micha" comment="reprev" date="1366714044" format="1.1" reprev="2" version="2"}%
+%META:TOPICPARENT{name="TopicView"}%
+%{<verbatim class="tml">}%
+%TMPL:INCLUDE{"Applications.ClassificationApp.ClassifiedTopicEdit"}%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"formdefinition"}%Applications.ClassificationApp.SeoTopic%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"topictype"}%%MAKETEXT{"seo topic"}%%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"formfields"}%<!-- --> 
+<input type="hidden" name="action" value="text" /> 
+%TMPL:P{"categoriestab"}% 
+%TMPL:P{"tagstab"}% 
+%TMPL:P{"seotab"}% 
+<!-- -->%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"seotab"}%<!-- -->
+%TAB{"%MAKETEXT{"SEO"}%"}%
+---++ %MAKETEXT{"Search engine optimization"}%
+%RENDERFOREDIT{"%BASEWEB%.%BASETOPIC%"
+  form="%TMPL:P{"formdefinition"}%"
+  fields="MetaKeywords, MetaDescription"
+  MetaKeywords_title="%MAKETEXT{"Meta keywords"}%"
+  MetaDescription_title="%MAKETEXT{"Meta desciption"}%"
+  MetaKeywords_default="%TAGINFO{topic="%BASEWEB%.%BASETOPIC%" format="$name"}%"
+  MetaDescription_default="%FORMFIELD{"Summary" topic="%BASEWEB%.%BASETOPIC%"}%"
+}%
+<literal>
+<script>
+jQuery(function($) {
+  $(document).on("click", "#clsFetchDescription", function() {
+    var $field = $(this).parents(".foswikiFormStep:first").find("textarea"),
+        description = $("input[name=Summary]").val();
+
+    if (!description) {
+      description = $("#topic").val();
+    }
+
+    $field.val(description.replace(/<[^>]*>/g, "").replace(/\n\s*\n/g, "").substr(0, 160));
+    return false;
+  });
+
+  $(document).on("click", "#clsFetchKeywords", function() {
+    var $field = $(this).parents(".foswikiFormStep:first").find("input"),
+        keywords = [];
+
+    $("input[name=Tag], input[name=Category]").each(function() {
+      var vals = $.trim($(this).val()).split(/\s*,\s*/);
+      $.each(vals, function(index, val) {
+        val = val.replace(/Category$/, "");
+        if (val) {
+          keywords.push(val);
+        }
+      });
+    });
+
+    $field.val(keywords.join(", "));
+    return false;
+  });
+});
+</script>
+</literal>
+%ENDTAB%
+<!-- -->%TMPL:END%
+</verbatim>
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"validationrules"}% {'MetaDescription': {maxlength:160}} %TMPL:END%
+</verbatim>
+
+%META:FORM{name="Applications.ApplicationTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="TopicView"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Editor for SeoTopics"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

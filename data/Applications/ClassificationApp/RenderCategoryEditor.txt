@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565281" format="1.1" version="14"}%
+%META:TOPICINFO{author="micha" comment="autosave" date="1365700493" format="1.1" version="15"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -26,21 +26,7 @@
 <verbatim class="tml">
 %STARTINCLUDE%<!-- --> 
 <noautolink>
-<div id="clsCatSelector_%IF{"defined NAME" then="%NAME%" else="Category"}%" \
- class="clsCatSelector { \
-   nothingFound:'%MAKETEXT{"Nothing found"}%', \
-   web:'%IF{"defined THEWEB" then="%THEWEB%" else="%BASEWEB%"}%', \
-   topic:'%BASEWEB%.%BASETOPIC%', \
-   fieldname:'%IF{"defined NAME" then="%NAME%" else="Category"}%', \
-   hidenull: '%IF{"defined HIDENULL" then="%HIDENULL%" else="off"}%', \
-   root:'%IF{"defined TOP" then="%TOP%" else="TopCategory"}%', \
-   exclude:'%IF{"defined EXCLUDE" then="%EXCLUDE%"}%', \
-   format:'%IF{"defined THEFORMAT" then="%THEFORMAT%" else="editor"}%' \
-   %IF{"defined DEPTH" then=", depth: '%DEPTH%'"}% \
-   %IF{"defined NRLEAFS" then=", nrleafs: '%NRLEAFS%'"}% \
-   %IF{"defined NRTOPICS" then=", nrtopics: '%NRTOPICS%'"}% \
-   %IF{"defined ONCLICK" then=", onclick: function(elem, editor) {$percntONCLICK$percnt}"}% \
- }">
+<div id="clsCatSelector_%IF{"defined NAME" then="%NAME%" else="Category"}%" class="clsCatSelector { nothingFound:'%MAKETEXT{"Nothing found"}%', web:'%IF{"defined THEWEB" then="%THEWEB%" else="%BASEWEB%"}%', topic:'%BASEWEB%.%BASETOPIC%', fieldname:'%IF{"defined NAME" then="%NAME%" else="Category"}%', hidenull: '%IF{"defined HIDENULL" then="%HIDENULL%" else="off"}%', root:'%IF{"defined TOP" then="%TOP%" else="TopCategory"}%', exclude:'%IF{"defined EXCLUDE" then="%EXCLUDE%"}%', format:'%IF{"defined THEFORMAT" then="%THEFORMAT%" else="editor"}%' %IF{"defined DEPTH" then=", depth: '%DEPTH%'"}% %IF{"defined NRLEAFS" then=", nrleafs: '%NRLEAFS%'"}% %IF{"defined NRTOPICS" then=", nrtopics: '%NRTOPICS%'"}% %IF{"defined ONCLICK" then=", onclick: function(elem, editor) {$percntONCLICK$percnt}"}% }">
 <input type="hidden" name="%IF{"defined NAME" then="%NAME%" else="Category"}%" class="clsCategoryField" value="%IF{"defined VALUE" then="%VALUE%"}%" />
   %IF{"$'BUTTONS'='top' or $'BUTTONS'='on' or not defined BUTTONS" 
     then="$percntDBCALL{\"%WEB%.%TOPIC%\" section=\"buttons\"}$percnt"
