@@ -675,11 +675,11 @@ sub getUrl {
   
   my $hierWeb = $this->{hierarchy}->{web};
   if ($hierWeb ne $this->{origWeb}) {
-    return Foswiki::Func::getScriptUrl($hierWeb, 
+    return Foswiki::Func::getScriptUrlPath($hierWeb, 
       'TopCategory', 'view', catname=>$this->{name});
   }
 
-  return Foswiki::Func::getScriptUrl($hierWeb, 
+  return Foswiki::Func::getScriptUrlPath($hierWeb, 
       $this->{name}, 'view');
 }
 
