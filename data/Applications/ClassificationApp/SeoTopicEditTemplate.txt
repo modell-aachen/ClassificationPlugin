@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="micha" comment="reprev" date="1367670792" format="1.1" reprev="3" version="3"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1375429181" format="1.1" reprev="3" version="4"}%
 %META:TOPICPARENT{name="TopicView"}%
 %{<verbatim class="tml">}%
 %TMPL:INCLUDE{"Applications.ClassificationApp.ClassifiedTopicEdit"}%
@@ -37,12 +37,12 @@
 <literal>
 <script>
 jQuery(function($) {
-  $(document).on("click", "#clsFetchTitle", function() {
+  $(document).on("click", "#clsGenerateTitle", function() {
     $(this).parents(".foswikiFormStep:first").find("input").val($("input[name=TopicTitle]").val() + ' %HTMLTITLESEP{default="-"}% ' + '%WIKITOOLNAME%');
     return false;
   });
 
-  $(document).on("click", "#clsFetchDescription", function() {
+  $(document).on("click", "#clsGenerateDescription", function() {
     var $field = $(this).parents(".foswikiFormStep:first").find("textarea"),
         description = $("input[name=Summary]").val();
 
@@ -54,7 +54,7 @@ jQuery(function($) {
     return false;
   });
 
-  $(document).on("click", "#clsFetchKeywords", function() {
+  $(document).on("click", "#clsGenerateKeywords", function() {
     var $field = $(this).parents(".foswikiFormStep:first").find("input"),
         keywords = [];
 

@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357564984" format="1.1" version="14"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1380194836" format="1.1" reprev="15" version="15"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -24,11 +24,11 @@ See the CategoryTemplate.
      top="%IF{"defined CAT" then="%CAT%" else="%URLPARAM{"catname" default="%BASETOPIC%"}%"}%"
      exclude="%IF{"defined CAT" then="%CAT%" else="%URLPARAM{"catname" default="%BASETOPIC%"}%"}%"
      depth="2"
-     format="$trunctitle;$topic;$origweb$n"
+     format="($trunctitle);$topic;$origweb$n"
    }%"
   cols="%IF{"defined CLASSIFICATIONPLUGIN_NRCOLS" then="%CLASSIFICATIONPLUGIN_NRCOLS%" else="3"}%"
   split="\n"
-  pattern="(.*);(.*);(.*)"
+  pattern="\((.*)\);(.*);(.*)"
   sort="off"
   format="$percntDBCALL{\"$3.$2->RenderIndexItem\" TITLE=\"$1\"}$percnt"
 }%

@@ -1,13 +1,14 @@
-%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565281" format="1.1" version="10"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1381661507" format="1.1" reprev="12" version="12"}%
 %META:TOPICPARENT{name="TopicFunction"}%
-%TOC{depth="2"}%
+ %TOC{depth="2"}%
 
 ---++ Documentation
 %STARTSECTION{name="documentation" type="section"}%
 
 ---+++++ Parameters
-   * TOP: node from where to start the category, defaults to 'TopCategory'
-   * THEWEB: where to search for categories, defaults to BASEWEB
+   * TOP: node from where to start the category, defaults to "TopCategory"
+   * THEWEB: where to search for categories, defaults to "%<nop>BASEWEB%"
+   * MODE: could be "edit", "select" or "browse", defaults to "browse"
 
 See also RenderCategoryEditor.
 
@@ -16,13 +17,21 @@ See also RenderCategoryEditor.
 ---++ Implementation
 <verbatim class="tml">
 %STARTINCLUDE%<!-- -->
-%DBCALL{"Applications.ClassificationApp.RenderCategoryEditor" 
-  THEWEB="%IF{"defined THEWEB" then="%THEWEB%" else="%BASEWEB%"}%" 
-  TOP="%IF{"defined TOP" then="%TOP%" else="TopCategory"}%"
-  THEFORMAT="browser"
-}%
-<style>.clsClearButton, .clsUndoButton {display:none}</style>
-<!-- -->%STOPINCLUDE%
+<div class="jqHierarchy clsBrowser" data-web="%THEWEB{default="%BASEWEB%"}%" data-root="%TOP{default="TopCategory"}%" data-mode="%MODE{default="browse"}%" data-display-counts="true" data-container=".jqHierarchyContainer">
+  <div class="jqHierarchyButtons">
+    <input type="text" size="28" class="foswikiInputField jqHierarchySearchField" style="display:none" /> 
+    %BUTTON{"%MAKETEXT{"Filter"}%" icon="find" class="simple jqHierarchySearchButton" title="%MAKETEXT{"Search for matching categories"}%"}% 
+    %IF{"'%USERNAME%' ingroup 'AdminGroup'" 
+      then="%BUTTON{"%MAKETEXT{"Refresh"}%" icon="arrow_refresh" class="jqHierarchyRefreshButton simple" title="%MAKETEXT{"Refresh hierarchy cache on the backend"}%"}%"
+    }%%CLEAR% 
+  </div>
+  <div class="jqHierarchyContainer jqUITooltip" data-theme='default' data-position="right" data-arrow="true"></div>
+</div>
+%JQREQUIRE{"jstree, ui::tooltip, blockui"}%<!-- -->
+%ADDTOZONE{"script" 
+  text="<script src='%PUBURLPATH%/System/ClassificationPlugin/jquery.hierarchy.js'></script>" 
+  requires="JQUERYPLUGIN::JSTREE, JQUERYPLUGIN::BLOCKUI"
+}%<!-- -->%STOPINCLUDE%
 </verbatim>
 
 ---++ Test

@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565281" format="1.1" version="6"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1370592984" format="1.1" reprev="7" version="7"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -20,7 +20,7 @@ if installed for better performance.
 <verbatim class="tml">
 %STARTINCLUDE%%SOLRSEARCH{
   web="%IF{"defined THEWEB" then="%THEWEB%" else="%BASEWEB%"}%"
-  facetlimit="tag=%IF{"defined LIMIT" then="%LIMIT%" else="10"}%"
+  facetlimit="tag=%IF{"defined LIMIT and not isempty LIMIT" then="%LIMIT%" else="10"}%"
   field="none"
   facets="tag"
   facetprefix="%IF{"defined TAG" then="%TAG%"}%"
@@ -35,7 +35,7 @@ if installed for better performance.
 ---++ Test
 <noautolink>
 <pre>
-%DBCALL{"%TOPIC%"}%
+%DBCALL{"%TOPIC%" THEWEB="%URLPARAM{"theweb"}%" TAG="%URLPARAM{"thetag"}%"}%
 </pre>
 </noautolink>
 

@@ -15,6 +15,7 @@
 package Foswiki::Plugins::ClassificationPlugin::Services;
 
 use strict;
+use warnings;
 
 our $debug = 0;
 our $baseWeb;

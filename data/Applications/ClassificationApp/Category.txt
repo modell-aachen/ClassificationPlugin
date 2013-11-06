@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565279" format="1.1" version="15"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1382706529" format="1.1" reprev="17" version="18"}%
 %META:TOPICPARENT{name="TopicType"}%
 %TOC%
 %DBCALL{"Applications.RenderTopicInstaller" 
@@ -14,24 +14,13 @@ categories are a predefined hierarchy where content is situated in separate comp
 
 Categories themselves are CategorizedTopics thus implementing a hierarchy.
 
-See also: See CategorizedTopic, ClassifiedTopic, TaggedTopic, CategoryTemplate, CategoryViewTemplate, CategoryEditTemplate
+See also: See [[CategorizedTopic]], [[ClassifiedTopic]], [[TaggedTopic]], [[CategoryTemplate]], [[CategoryViewTemplate]], [[CategoryEditTemplate]]
 %ENDSECTION{name="documentation" type="section"}%
 
 %STARTINCLUDE%<!-- -->
-%TWISTY{
-  link="%BUTTON{
-    "%IF{"defined 'LABEL'" then="%LABEL%" else="%MAKETEXT{"New"}%"}%" 
-    icon="add"
-    style="margin-bottom:2px;"
-  }%%CLEAR%"
-}%
-%DBCALL{"Applications.ClassificationApp.RenderCategoryFactory"}%
-%ENDTWISTY%
 %DBCALL{"Applications.ClassificationApp.RenderCategoryBrowser" 
   THEWEB="%URLPARAM{"web" default="%BASEWEB%"}%"
-  BUTTONS="bottom"
-}%
-<!-- -->%STOPINCLUDE%
+}%<!-- -->%STOPINCLUDE%
 
 ---++ %TOPIC% form
 | *Name:*| *Type:* | *Size:* | *Values:* | *Description:* | *Attributes:* |

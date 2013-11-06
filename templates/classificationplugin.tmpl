@@ -1,4 +1,25 @@
-%TMPL:DEF{"categoryeditor"}%%DBCALL{
+%TMPL:DEF{"categoryeditor"}%%TMPL:P{"categoryeditor::jstree"}%%TMPL:END%
+
+%TMPL:DEF{"categoryeditor::jstree"}%<!-- -->
+%JQREQUIRE{"jstree, pnotify, wikiword, ui::tooltip"}%<!-- -->
+%ADDTOZONE{"script" 
+  text="<script src='%PUBURLPATH%/System/ClassificationPlugin/jquery.hierarchy.js'></script>" 
+  requires="JQUERYPLUGIN::JSTREE, JQUERYPLUGIN::PNOTIFY, JQUERYPLUGIN::WIKIWORD"
+}%<!-- -->
+<div class="jqHierarchy clsBrowser" data-web="$baseweb" data-root="$top" data-input-field-name="$name" data-mode="select" data-display-counts="true" data-container=".jqHierarchyContainer">
+<input type="hidden" class="foswikiInputField" name="$name" value="$value" />
+<div class="jqHierarchyButtons jqUITooltip" data-theme='info' data-position="top" data-arrow="true">
+  <input type="text" size="28" class="foswikiInputField jqHierarchySearchField" style="display:none" /> 
+  %BUTTON{"%MAKETEXT{"Filter"}%" icon="find" class="simple jqHierarchySearchButton" title="%MAKETEXT{"Search for a matching categories"}%"}% 
+  %BUTTON{"%MAKETEXT{"Clear"}%" icon="application" class="simple jqHierarchyClearButton" title="%MAKETEXT{"Deselect all categories"}%"}%
+  %BUTTON{"%MAKETEXT{"Reset"}%" icon="arrow_refresh" class="simple jqHierarchyResetButton" title="%MAKETEXT{"Reset selection to initial state"}%"}%
+  %CLEAR% 
+</div>
+<div class="jqHierarchyContainer jqUITooltip" data-theme='default' data-position="right" data-arrow="true"></div>
+</div>
+<!-- -->%TMPL:END%
+
+%TMPL:DEF{"categoryeditor::jstreeview"}%%DBCALL{
   "Applications.ClassificationApp.RenderCategoryEditor" 
   NAME="$name" 
   VALUE="$value" 
@@ -20,21 +41,20 @@
 %TMPL:DEF{"querytags::default"}%%DBCALL{
   "Applications.ClassificationApp.RenderKnownTags"
   TAG="%URLPARAM{"term"}%"
-  LIMIT="%URLPARAM{"limit"}%"
+  LIMIT="%URLPARAM{"limit" default="10"}%"
   THEWEB="%URLPARAM{"web" default="%BASEWEB%"}%"
 }%%TMPL:END%
 
 %TMPL:DEF{"querytags::solr"}%%DBCALL{
   "Applications.ClassificationApp.RenderKnownTagsSolr"
   TAG="%URLPARAM{"term"}%"
-  LIMIT="%URLPARAM{"limit"}%"
+  LIMIT="%URLPARAM{"limit" default="10"}%"
   THEWEB="%URLPARAM{"web" default="%BASEWEB%"}%"
 }%%TMPL:END%
 
 %TMPL:DEF{"querycats"}%%DBCALL{
   "Applications.ClassificationApp.RenderKnownCats"
   CAT="%URLPARAM{"q"}%"
-  LIMIT="%URLPARAM{"limit"}%"
+  LIMIT="%URLPARAM{"limit" default="10"}%"
   THEWEB="%URLPARAM{"web" default="%BASEWEB%"}%"
 }%%TMPL:END%
-

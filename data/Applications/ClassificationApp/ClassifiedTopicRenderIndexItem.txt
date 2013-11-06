@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="micha" comment="reprev" date="1366813631" format="1.1" reprev="19" version="19"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1383131311" format="1.1" reprev="21" version="21"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -17,7 +17,11 @@ a summary for an object of type ClassifiedTopic.
 %STARTINCLUDE%<!-- -->%CALC{"$SET(catinfo, 0)"}%
 %DBQUERY{topic="%OBJECT%"
   format="<div class='clsIndexItem clsTopicItem clsCassifiedTopicItem'>
-    $percntDBCALL{\"$web.$topic->Applications.RenderTopicThumbnail\" TYPE=\"plain\"}$percnt<!-- -->
+    $percntDBCALL{\"$web.$topic->Applications.RenderTopicThumbnail\" 
+      TYPE=\"plain\" 
+      ALIGN=\"right\"
+      DIS_SIZE=\"84x84>\"
+    }$percnt<!-- -->
     [[$web.$topic][$expand(topictitle)]]&nbsp;$percntREDDOT{\"$web.$topic\"}$percnt
     $expand('<div class=\"foswikiTopicSummary\">' and Summary and '</div>')<!-- -->
     <div class='foswikiTopicInfo'>

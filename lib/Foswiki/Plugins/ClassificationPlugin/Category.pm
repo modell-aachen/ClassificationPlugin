@@ -15,6 +15,8 @@
 package Foswiki::Plugins::ClassificationPlugin::Category;
 
 use strict;
+use warnings;
+
 use Foswiki::Contrib::DBCacheContrib::Search ();
 use Foswiki::Plugins::DBCachePlugin::Core ();
 
@@ -23,11 +25,7 @@ use constant DEBUG => 0; # toggle me
 ###############################################################################
 # static
 sub writeDebug {
-  #Foswiki::Func::writeDebug('- ClassificationPlugin - '.$_[0]) if DEBUG;
-  return unless DEBUG;
-  use Foswiki::Time ();
-  my $timeStamp = Foswiki::Time::formatTime(time(), '$hour:$min:$sec');
-  print STDERR $timeStamp.' - ClassificationPlugin::Category - '.$_[0]."\n";
+  print STDERR ' - ClassificationPlugin::Category - '.$_[0]."\n" if DEBUG;
 }
 
 ################################################################################
@@ -63,7 +61,7 @@ sub new {
 sub purgeCache {
   my $this = shift;
 
-  #writeDebug("purging category cache for $this->{name}");
+  writeDebug("purging category cache for $this->{name}");
   undef $this->{_topics};
   undef $this->{_tags};
   undef $this->{_prefs};
@@ -275,6 +273,7 @@ sub setParents {
     } else {
       $parentObj = $this->{hierarchy}->getCategory($parent) || 1;
     }
+    #die "can't set myself as a parent" if $this eq $parentObj;
     $this->{parents}{$parentName} = $parentObj;
   }
   $this->{gotUpdate} = 1;
@@ -344,7 +343,7 @@ sub countTopics {
 
   @topics = $this->filterTopics(\@topics, $filter) if $filter;
 
-  return scalar(@topics);;
+  return scalar(@topics);
 }
 
 ###############################################################################
@@ -372,37 +371,10 @@ sub getTopics {
   my ($this, $filter) = @_;
 
   unless (defined($this->{_topics})) {
-    writeDebug("refreshing _topics in $this->{name}");
-
-    my $hierarchy = $this->{hierarchy};
-    my $db = Foswiki::Plugins::DBCachePlugin::Core::getDB($hierarchy->{web});
-
-    foreach my $topicName ($db->getKeys()) {
-      my $topicObj = $db->fastget($topicName);
-
-      my $form = $topicObj->fastget("form");
-      next unless $form;
-
-      $form = $topicObj->fastget($form);
-      next unless $form;
-
-      my $topicTypes = $form->fastget('TopicType');
-      next unless $topicTypes;
-
-      next if $topicTypes =~ /\bCategory\b/o;
-
-      my $cats = $hierarchy->getCategoriesOfTopic($topicObj);
-      next unless $cats;
-
-      foreach my $name (@$cats) {
-        next unless $name eq $this->{name};
-        writeDebug("adding $topicName it to category $this->{name}");
-        $this->{_topics}{$topicName} = 1;
-	$this->{gotUpdate} = 1;
-      }
-    }
+   # writeDebug("$this->{name} triggers collecting topics of categories in $this->{hierarchy}->{web}");
+    $this->{hierarchy}->collectTopicsOfCategory();
   } else {
-    writeDebug("_topics found in cache of $this->{name}");
+    #writeDebug("_topics found in cache of $this->{name}");
   }
 
   my @topics = keys %{$this->{_topics}};
@@ -659,7 +631,57 @@ sub getIconUrl {
     $pubUrlPath.
     '/Applications/ClassificationApp/IconSet/'.
     $icon;
+}
 
+###############################################################################
+sub getBreadCrumbs {
+  my ($this, $separator) = @_;
+
+  $separator = "." unless defined $separator;
+
+  my @breadCrumbs = ();
+  my %seen = ();
+
+  my $parent = $this;
+  while ($parent) {
+    last if $seen{$parent->{name}};
+    $seen{$parent->{name}} = 1;
+
+    push @breadCrumbs, $parent->{name};
+
+    my @parents = $parent->getParents();
+    last unless @parents;
+
+    $parent = shift @parents;
+    last if !$parent || $parent eq $parent->{hierarchy}{_top};
+  }
+
+  return join($separator, reverse @breadCrumbs);
+}
+
+###############################################################################
+sub getAllBreadCrumbs {
+  my ($this, $separator, $seen) = @_;
+
+  $seen ||= {};
+  return () if $seen->{$this->{name}};
+  $seen->{$this->{name}} = 1;
+
+  $separator = "." unless defined $separator;
+
+  my @parents = $this->getParents();
+
+  my @result = ();
+  foreach my $parent (@parents) {
+    next if $parent->{name} eq 'TopCategory';
+    foreach my $item ($parent->getAllBreadCrumbs($separator)) {
+      push @result, $item.$separator.$this->{name};
+    }
+  }
+
+  return ($this->{name}) unless @result;
+
+  return @result;
 }
 
 ###############################################################################
@@ -950,23 +972,11 @@ sub traverse {
   if ($header =~ /\$breadcrumbs/ ||
       $footer =~ /\$breadcrumbs/ ||
       $format =~ /\$breadcrumbs/) {
-    my @breadCrumbs = ();
-    my %seen = ();
-    my $parent = $this;
-    while ($parent) {
-      last if $seen{$parent->{name}};
-      $seen{$parent->{name}} = 1;
-      push @breadCrumbs, $parent->{name};
-      my @parents = $parent->getParents();
-      last unless @parents;
-      $parent = shift @parents;
-      last if !$parent || $parent eq $parent->{hierarchy}{_top};
-    }
-    $breadCrumbs = join(', ', reverse @breadCrumbs);
+    $breadCrumbs = $this->getBreadCrumbs(", ");
   }
 
   my $truncTitle = $this->{title};
-  $truncTitle =~ s/^$parentTitle\b\s*// if $parentTitle;
+  $truncTitle =~ s/^$parentTitle\b\s*[\-,\/]?\s*// if $parentTitle;
 
   if ($subResult) {
     $header = Foswiki::Plugins::ClassificationPlugin::Core::expandVariables($header,

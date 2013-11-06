@@ -15,6 +15,7 @@
 package Foswiki::Plugins::ClassificationPlugin::Core;
 
 use strict;
+use warnings;
 
 use vars qw(
   %hierarchies 
@@ -58,7 +59,7 @@ sub init {
 ###############################################################################
 sub finish {
 
-  #writeDebug("called finish()");
+  writeDebug("called finish()");
   foreach my $hierarchy (values %hierarchies) {
     next unless defined $hierarchy;
     my $web = $hierarchy->{web};
@@ -69,7 +70,7 @@ sub finish {
       undef $loadTimeStamps{$web};
     }
   }
-  #writeDebug("done finish()");
+  writeDebug("done finish()");
 }
 
 ###############################################################################
@@ -636,7 +637,7 @@ sub handleTAGINFO {
     my $url;
     if ($context->{SolrPluginEnabled}) {
       # SMELL: WikiWords are autolinked in parameter position ... wtf
-      $url = '<noautolink>%SOLRSCRIPTURL{topic="'.$thisWeb.'.'.$thisTopic.'" tag="'.$tag.'" web="'.$thisWeb.'" union="web" separator="&&"}%</noautolink>'; # && to please MAKETEXT :(
+      $url = '<noautolink>%SOLRSCRIPTURL{topic="'.$thisWeb.'.WebSearch" tag="'.$tag.'" web="'.$thisWeb.'" union="web" separator="&&"}%</noautolink>'; # && to please MAKETEXT :(
     } else {
       $url = Foswiki::Func::getScriptUrlPath($thisWeb, "WebTagCloud", "view", tag=>$tag);
     }
@@ -757,8 +758,7 @@ sub beforeSaveHandler {
     #}
   }
 
-  my $trashWeb = $Foswiki::cfg{TrashWebName};
-  if ($web eq $trashWeb) {
+  if ($web eq $Foswiki::cfg{TrashWebName}) {
     writeDebug("detected a move from $baseWeb to trash");
     $web = $baseWeb;# operations are on the baseWeb
   }
@@ -928,8 +928,7 @@ sub afterSaveHandler {
 
   writeDebug("afterSaveHandler($web, $topic)");
 
-  my $trashWeb = $Foswiki::cfg{TrashWebName};
-  if ($web eq $trashWeb) {
+  if ($web eq $Foswiki::cfg{TrashWebName}) {
     #writeDebug("detected a move from $baseWeb to trash");
     $web = $baseWeb;# operations are on the baseWeb
   }
@@ -957,9 +956,45 @@ sub afterSaveHandler {
     #writeDebug("purging \@changedCats");
 
     $hierarchy->purgeCache($purgeMode, \@changedCats);
+    $purgeMode = 0; # reset
   }
 
   finish(); # not called by modifyHeaderHandler
+}
+
+###############################################################################
+sub afterRenameHandler {
+  my ($fromWeb, $fromTopic, $fromAttachment, $toWeb, $toTopic, $toAttachment) = @_;
+
+  return if $fromAttachment || $toAttachment;
+
+  writeDebug("afterRenameHandler($fromWeb, $fromTopic, $toWeb, $toTopic)");
+
+  my ($meta) = Foswiki::Func::readTopic($toWeb, $toTopic);
+  my $formName = $meta->getFormName();
+
+  #print STDERR "formName=$formName\n";
+  return unless $formName =~ /^Applications[\.\/]ClassificationApp[\.\/]Category$/;
+
+  my $hierarchy = getHierarchy($fromWeb);
+
+  if ($hierarchy) {
+    my @changedCats = ($fromTopic);
+    push @changedCats, $toTopic if $fromWeb eq $toWeb && $fromTopic ne $toTopic;
+    #print STDERR "purge cache for $hierarchy->{web}, affects categories @changedCats\n";
+    $hierarchy->purgeCache(4, \@changedCats);
+  }
+
+  if ($fromWeb ne $toWeb && $toWeb ne $Foswiki::cfg{TrashWebName}) {
+    $hierarchy = getHierarchy($toWeb);
+
+    if ($hierarchy) {
+      my @changedCats = ($toTopic);
+      $hierarchy->purgeCache(4, \@changedCats);
+    }
+  } else {
+    writeDebug("detected rename to trash");
+  }
 }
 
 ###############################################################################
@@ -1133,6 +1168,7 @@ sub renameTag {
 sub getIndexFields {
   my ($web, $topic, $meta) = @_;
 
+  $web =~ s/\//./g;
   my $indexFields = $cachedIndexFields{"$web.$topic"};
   return $indexFields if $indexFields;
 
@@ -1207,12 +1243,22 @@ sub getIndexFields {
 
     # gather all parents of all cat fields
     if ($hierarchy) {
+      my %seenWebCat = ();
       foreach my $category (keys %categories) {
 	my $cat = $hierarchy->getCategory($category);
 	next unless $cat;
 	foreach my $parent ($cat->getAllParents()) {
 	  $categories{$parent} = 1;
 	}
+        foreach my $breadCrumb ($cat->getAllBreadCrumbs) {
+          my $prefix = $web;
+          foreach my $component (split(/\./, $breadCrumb)) {
+            $prefix .= '.'.$component;
+            next if $seenWebCat{$prefix};
+            $seenWebCat{$prefix} = 1;
+            push @$indexFields, ['webcat' => $prefix];
+          }
+        }
       }
     }
 

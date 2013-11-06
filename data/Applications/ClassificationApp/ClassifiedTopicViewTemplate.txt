@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565279" format="1.1" version="14"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1371559314" format="1.1" reprev="15" version="15"}%
 %META:TOPICPARENT{name="TopicView"}%
 %{<verbatim class="tml">}%
 %TMPL:INCLUDE{"Applications.WikiTopicView"}%
@@ -7,7 +7,7 @@
 %{<verbatim class="tml">}%
 %TMPL:DEF{"beforetext"}%<div class="foswikiTopicInfo">
 %DBCALL{"Applications.ClassificationApp.RenderClassifiedTopicView" TITLE_EXTRA="%TMPL:P{"titleextra"}%" }%
-</div>%TMPL:END%
+</div>%IF{"$'ENABLEQUALITYCHECK'='on'" then="$percntTMPL:P{\"qualitycheck\"}$percnt"}%%TMPL:END%
 %{</verbatim>}%
 
 %{<verbatim class="tml">}%
@@ -31,6 +31,18 @@
   null="$percntTMPL:P{\"breadcrumbs::default\"}$percnt"
 }%%TMPL:END%
 %{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"qualitycheck"}%%TMPL:PREV%%TMPL:P{"qualitycheck::notags"}%%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"qualitycheck::notags"}%%IF{
+  "'%BASEWEB%.%BASETOPIC%'/TopicType=~'ClassifiedTopic' and '%BASEWEB%.%BASETOPIC%'/Tag=''" 
+  then="<p class='foswikiWarningMessage'>This page needs tagging. Please add keywords describing what this page is about.</p>" 
+}%%TMPL:END%
+%{</verbatim>}%
+
 
 %META:FORM{name="Applications.ApplicationTopic"}%
 %META:FIELD{name="TopicType" title="TopicType" value="TopicView"}%

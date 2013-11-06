@@ -1,23 +1,3 @@
-.clsBrowserControl {
-  margin:0em 0em 0.5em;
-  float:right;
-}
-.clsBrowserControl .sep {
-  padding:0px 5px;
-  visibility:hidden;
-}
-.clsBrowserControlExpand,
-.clsBrowserControlCollapse {
-  padding:1px 0px 1px 21px;
-  background-position:center left !important;
-  background-repeat:no-repeat !important;
-}
-.clsBrowserControlExpand {
-  background-image:url(../../System/FamFamFamSilkIcons/add.png) !important;
-}
-.clsBrowserControlCollapse {
-  background-image:url(../../System/FamFamFamSilkIcons/delete.png) !important;
-}
 .clsCategoryFactory {
   margin-bottom:10px;
 }
@@ -30,6 +10,19 @@
 .clsCatSelector h3 a:hover {
   color:#fff;
 }
+.jqHierarchyButtons {
+  position:relative;
+  float:right;
+  line-height:30px;
+  margin:-5px -5px 0 0;
+}
+.jqHierarchyButtons .jqHierarchySearchField {
+  width:14em;
+}
+.jstree-count {
+  margin-left:0.3em;
+}
+.jqHierarchy a,
 .clsBrowser a {
   text-decoration:none !important;
 }
@@ -108,6 +101,9 @@ a.clsTagClose:hover {
 .clsBrowser ul li a {
   background-image:none;
   padding:0px;
+}
+.clsBrowser li a img {
+  padding-right:2px;
 }
 .clsSideBar.clsBrowser {
   border:0px;
@@ -220,11 +216,11 @@ a.clsTagClose:hover {
 }
 .clsTopicItem .imageSimple_left,
 .clsTopicItem .imagePlain_left {
-  margin:0px 7px 7px 0px;
+  margin:4px 1em 1em 0px;
 }
 .clsTopicItem .imageSimple_right,
 .clsTopicItem .imagePlain_right {
-  margin:0px 0px 7px 7px;
+  margin:4px 0px 1em 1em;
 }
 .clsCategoryItem {
   padding-left:20px;

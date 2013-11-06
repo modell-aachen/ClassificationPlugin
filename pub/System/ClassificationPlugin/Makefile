@@ -4,6 +4,7 @@ TARGET=\
   jquery.tagsuggestion.js \
   jquery.catselector.js \
   jquery.classifiedtopic.js \
+  jquery.hierarchy.js \
   renametag.js \
   styles.css
 
