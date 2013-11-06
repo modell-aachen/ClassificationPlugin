@@ -1,4 +1,5 @@
-Foswiki::Contrib::WikiWorkbenchContrib,>=0.50,perl,Required
+Foswiki::Contrib::JSTreeContrib,>=1.03,perl,Required
+Foswiki::Contrib::WikiWorkbenchContrib,>=1.20,perl,Required
 Foswiki::Plugins::DBCachePlugin,>=4.10,perl,Required
 Foswiki::Plugins::FilterPlugin,>=1.40,perl,Required
 Foswiki::Plugins::FlexFormPlugin,>=2.61,perl,Required
