@@ -103,15 +103,13 @@ weighted matching coefficient.
 |  Release: | %$RELEASE% |
 |  Version: | %$VERSION% |
 |  Change History: | <!-- versions below in reverse order -->&nbsp; |
+|  07 Nov 2013: | rewrite of hierarchy widget using Foswiki:Extensions/JSTreeContrib; new !TopicType !SeoTopic |
 |  07 Jan 2013: | first public releaes |
 |  30 Oct 2007: | first check-in to svn |
 |  30 Oct 2006: | Initial version |
-|  Dependency: | $Foswiki::Plugins::VERSION 1.1 |
-|  CPAN Dependencies: |  |
-|  Other Dependencies: | none |
-|  Perl Version: | 5.005 |
-|  Plugin Home: | Foswiki:Extensions/%TOPIC% |
-|  Feedback: | Foswiki:Support/%TOPIC% |
+|  Dependencies: | %$DEPENDENCIES% |
+|  Home page: | http://foswiki.org/Extensions/%TOPIC% |
+|  Support: | http://foswiki.org/Support/%TOPIC% |
 
 %META:FILEATTACHMENT{name="ClassificationPluginSnap7.png" attachment="ClassificationPluginSnap7.png" attr="" comment="" date="1357569579" size="233626" user="ProjectContributor" version="1"}%
 %META:FILEATTACHMENT{name="ClassificationPluginSnap6.png" attachment="ClassificationPluginSnap6.png" attr="" comment="" date="1357569581" size="108342" user="ProjectContributor" version="1"}%
