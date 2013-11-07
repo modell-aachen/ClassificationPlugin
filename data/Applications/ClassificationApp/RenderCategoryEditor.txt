@@ -1,9 +1,10 @@
-%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1365700493" format="1.1" version="15"}%
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1383815926" format="1.1" version="16"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
 ---++ Documentation
 %STARTSECTION{name="documentation" type="section"}%
+%RED%Note, this function is deprecated. Use [[RenderCategoryBrowser]] instead.%ENDCOLOR%
 
 ---+++++ Parameters
    * THEWEB: the web where to look for classes, defaults to BASEWEB

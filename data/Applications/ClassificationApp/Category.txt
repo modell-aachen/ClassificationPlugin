@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1382706529" format="1.1" reprev="17" version="18"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1383819617" format="1.1" reprev="19" version="19"}%
 %META:TOPICPARENT{name="TopicType"}%
 %TOC%
 %DBCALL{"Applications.RenderTopicInstaller" 
@@ -18,6 +18,16 @@ See also: See [[CategorizedTopic]], [[ClassifiedTopic]], [[TaggedTopic]], [[Cate
 %ENDSECTION{name="documentation" type="section"}%
 
 %STARTINCLUDE%<!-- -->
+%TWISTY{
+  link="%BUTTON{
+    "%IF{"defined 'LABEL'" then="%LABEL%" else="%MAKETEXT{"New"}%"}%" 
+    icon="add"
+    style="margin-bottom:2px;"
+  }%%CLEAR%"
+}%
+%DBCALL{"Applications.ClassificationApp.RenderCategoryFactory"}%
+%ENDTWISTY%
+
 %DBCALL{"Applications.ClassificationApp.RenderCategoryBrowser" 
   THEWEB="%URLPARAM{"web" default="%BASEWEB%"}%"
 }%<!-- -->%STOPINCLUDE%

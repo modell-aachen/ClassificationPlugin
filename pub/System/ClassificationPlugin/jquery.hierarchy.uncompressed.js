@@ -145,7 +145,7 @@
     var self = this, plugins = ["themes", "json_data", "search", "counts"];
 
     if (typeof(self.opts.container) !== 'undefined') {
-      self.container = $(self.opts.container);
+      self.container = self.elem.find(self.opts.container);
     } else {
       self.container = self.elem;
     }
@@ -706,5 +706,3 @@
   });
 
 })(jQuery, window, document);
-
-

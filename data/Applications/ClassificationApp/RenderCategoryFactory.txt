@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565281" format="1.1" version="14"}%
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1383817526" format="1.1" version="15"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -46,7 +46,7 @@ This function renders an input form to create a new category.
 </div>
 <div class="foswikiFormStep">
   <h3>%MAKETEXT{"Parent category"}%:</h3>
-  %DBCALL{"Applications.ClassificationApp.RenderCategoryEditor"}%
+  %DBCALL{"Applications.ClassificationApp.RenderCategoryBrowser" MODE="select"}%
   <div class="foswikiFormDescription">
     %MAKETEXT{"Select one or more parent categories that the newly created category is subordinated to."}%
   </div>
