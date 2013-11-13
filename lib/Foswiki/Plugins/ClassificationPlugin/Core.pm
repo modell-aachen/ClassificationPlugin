@@ -916,7 +916,7 @@ sub beforeSaveHandler {
     }
   }
 
-  #writeDebug("purgeMode=$purgeMode");
+  writeDebug("purgeMode=$purgeMode");
   #writeDebug("changedCats=".join(',', @changedCats));
 }
 
@@ -935,7 +935,7 @@ sub afterSaveHandler {
   $web =~ s/\//./go;
  
   if ($purgeMode) {
-    #writeDebug("purging hierarchy $web");
+    writeDebug("purging hierarchy $web");
     my $hierarchy = getHierarchy($web);
 
     # delete the cached html page 
@@ -953,13 +953,11 @@ sub afterSaveHandler {
         }
       }
     }
-    #writeDebug("purging \@changedCats");
+    writeDebug("purging @changedCats");
 
     $hierarchy->purgeCache($purgeMode, \@changedCats);
     $purgeMode = 0; # reset
   }
-
-  finish(); # not called by modifyHeaderHandler
 }
 
 ###############################################################################

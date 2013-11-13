@@ -102,6 +102,10 @@
       set_text: function (obj, val) {
         var tmp, count;
 
+        if (typeof(val) === 'undefined') {
+          val = obj.data("name");
+        }
+
         obj = this._get_node(obj);
         count = obj.data("nrTopics");
         
@@ -275,59 +279,71 @@
 
       /* moving a node */
       self.worker.bind("move_node.jstree", function(e, data) {
+        var node = $(data.rslt.o),
+            catName = node.data("name"),
+            catTitle = node.data("title"),
+            newParent = data.rslt.np.data("name"),
+            newParentTitle = data.rslt.np.data("title"),
+            oldParent = data.rslt.op.data("name"),
+            oldParentTitle = data.rslt.op.data("title"),
+            nextCat = node.next().data("name"),
+            prevCat = node.prev().data("name"),
+            position = data.rslt.p,
+            copy = data.rslt.cy ? 1 : 0;
+
+        //console.log("data=",data);
+        //console.log("catName=",catName,"newParent=",newParent,"oldParent=",oldParent,"nextCat=",nextCat,"prevCat=",prevCat,"position=",position,"copy=",copy);
+
         $.vakata.context.hide();
-        if (!confirm("Are you sure that you want to move these category(ies)?")) {
-          $.jstree.rollback(data.rlbk);
-          return
-        }
-        data.rslt.o.each(function(i) {
-          var $this = $(this),
-              catName = $this.data("name"),
-              newParent = data.rslt.np.data("name"),
-              oldParent = data.rslt.op.data("name"),
-              nextCat =$this.next().data("name"),
-              prevCat =$this.prev().data("name"),
-              copy = data.rslt.cy ? 1 : 0;
 
-          //console.log("moving "+catName+" from parent="+oldParent+" to new parent "+newParent+" between "+prevCat+" and "+nextCat+" copy="+copy);
-          //console.log("data=",data);
-
-          $.ajax({
-            async: false,
-            type: "POST",
-            dataType: "json",
-            url: self.opts.url,
-            data: { 
-              "action": "move_node", 
-              "web": self.opts.web,
-              "topic": self.opts.topic,
-              "cat": catName,
-              "parent":newParent,
-              "oldParent":oldParent,
-              "next": nextCat,
-              "prev": prevCat,
-              "copy": copy
-            },
-            error: function() {
-              $.jstree.rollback(data.rlbk);
-            },
-            success: function (response) {
-              $(data.rslt.oc).data("name", response.id).addClass(response.id);
-              if(copy && $(data.rslt.oc).children("UL").length) {
-                data.inst.refresh(data.inst._get_parent(data.rslt.oc));
+        self.confirm({
+            message:"<div class='foswikiCenter'>Are you sure that you want to move <br />" +
+                    "<b>"+catTitle+"</b><br/>" +
+                    "to<br />" +
+                    "<b>"+(newParent?newParentTitle:'TOP')+"</b>?</div>",
+            okayText: "Yes, move it.",
+            cancelText: "No, thanks."
+          }).then(function() {
+          data.rslt.o.each(function(i) {
+            $.ajax({
+              async: false,
+              type: "POST",
+              dataType: "json",
+              url: self.opts.url,
+              data: { 
+                "action": "move_node", 
+                "web": self.opts.web,
+                "topic": self.opts.topic,
+                "cat": catName,
+                "parent":newParent,
+                "oldParent":oldParent,
+                "next": nextCat,
+                "prev": prevCat,
+                "copy": copy
+              },
+              error: function() {
+                $.jstree.rollback(data.rlbk);
+              },
+              success: function (response) {
+                $(data.rslt.oc).data("name", response.id).addClass(response.id);
+                if(copy && $(data.rslt.oc).children("UL").length) {
+                  data.inst.refresh(data.inst._get_parent(data.rslt.oc));
+                }
+              },
+              complete: function(xhr) {
+                var response = $.parseJSON(xhr.responseText);
+                //console.log(response);
+                $.pnotify({
+                  type: response.type,
+                  title: response.title,
+                  text: response.message
+                });
               }
-            },
-            complete: function(xhr) {
-              var response = $.parseJSON(xhr.responseText);
-              //console.log(response);
-              $.pnotify({
-                type: response.type,
-                title: response.title,
-                text: response.message
-              });
-            }
+            });
           });
-        });
+        }, function() {
+          $.jstree.rollback(data.rlbk);
+        })
       })
 
       /* renaming a node */
@@ -335,6 +351,10 @@
         var catName = data.rslt.obj.data("name"),
             newTitle = data.rslt.new_name,
             oldTitle = data.rslt.old_name;
+
+        if (typeof(newTitle) === 'undefined' || newTitle === '') {
+          newTitle = catName;
+        }
 
         if (newTitle === oldTitle) {
           return;
@@ -425,41 +445,48 @@
 
       /* removing a node */
       .bind("remove.jstree", function (e, data) {
-        var catName = data.rslt.obj.data("name");
+        var catName = data.rslt.obj.data("name"),
+            catTitle = data.rslt.obj.data("title");
 
         $.vakata.context.hide();
-        if (!confirm("Are you sure that you want to delete '"+catName+"'?")) {
+
+        self.confirm({
+          message: "<div class='foswikiCenter'>Are you sure that you want to delete<br /><b>"+catTitle+"</b>?",
+          okayText: "Yes, delete it.",
+          okayIcon: "ui-icon-trash",
+          cancelText: "No, thanks."
+        }).then(function() {
+          data.rslt.obj.each(function () {
+            $.ajax({
+              async : false,
+              type: 'POST',
+              url: self.opts.url,
+              data : { 
+                "action" : "remove_node", 
+                "web": self.opts.web,
+                "topic": self.opts.topic,
+                "cat": catName
+              }, 
+              error: function() {
+                $.jstree.rollback(data.rlbk);
+              },
+              success: function() {
+                self.removeVal(this.id);
+              },
+              complete: function(xhr) {
+                var response = $.parseJSON(xhr.responseText);
+                //console.log(response);
+                $.pnotify({
+                  type: response.type,
+                  title: response.title,
+                  text: response.message
+                });
+              }
+            });
+        });
+        }, function() {
           $.jstree.rollback(data.rlbk);
-          return
-        }
-        data.rslt.obj.each(function () {
-          $.ajax({
-            async : false,
-            type: 'POST',
-            url: self.opts.url,
-            data : { 
-              "action" : "remove_node", 
-              "web": self.opts.web,
-              "topic": self.opts.topic,
-              "cat": catName
-            }, 
-            error: function() {
-              $.jstree.rollback(data.rlbk);
-            },
-            success: function() {
-              self.removeVal(this.id);
-            },
-            complete: function(xhr) {
-              var response = $.parseJSON(xhr.responseText);
-              //console.log(response);
-              $.pnotify({
-                type: response.type,
-                title: response.title,
-                text: response.message
-              });
-            }
-          });
-      });
+        });
       });
     } // end if edit
 
@@ -676,6 +703,63 @@
     var self = this;
     self.inputField.val("");
     self.worker.jstree("refresh", -1);
+  };
+
+  /***************************************************************************
+   * confirm dialog
+   */
+  Hierarchy.prototype.confirm = function(opts) {
+    var defaults = {
+      message: "",
+      title: "Confirmation required",
+      okayText: "Ok",
+      okayIcon: "ui-icon-check",
+      cancelText: "Cancel",
+      cancelIcon: "ui-icon-cancel",
+      width: 'auto'
+    };
+
+    if (typeof(opts) === 'string') {
+      opts = {
+        message: opts
+      };
+    }
+    opts = $.extend({}, defaults, opts);
+
+    return $.Deferred(function(dfd) {
+      $("<div></div>").dialog({
+        buttons: [{
+          text: opts.okayText,
+          icons: {
+            primary: opts.okayIcon
+          },
+          click: function() {
+            $(this).dialog("close");
+            dfd.resolve();
+            return true;
+          },
+        }, {
+          text: opts.cancelText,
+          icons: {
+            primary: opts.cancelIcon
+          },
+          click: function() {
+            $(this).dialog("close");
+            dfd.reject();
+            return false;
+          }
+        }],
+        close: function(event, ui) {
+          $(this).remove();
+        },
+        show: 'fade',
+        draggable: false,
+        resizable: false,
+        title: opts.title,
+        modal: true,
+        width: opts.width
+      }).html(opts.message);
+    }).promise();
   };
 
   /***************************************************************************

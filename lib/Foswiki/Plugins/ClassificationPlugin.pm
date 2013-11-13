@@ -187,6 +187,7 @@ sub afterRenameHandler {
 
 ###############################################################################
 sub finishPlugin {
+
   Foswiki::Plugins::ClassificationPlugin::Core::finish(@_)
     if $doneInitCore;
   Foswiki::Plugins::ClassificationPlugin::Services::finish(@_)

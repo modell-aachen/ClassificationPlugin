@@ -104,8 +104,8 @@ sub finish {
 
   writeDebug("gotUpdate=$gotUpdate");
   if ($gotUpdate) {
-    writeDebug("saving hierarchy $this->{web}");
     my $cacheFile = Foswiki::Plugins::ClassificationPlugin::Core::getCacheFile($this->{web});
+    writeDebug("saving hierarchy $this->{web} to $cacheFile");
 
     # SMELL: don't cache the prefs for now
     undef $this->{_prefs}; 
@@ -178,6 +178,10 @@ sub init {
   $insideInit{$this->{web}} = 1;
 
   writeDebug("called Hierarchy::init for $this->{web} ... EXPENSIVE");
+
+  # reset all
+  $this->purgeCache(5);
+
   my $session = $Foswiki::Plugins::SESSION;
   $this->{_prefs} = new Foswiki::Prefs($session);
 
@@ -188,8 +192,9 @@ sub init {
     return;
   }
 
-  # itterate over all topics and collect categories
+  # iterate over all topics and collect categories
   my $seenImport = {};
+  
   foreach my $topicName ($db->getKeys()) {
     my $topicObj = $db->fastget($topicName);
     next unless $topicObj;
@@ -204,7 +209,7 @@ sub init {
 
     if ($topicType =~ /\bCategory\b/) {
       # this topic is a category in itself
-      #writeDebug("found category '$topicName' in web $this->{web}");
+      writeDebug("found category '$topicName' in web $this->{web}");
       my $cat = $this->{_categories}{$topicName};
       $cat = $this->createCategory($topicName) unless $cat;
 
@@ -277,11 +282,6 @@ sub init {
     $cat->init();
   }
 
-  # reset distances, delay computeDistance til we need it
-  undef $this->{_distance};
-  if (DEBUG) {
-    $this->computeDistance();
-  }
   $this->{gotUpdate} = 1;
 
   if (0) {
@@ -292,7 +292,7 @@ sub init {
       }
       writeDebug($text);
     }
-    $this->printDistanceMatrix();
+    #$this->printDistanceMatrix();
   }
 
   writeDebug("done init $this->{web}");
@@ -315,7 +315,7 @@ sub printDistanceMatrix {
       my $catId2 = $cat2->{id};
       my $dist =  $$distance[$catId1][$catId2];
       next unless $dist;
-      #writeDebug("distance($catName1/$catId1, $catName2/$catId2) = $dist");
+      writeDebug("distance($catName1/$catId1, $catName2/$catId2) = $dist");
     }
   }
 }
@@ -790,7 +790,7 @@ sub getCategory {
   }
 
   if ($cat) {
-    my $cache = $Foswiki::Plugins::SESSION->{cache} || $Foswiki::Plugins::SESSION->{cache};
+    my $cache = $Foswiki::Plugins::SESSION->{cache};
     if (defined $cache) {
       #print STDERR "### addDependency($cat->{origWeb}, $cat->{name})\n";
       $cache->addDependency($cat->{origWeb}, $cat->{name})
