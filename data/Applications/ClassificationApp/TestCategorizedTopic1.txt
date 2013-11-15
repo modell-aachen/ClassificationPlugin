@@ -1,0 +1,9 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565281" format="1.1" version="6"}%
+%META:TOPICPARENT{name="TestCategory"}%
+
+
+%META:FORM{name="Applications.ClassificationApp.CategorizedTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="ClassifiedTopic, TaggedTopic, CategorizedTopic, WikiTopic"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="TestCategorizedTopic1"}%
+%META:FIELD{name="Summary" attributes="" title="Summary" value="This is a test topic"}%
+%META:FIELD{name="Category" attributes="" title="Category" value="TestCategory"}%

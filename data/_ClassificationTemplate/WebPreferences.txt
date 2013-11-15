@@ -1,0 +1,39 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565283" format="1.1" version="7"}%
+%META:TOPICPARENT{name="WebHome"}%
+---+!! <nop>%WEB% Web Preferences
+
+%TOC%
+
+---++ General settings
+   * Set SITEMAPLIST = on
+   * Set WEBSUMMARY = 
+   * Set NOSEARCHALL = 
+
+---++ Supplemental topics
+   * WebTopicEditTemplate: template for new topics
+   * WebMenu: horizontal navitation (overrides %USERSWEB%.SiteMenu or %SYSTEMWEB%.SiteMenu)
+   * WebLinks: sidebar links (overrides %USERSWEB%.SiteLinks or %SYSTEMWEB%.SiteLinks)
+   * WebSideBar: sidebar navigation: (overrides %USERSWEB%.SiteSideBar or %SYSTEMWEB%.SiteSideBar)
+
+---++ Application settings
+   * Set WEBFORMS = Applications.ClassificationApp.ClassifiedTopic
+
+---++ !ClassificationPlugin settings
+   * #Set CLASSIFICATIONPLUGIN_AUTOREPARENT = on
+
+---++ Cache settings
+   * Set WEBDEPENDENCIES = WebHome, WebTopicList, WebChanges, WebRss, WebAtom, WebSearch
+
+---++ Access rights
+*Web*:
+   * #Set DENYWEBVIEW = 
+   * Set ALLOWWEBVIEW = %USERSWEB%.AdminGroup
+   * Set DENYWEBCHANGE = %USERSWEB%.WikiGuest
+   * Set ALLOWWEBCHANGE = %USERSWEB%.AdminGroup
+   * #Set DENYWEBRENAME = 
+   * Set ALLOWWEBRENAME = %USERSWEB%.AdminGroup
+   * Set DENYWEBCOMMENT = %USERSWEB%.WikiGuest
+
+*Topic*
+   * Set ALLOWTOPICCHANGE = %USERSWEB%.AdminGroup
+   * Set ALLOWTOPICRENAME = %USERSWEB%.AdminGroup

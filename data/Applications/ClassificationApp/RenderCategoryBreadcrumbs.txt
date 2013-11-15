@@ -1,0 +1,51 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565281" format="1.1" version="6"}%
+%META:TOPICPARENT{name="TopicFunction"}%
+%TOC{depth="2"}%
+
+---++ Documentation
+%STARTSECTION{name="documentation" type="section"}%
+If no category breadcrumbs are available, standard ones are created based on BASETOPIC.
+All information is extracted from BASEWEB.
+
+---+++++ Parameters
+   * CAT: name of category to render the breadcrumbs for, defaults to BASETOPIC
+   * SEP: string used as a separator in the breadcrumbs
+
+%ENDSECTION{name="documentation" type="section"}%
+
+---++ Implementation
+<verbatim class="tml">
+%STARTINCLUDE%%CATINFO{
+  web="%BASEWEB%"
+  cat="%IF{"not isempty CAT" then="%CAT%" else="%BASETOPIC%"}%"
+  header="$percntBREADCRUMBS{
+      \"%BASEWEB%.%HOMETOPIC%\"
+      recurse=\"topicoff\"
+      separator=\"%SEP%\"
+    }$percnt%SEP%" 
+  format="$breadcrumb" 
+  separator="%SEP%"
+  null="$percntBREADCRUMBS{
+    \"%BASEWEB%.%BASETOPIC%\"
+    separator=\"%SEP%\"
+    }$percnt"
+}%%STOPINCLUDE%
+</verbatim>
+
+---++ Test
+<div class="alt">
+%DBCALL{"%TOPIC%"}%
+</div>
+
+%DBCALL{"Applications.RenderFunctionCallers"}%
+
+---++ Copyright
+&copy; 2006-2013 Michael Daum http://michaeldaumconsulting.com
+
+%DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
+
+%META:FORM{name="Applications.ApplicationTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Renders a list of parent categories for breadcrumbs navigation"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

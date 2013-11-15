@@ -1,0 +1,87 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565281" format="1.1" version="18"}%
+%META:TOPICPARENT{name="TopicFunction"}%
+%TOC{depth="2"}%
+---++ Documentation
+%STARTSECTION{"documentation"}%
+
+---+++++ Parameters
+   * TAG: comma separated list of tags to be searched for in the archive
+   * CAT: restrict tag cloud to this category; displays all tags of all categories if unspecified
+   * KEYWORDS: keywords to filter for
+   * MIN: minimum frequency of a tags to be shown
+   * LIMIT: maximum number of tags in the could, defaults to 100
+   * TOPICTYPE: limit search for tags of topics of the given type
+   * THEWEB: web to restrict search to, defaults to current
+
+%ENDSECTION{"documentation"}%
+
+---++ Implementation
+<verbatim class="tml">
+%STARTINCLUDE%<!-- -->
+<noautolink>
+%TAGCLOUD{ 
+  terms="%DBSTATS{
+    "TopicType=~'\b(Tagged|Classified)Topic\b'"
+    format="$key:$count" 
+    separator=", "
+    field="Tag"
+    sort="modifiedto"
+    reverse="on"
+    limit="%IF{"defined LIMIT" then="%LIMIT%" else="100"}%"
+    web="%IF{"defined THEWEB" then="%THEWEB%"}%" 
+  }%" 
+  header="<div class='clsTagCloud'>" 
+  format="<span style='font-size:$weightpx;line-height:110%'><a href='#' style='color:$fadeRGB(104,144,184,0,102,255);' name='tag_$term' value='$term'>$term</a></span>" 
+  footer="</div>" 
+  group="<strong>$group</strong>&nbsp;" 
+  split="\s*,\s*" 
+  buckets="19" 
+  offset="10" 
+  warn="off" 
+  min="%IF{"not isempty 'MIN'" then="%MIN%" else="1"}%"
+}%
+%ADDTOZONE{"script" tag="TAGCLOUD::JS" requires="JQUERYPLUGIN"  
+text="<literal> 
+<script> 
+jQuery(function($) { 
+  $('.clsTagCloud a').click(function() { 
+    var $this = $(this), 
+        href = '%SCRIPTURL{"view"}%/%IF{"defined THEWEB and not isempty THEWEB and $THEWEB != 'all'" then="%THEWEB%" else="%BASEWEB%"}%/WebSearch'; 
+
+    href += '#fq=tag:'+escape($this.attr('value')); 
+    var tags = '%IF{"defined TAG" then="%TAG%"}%'.split(/\s*,\s*/); 
+    for (var i = 0; i < tags.length; i++) { 
+      if (tags[i] !='') { 
+        href += '&fq=tag:'+escape(tags[i])+''; 
+      } 
+    } 
+    var cats = '%IF{"defined CAT" then="%CAT%"}%'.split(/\s*,\s*/); 
+    for (var i = 0; i < cats.length; i++) { 
+      if (cats[i]!='') { 
+        href += '&fq=category:'+escape(cats[i]); 
+      } 
+    } 
+    window.location.href = href; 
+    return false; 
+  }); 
+}); 
+</script> 
+</literal>" 
+}%</noautolink>%STOPINCLUDE%
+</verbatim>
+
+---++ Test
+%DBCALL{"%TOPIC%" THEWEB="%URLPARAM{"theweb"}%"}%
+
+%DBCALL{"Applications.RenderFunctionCallers"}%
+
+---++ Copyright
+&copy; 2007-2013 Michael Daum http://michaeldaumconsulting.com
+
+%DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
+
+%META:FORM{name="Applications.ApplicationTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Render a tool to list all classified topics in this web"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

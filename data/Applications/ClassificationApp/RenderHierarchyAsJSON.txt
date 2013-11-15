@@ -1,0 +1,149 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565281" format="1.1" version="21"}%
+%META:TOPICPARENT{name="TopicFunction"}%
+%TOC{depth="2"}%
+
+---++ Documentation
+%STARTSECTION{name="documentation" type="section"}%
+This function is called by the %SYSTEMWEB%.RenderPlugin to implement the REST handler
+for the hierarchy browsers.
+
+---+++++ Parameters
+   * web: name of the web where to extract the hierarchy from, defaults to BASEWEB
+   * root: top category inside the hierarchy to start extracting information from, defaults to !TopCategory
+   * exclude: pattern of categories to be excluded from the tree
+   * depth: number of levels to extract, defaults to 2
+   * format: one of "browser", "sidebar", or "editor", defaults to "browser"
+   * open: categories to be expanded
+   * hidenull: hides empty categories
+   * nrleafs: list of =cat:count= items that specify the number of leafs per category; these values are used instead of computing them by HIERARCHY itself
+   * nrtopics: list of =cat:count= items that specify the number of topics per category; these values are used instead of computing them by HIERARCHY itself
+
+%ENDSECTION{name="documentation" type="section"}%
+
+---++ Implementation
+<verbatim class="tml">
+%STARTINCLUDE%[
+%HIERARCHY{
+   web="%IF{"defined web" then="%web%" else="%BASEWEB%"}%"
+   top="%IF{"defined root" then="%root%" else="TopCategory"}%"
+   depth="%IF{"defined depth" then="%depth%"}%"
+   exclude="%IF{"defined root" then="%root%" else="TopCategory"}%%IF{"defined exclude" then="|%exclude%"}%"
+   hidenull="%IF{"defined hidenull" then="%hidenull%" else="off"}%"
+   %IF{"defined nrleafs" then="nrleafs=\"%nrleafs%\""}%
+   %IF{"defined nrtopics" then="nrtopics=\"%nrtopics%\""}%
+   %IF{"defined search" then="hideclosed=\"on\""}%
+   open="%IF{"defined root" 
+     then="%root%" 
+     else="TopCategory"
+   }%%IF{"defined open" 
+     then=", %open%"
+   }%%IF{"defined search"
+     then="$percntCATINFO{
+       web=\"%IF{"defined web" then="%web%" else="%BASEWEB%"}%\"
+       include=\".*%search%.*\"
+       matchcase=\"off\"
+       matchattr=\"title\"
+       header=\", \"
+       format=\"$topic\"
+       separator=\", \"
+     }$percnt"
+   }%"
+   separator=",$n"
+   format="$indent{
+$indent  \"text\": \"%DBCALL{
+      "%WEB%.%TOPIC%"
+      section="%IF{"not isempty format" then="%format%" else="browser"}%"
+      depth="%depth%"
+      fieldname="%fieldname%"
+}%\",
+$indent  \"expanded\": $isexpanded,
+$indent  \"hasChildren\": $subcats,
+$indent  \"id\": \"$name\",
+$indent  \"children\": [$children]
+$indent}"
+}%
+]%STOPINCLUDE%
+</verbatim>
+
+---++ Browser format
+<verbatim class="tml">
+%STARTSECTION{"browser"}%<a href='$url' title='$percntENCODE{\"$summary\" type=\"entity\"}$percnt'><img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' />$percntENCODE{\"$title\" type=\"quote\"}$percnt</a>$percntIF{
+  \"'$cyclic' = '1'\" 
+  then=\" <span class='foswikiAlert'>C</span>\"}$percnt$percntIF{
+  \"'$count' != '0'\" 
+  then=\" ($count)\"
+}$percnt%ENDSECTION{"browser"}%
+</verbatim>
+
+---++ Plain format
+<verbatim class="tml">
+%STARTSECTION{"plain"}%<a href='$url' title='$percntENCODE{\"$summary\" type=\"entity\"}$percnt'><noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink></a>%ENDSECTION{"plain"}%
+</verbatim>
+
+---++ Sidebar format
+<verbatim class="tml">
+%STARTSECTION{"sidebar"}%<a class='clsCategoryLink' style='background-image:url($icon);' href='$url' title='$percntENCODE{\"$summary\" type=\"entity\"}$percnt'><noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink></a>%ENDSECTION{"sidebar"}%
+</verbatim>
+
+---++ Editor format
+<verbatim class="tml">
+%STARTSECTION{"editor"}%<a href='#' class='$name clsCategory {depth:$depth}' title='$title' value='$name'><img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' /><noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink></a>%ENDSECTION{"editor"}%
+</verbatim>
+
+---++ Leaf select format
+<verbatim class="tml">
+%STARTSECTION{"leafselect"}%$percntIF{\"$leafs>0 and $depth <= %depth%\"
+  then=\"<img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' /><noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink>\"
+  else=\"<a href='#' title='$title' value='$name' class='$name clsCategory {depth:$depth}'><img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' /><noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink></a>\"
+}%%ENDSECTION{"leafselect"}%
+</verbatim>
+
+---++ Solr facet format
+<verbatim class="tml">
+%STARTSECTION{"solrfacet"}%<a href='#' class='$name clsCategory solrFacetValue {depth:$depth}' title='$title' value='category:$name'><img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' /><noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink></a> $percntIF{\"$count>0\" then=\"($count)\"}$percnt%ENDSECTION{"solrfacet"}%
+</verbatim>
+
+---++ Solr facet format (no counts)
+<verbatim class="tml">
+%STARTSECTION{"solrfacet_nocounts"}%<a href='#' class='$name clsCategory solrFacetValue {depth:$depth}' title='$title' value='category:$name'><img src='$icon' alt='$percntENCODE{\"$title\" type=\"entity\"}$percnt' /><noautolink>$percntENCODE{\"$title\" type=\"quote\"}$percnt</noautolink></a>%ENDSECTION{"solrfacet_nocounts"}%
+</verbatim>
+
+---++ Test
+---+++ Plain
+<pre>
+%DBCALL{"%TOPIC%" format="plain"}%
+</pre>
+
+---+++ Browser
+<pre>
+%DBCALL{"%TOPIC%" format="browser"}%
+</pre>
+
+---+++ Editor
+<pre>
+%DBCALL{"%TOPIC%" format="editor" exclude="TestCategory5"}%
+</pre>
+
+---+++ Leaf select
+<pre>
+%DBCALL{"%TOPIC%" format="leafselect" root="TestCategory2" depth="2"}%
+</pre>
+
+---+++ Solr facet
+<pre>
+%DBCALL{"%TOPIC%" format="solrfacet"}%
+</pre>
+
+%DBCALL{"Applications.RenderFunctionCallers"}%
+
+---++ Copyright
+&copy; 2008-2013 Michael Daum http://michaeldaumconsulting.com
+
+%DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
+
+
+%META:FORM{name="Applications.ApplicationTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Renders a hierarchy as a JSON object"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

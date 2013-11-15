@@ -1,0 +1,89 @@
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1357564801" format="1.1" reprev="14" version="14"}%
+%META:TOPICPARENT{name="TopicFunction"}%
+%TOC{depth="2"}%
+
+---++ Documentation
+%STARTSECTION{name="documentation" type="section"}%
+This function displays part of the hierarchy a topic is situated in.
+It tries to provide a sense of "location" for the topic based on
+the way it is classified. 
+
+TODO: what do we display for topics that are not categorized?
+
+%ENDSECTION{name="documentation" type="section"}%
+
+---++ Implementation
+<verbatim class="tml">
+%STARTINCLUDE%<div class="clsSideBar clsBrowser" id="clsSideBarCategoryBrowser" style="display:none">
+%HIERARCHY{
+  web="%BASEWEB%"
+  open="$percntIF{
+      \"$percntDISTANCE{
+          from=\"$name\"
+          to=\"%URLPARAM{"catname" default="%BASETOPIC%"}%\"
+          undef=\"-1\"
+        }$percnt >= 0\"
+      then=\"$name\" 
+    }$percnt, %TOP{default="TopCategory"}%"
+  placeholder="<li><span class='placeholder'>&nbsp;</span></li>"
+  top="%TOP{default="TopCategory"}%"
+  exclude="%TOP{default="TopCategory"}%"
+  header="<ul>"
+  footer="</ul>"
+  format="<li id=\"$name\" class=\"$percntIF{\"'$subcats'!='0'\" then=\"hasChildren\"}$percnt\">
+    <a style='background-image:url($icon);' class='clsCategoryLink $percntIF{
+      \"( $percntISA{
+            \"%BASETOPIC%\"
+            cat=\"$name\"
+          }$percnt = 1 
+          and
+          $percntDISTANCE{
+            from=\"$name\"
+            to=\"%BASETOPIC%\"
+            undef=\"-1\"
+          }$percnt = 1
+        ) or $percntDISTANCE{
+               from=\"$name\"
+               to=\"%URLPARAM{"catname" default="%BASETOPIC%"}%\"
+               undef=\"-1\"
+             }$percnt = 0
+      \"
+      then=\"current\"
+    }$percnt' href=\"$url\" title=\"$percntENCODE{$summary}$percnt\"><noautolink>$title</noautolink>
+    </a>$children</li>"
+}%</div>%JQREQUIRE{"treeview"}%
+<literal>
+<script>
+  jQuery(function ($) {
+    $("#clsSideBarCategoryBrowser > ul").each(function() {
+      var $this = $(this);
+      $this.find("li ul").parent().addClass("open collapsable");
+      $this.find(".placeholder").parent().parent().parent().removeClass("open collapsable");
+      $this.find(".hasChildren.open").removeClass("hasChildren");
+      $this.treeview({
+        url: "%SCRIPTURL{"rest"}%/RenderPlugin/tag?name=DBCALL;param=Applications.ClassificationApp.RenderHierarchyAsJSON;t=%GMTIME{"$epoch"}%;depth=2;format=sidebar;topic=%BASEWEB%.%BASETOPIC%",
+        animated: 'fast'
+      }).parent().show();
+      $this.find(".open").removeClass("expandable").
+      find(".open-hitarea.expandable-hitarea").removeClass("expandable-hitarea").addClass("collapsable-hitarea");
+    });
+  });
+</script>
+</literal>%STOPINCLUDE%
+</verbatim>
+
+---++ Test
+%DBCALL{"%TOPIC%"}%
+
+%DBCALL{"Applications.RenderFunctionCallers"}%
+
+---++ Copyright
+&copy; 2008-2013 Michael Daum http://michaeldaumconsulting.com
+
+%DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
+
+%META:FORM{name="Applications.ApplicationTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Render tools to handle categories"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

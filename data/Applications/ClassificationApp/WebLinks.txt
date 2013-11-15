@@ -1,0 +1,9 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565282" format="1.1" version="6"}%
+%META:TOPICPARENT{name="WebTool"}%
+%STARTINCLUDE%%DBCALL{"Applications.RenderSideBar"}%%STOPINCLUDE%
+
+%META:FORM{name="Applications.ApplicationTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="WebTool"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="sidebar navigation"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="WikiWorkbench"}%

@@ -1,0 +1,35 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565283" format="1.1" version="8"}%
+%META:TOPICPARENT{name="WebPreferences"}%
+---+ %TOPIC%
+<verbatim class="tml">
+%STARTINCLUDE%%IF{
+  "context SolrPluginEnabled" 
+  then="$percntINCLUDE{\"%SYSTEMWEB%.SolrSideBar\"}$percnt"
+  else="$percntINCLUDE{\"%WEB%.%TOPIC%\" section=\"recentchanges\"}$percnt"
+}%%STOPINCLUDE%
+</verbatim>
+
+---++ Recent changes
+<verbatim class="tml">
+%STARTSECTION{"recentchanges"}%<noautolink>
+%DBQUERY{
+ web="%BASEWEB%" 
+ order="modified" 
+ limit="5" 
+ reverse="on"
+ exclude="WebHome|WebLinks|WebSideBar|WebPreferences|WebStatistics|WebTopicList|WebSearch|WebIndex|WebAdvancedSearch"
+ header="<h2 >%MAKETEXT{"Recent Changes"}%</h2>$n<ul>"
+ footer="</ul>"
+ format="<li>
+     <a href='%SCRIPTURLPATH{"view"}%/$web/$topic'>
+       $percntDBCALL{\"Applications.RenderTopicThumbnail\"
+         OBJECT=\"$web.$topic\"
+         TYPE=\"plain\"
+       }$percnt<!-- -->$expand(topictitle)<br />
+       <span class='foswikiTopicInfo foswikiSmallish'>$formfield(Summary)</span>
+       %CLEAR%
+     </a>
+   </li>"
+}%
+</noautolink>%ENDSECTION{"recentchanges"}%
+</verbatim>

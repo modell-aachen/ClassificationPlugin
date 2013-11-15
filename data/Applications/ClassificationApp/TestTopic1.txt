@@ -1,0 +1,29 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565282" format="1.1" version="14"}%
+%META:TOPICPARENT{name="WebHome"}%
+<verbatim>
+   * ISA{IntranetDirectory}: %ISA{cat="IntranetDirectory"}%
+   * ISA{CorporateCategory}: %ISA{cat="CorporateCategory"}%
+   * DISTANCE: %DISTANCE%
+   * DISTANCE{to="IntranetDirectory"}: %DISTANCE{to="IntranetDirectory"}%
+   * DISTANCE{from="foo" to="IntranetDirectory"}: %DISTANCE{from="foo" to="IntranetDirectory"}%
+   * DISTANCE{from="TestCategory5" to="ChannelManagementCategory"}: %DISTANCE{from="TestCategory5" to="ChannelManagementCategory"}%
+   * DISTANCE{from="TopCategory" to="BottomCategory" format="min=$min, max=$max"}: %DISTANCE{from="TopCategory" to="BottomCategory" format="min=$min, max=$max"}%
+   * DISTANCE{from="TopCategory" to="FinanceAndPlaning"}: %DISTANCE{from="TopCategory" to="FinanceAndPlaning"}%
+   * DISTANCE{from="TestCategory8" to="FinanceAndPlaning"}: %DISTANCE{from="TestCategory8" to="FinanceAndPlaning" abs="off"}%
+   * DISTANCE{from="FinanceAndPlaning" to="TestCategory8"}: %DISTANCE{from="FinanceAndPlaning" to="TestCategory8" abs="off"}%
+</verbatim>
+
+---++ Topics without a category
+
+%DBQUERY{"Category = ''" format="   * [[$web.$topic][$topic]]"}%
+
+%META:FORM{name="Applications.ClassificationApp.ClassifiedTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="ClassifiedTopic, CategorizedTopic, TaggedTopic, WikiTopic"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="" title="Summary" value=""}%
+%META:FIELD{name="Tag" attributes="" title="Tag" value="FooBar, BarBaz"}%
+%META:FIELD{name="Category" attributes="" title="Category" value=""}%
+%META:PREFERENCE{name="COMMENTSTATE" title="COMMENTSTATE" type="Local" value="closed"}%
+%META:PREFERENCE{name="COMMENTSTRUCTURE" title="COMMENTSTRUCTURE" type="Local" value="threaded"}%
+%META:PREFERENCE{name="PERMSET_VIEW" title="PERMSET_VIEW" type="Local" value="justauthor"}%
+%META:PREFERENCE{name="PERMSET_CHANGE" title="PERMSET_CHANGE" type="Local" value="nobody"}%

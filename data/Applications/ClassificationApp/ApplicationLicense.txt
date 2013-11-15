@@ -1,0 +1,11 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565279" format="1.1" version="4"}%
+%META:TOPICPARENT{name="TopicType"}%
+
+
+%META:FORM{name="Applications.TopicStub"}%
+%META:FIELD{name="TopicType" title="TopicType" value="TopicStub, TopicType"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="ApplicationLicense"}%
+%META:FIELD{name="Summary" attributes="" title="Summary" value="License for WikiApplications"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="WikiWorkbench"}%
+%META:FIELD{name="Target" attributes="" title="Target" value="Applications.ApplicationLicense"}%
+%META:FIELD{name="Section" attributes="" title="Section" value=""}%

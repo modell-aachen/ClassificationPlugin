@@ -1,0 +1,16 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565282" format="1.1" version="4"}%
+
+
+This is a subscription service to be automatically notified by e-mail when topics change in this *%BASEWEB%* web. This is a convenient service, so you do not have to come back and check all the time if something has changed. To subscribe, please add a bullet with your %SYSTEMWEB%.WikiName in alphabetical order to this list:
+
+Format:
+   * [ webname . ] wikiName - SMTP mail address 
+   * [ webName . ] wikiName 
+   * SMTP mail address 
+   * SMTP mail address : topics 
+   * [ webname . ] wikiName : topics
+
+%META:FORM{name="Applications.WikiTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="WebTool"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="" title="Summary" value="EMail subscription service for the %25WEB%25 web"}%

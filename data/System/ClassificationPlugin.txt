@@ -1,0 +1,122 @@
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1357569946" format="1.1" reprev="6" version="6"}%
+---+!! ClassificationPlugin
+%TOC%
+
+---++ Description
+ClassificationPlugin is a taxonomy and folksonomy extension for Foswiki that allows you to 
+manage knowledge assets stored in your wiki. Users can organize their content by filing 
+topics into categories and by adding offhand tags. Classifying content using categories and tags
+are the key factors to foster sustainable knowledge management. This becomes even more important
+in a wiki environment where content is created quickly but has to be made available for a longer period of time.
+
+Categories become the backbone spanning all of your content. Content can then be retrieved by browsing
+categories narrowing down search results interactively in addition to the normal full-text search.
+
+---++ Key features 
+   * *Multilevel facet navigation*: Wiki content is displayed dynamically by browsing a category tree or 
+     by means of interactive tag clouds. 
+
+   * *Managing taxonomies the wiki way*: Categories in a taxonomy are first-class wiki citizens that can be created,
+     renamed, managed and reused as easily as normal wiki topics.
+
+   * *Expressive knowledge models*: Categories may form poly-hierarchies
+     where categories can have multiple parent categories. Wiki documents can be filed into multiple
+     categories at the same time.
+
+   * *Multidimensional classification*: A wiki document may participate in multiple taxonomies and folksonomies
+     at the same time. Different facets of a document can be separated in a clean way.
+
+   * *Reusing and merging taxonomies*: A category tree once defined in one web space can be imported into another
+     web space effortless. You are free to chose which part of a tree you want to import. Multiple category trees
+     from a number of web spaces can be merged and reassembled differently in a new web. That way predefined
+     taxonomies can be managed in a centralized way and reused as needed in different webs. Any change to a taxonomy
+     in one place will automatically show up in all webs that imported it.
+
+   * *Tagging for corporate intranets*: While categories establish a predefined vocabulary, tags are a way to
+     assign keywords to wiki content in an ad hoc fashion. This completes category knowledge management in
+     a natural and fruitful way.
+
+   * *Standardized <nop>WikiApplicatons*: <nop>ClassificationPlugin conforms to the <nop>WikiWorkbench application
+     framework that grants for scalable and long-term maintainable <nop>WikiApplications.
+
+   * *Extensibility*: <nop>ClassificationPlugin serves as a building block for further <nop>WikiApplications
+     to be integrated in an overall knowledge management infrastructure. It serves as a middleware for a couple
+     of higher order applications, like blogging, forums and skills management available separately.
+
+   * *Document types*: <nop>ClassificationPlugin adds a couple of document types to the standard set that come with
+     the <nop>WikiWorkbench. This gives you maximum flexibility in your knowledge management initiative. Further
+     document types can be derived with ease. These will automatically participate in the overall knowledge management
+     framework.
+
+   * *Facetted Search*: <nop>ClassificationPlugin integrates well into Foswiki:Extensions/SolrPlugin using tags and 
+     categories to drill down into search results.
+
+For further information please contact foswiki@michaeldaumconsulting.com.
+
+---++ Screenshots
+%IMAGE{"ClassificationPluginSnap1.png" size="150" crop="on"}%
+%IMAGE{"ClassificationPluginSnap2.png" size="150" crop="on"}%
+%IMAGE{"ClassificationPluginSnap3.png" size="150" crop="on"}%
+%IMAGE{"ClassificationPluginSnap4.png" size="150" crop="on"}%
+%IMAGE{"ClassificationPluginSnap5.png" size="150" crop="on"}%
+%IMAGE{"ClassificationPluginSnap6.png" size="150" crop="on"}%
+%IMAGE{"ClassificationPluginSnap7.png" size="150" crop="on"}%
+
+---++ Syntax Rules
+=%<nop>HIERARCHY{...}%=
+
+Format strings may contain the following:
+   * =$time= expands to the calculated time difference
+   * =%$= expands to a =%= char
+   * =$$= expands to a =$= char
+   * =
+= expands to a linefeed
+   * =$t= expands to a tab space
+   * == expands to the empty string
+
+---++ ISA
+Predicate that checks if a topic is filed in a specific category or one of its subcategories
+Also available in <nop>DBCacheContrib search expressions.
+
+---++ SUBSUMES
+Predicate that checks if a category is a parent category of another. 
+Also available in <nop>DBCacheContrib search expressions.
+
+---++ SIMILARTOPICS
+Returns a list of topics that are similar to the current one. Similarity between two
+topics is a value expressed in percentage, where 100% means that the topics are extremely
+similar and 0% means that the compared topics aren't corelated at all. The similarity
+is computed on the base of the categorization and tagging information using a
+weighted matching coefficient.
+
+---++ Installation Instructions
+%$INSTALL_INSTRUCTIONS%
+
+---++ Plugin Info
+<!-- provided for compatibility only
+   * Set SHORTDESCRIPTION = A topic classification plugin and application
+-->
+
+|  Plugin Author: | Michael Daum |
+|  Copyright &copy;: | 2006-2013, Michael Daum http://michaeldaumconsulting.com |
+|  License: | GPL ([[http://www.gnu.org/copyleft/gpl.html][GNU General Public License]]) |
+|  Release: | %$RELEASE% |
+|  Version: | %$VERSION% |
+|  Change History: | <!-- versions below in reverse order -->&nbsp; |
+|  07 Jan 2013: | first public releaes |
+|  30 Oct 2007: | first check-in to svn |
+|  30 Oct 2006: | Initial version |
+|  Dependency: | $Foswiki::Plugins::VERSION 1.1 |
+|  CPAN Dependencies: |  |
+|  Other Dependencies: | none |
+|  Perl Version: | 5.005 |
+|  Plugin Home: | Foswiki:Extensions/%TOPIC% |
+|  Feedback: | Foswiki:Support/%TOPIC% |
+
+%META:FILEATTACHMENT{name="ClassificationPluginSnap7.png" attachment="ClassificationPluginSnap7.png" attr="" comment="" date="1357569579" size="233626" user="ProjectContributor" version="1"}%
+%META:FILEATTACHMENT{name="ClassificationPluginSnap6.png" attachment="ClassificationPluginSnap6.png" attr="" comment="" date="1357569581" size="108342" user="ProjectContributor" version="1"}%
+%META:FILEATTACHMENT{name="ClassificationPluginSnap5.png" attachment="ClassificationPluginSnap5.png" attr="" comment="" date="1357569582" size="32247" user="ProjectContributor" version="1"}%
+%META:FILEATTACHMENT{name="ClassificationPluginSnap4.png" attachment="ClassificationPluginSnap4.png" attr="" comment="" date="1357569583" size="113934" user="ProjectContributor" version="1"}%
+%META:FILEATTACHMENT{name="ClassificationPluginSnap3.png" attachment="ClassificationPluginSnap3.png" attr="" comment="" date="1357569585" size="337629" user="ProjectContributor" version="1"}%
+%META:FILEATTACHMENT{name="ClassificationPluginSnap2.png" attachment="ClassificationPluginSnap2.png" attr="" comment="" date="1357569586" size="30485" user="ProjectContributor" version="1"}%
+%META:FILEATTACHMENT{name="ClassificationPluginSnap1.png" attachment="ClassificationPluginSnap1.png" attr="" comment="" date="1357569587" size="55821" user="ProjectContributor" version="1"}%

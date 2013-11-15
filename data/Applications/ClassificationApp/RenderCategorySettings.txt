@@ -1,0 +1,60 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565281" format="1.1" version="4"}%
+%META:TOPICPARENT{name="TopicFunction"}%
+%TOC{depth="2"}%
+
+---++ Documentation
+%STARTSECTION{name="documentation" type="section"}%
+This function is used by the rest handler to render the 
+settings tab in the category editor
+
+---+++++ Parameters
+   * BASETOPIC
+   * TOPICPARENT
+
+%ENDSECTION{name="documentation" type="section"}%
+
+---++ Implementation
+<verbatim class="tml">
+%STARTINCLUDE%<!-- render category settings -->
+<literal>
+<table class="foswikiLayoutTable">
+<tr>
+  <th>%MAKETEXT{"Parent topic"}%:</th>
+  <td><input class="foswikiInputField" type="text" name="topicparent" size="80" value="%IF{"defined TOPICPARENT" then="%TOPICPARENT%"}%" /></td>
+</tr>
+<tr>
+  <th>%MAKETEXT{"Imported Categories"}%:</th>
+  <td><input class="foswikiInputField" type="text" name="ImportedCategory" size="80" value="%FORMFIELD{topic="%BASEWEB%.%BASETOPIC%" "ImportedCategory"}%" /></td>
+</tr>
+<tr>
+  <th valign="top">%MAKETEXT{"Icon"}%:</th>
+  <td>
+    %DBCALL{"Applications.ClassificationApp.RenderIconSelector"
+      VALUE="%URLPARAM{"Icon" default="%FORMFIELD{topic="%BASEWEB%.%BASETOPIC%" "Icon"}%"}%"
+      SOURCE="%CLASSIFICATIONPLUGIN_ICONSET%"
+    }%
+  </td>
+</tr>
+</table>
+</literal>
+<!-- //render category settings -->%STOPINCLUDE%
+</verbatim>
+
+---++ Test
+<div class="foswikiPageForm">
+%DBCALL{"%TOPIC%"}%
+</div>
+
+%DBCALL{"Applications.RenderFunctionCallers"}%
+
+---++ Copyright
+&copy; 2006-2013 Michael Daum http://michaeldaumconsulting.com
+
+%DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
+
+
+%META:FORM{name="Applications.ApplicationTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Renders the content of the settings tab in the category editor"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

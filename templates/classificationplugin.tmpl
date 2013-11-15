@@ -1,0 +1,40 @@
+%TMPL:DEF{"categoryeditor"}%%DBCALL{
+  "Applications.ClassificationApp.RenderCategoryEditor" 
+  NAME="$name" 
+  VALUE="$value" 
+  TOP="$top" 
+  THEWEB="$baseweb"
+}%%TMPL:END%
+
+%TMPL:DEF{"tageditor"}%%DBCALL{
+  "Applications.ClassificationApp.RenderTagEditor"
+  NAME="$name" 
+  VALUE="$value" 
+  THEWEB="$baseweb"
+  THETOPIC="$topic"
+  SIZE="$size"
+}%%TMPL:END%
+
+%TMPL:DEF{"querytags"}%%TMPL:P{context="SolrPluginEnabled" then="querytags::solr" else="querytags::default"}%%TMPL:END%
+
+%TMPL:DEF{"querytags::default"}%%DBCALL{
+  "Applications.ClassificationApp.RenderKnownTags"
+  TAG="%URLPARAM{"term"}%"
+  LIMIT="%URLPARAM{"limit"}%"
+  THEWEB="%URLPARAM{"web" default="%BASEWEB%"}%"
+}%%TMPL:END%
+
+%TMPL:DEF{"querytags::solr"}%%DBCALL{
+  "Applications.ClassificationApp.RenderKnownTagsSolr"
+  TAG="%URLPARAM{"term"}%"
+  LIMIT="%URLPARAM{"limit"}%"
+  THEWEB="%URLPARAM{"web" default="%BASEWEB%"}%"
+}%%TMPL:END%
+
+%TMPL:DEF{"querycats"}%%DBCALL{
+  "Applications.ClassificationApp.RenderKnownCats"
+  CAT="%URLPARAM{"q"}%"
+  LIMIT="%URLPARAM{"limit"}%"
+  THEWEB="%URLPARAM{"web" default="%BASEWEB%"}%"
+}%%TMPL:END%
+

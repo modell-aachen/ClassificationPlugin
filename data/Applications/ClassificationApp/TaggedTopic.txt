@@ -1,0 +1,38 @@
+%META:TOPICINFO{author="micha" comment="reprev" date="1366625454" format="1.1" reprev="10" version="10"}%
+%META:TOPICPARENT{name="TopicType"}%
+%TOC{depth="2"}%
+%DBCALL{"Applications.RenderTopicInstaller" TYPE="TopicType" PARENT="TopicType"}%
+---++ Documentation
+%STARTSECTION{"documentation"}%
+This is a TopicType for topics that you want to tag. If you want to categorize them also
+use the ClassifiedTopic type.
+
+See also: ClassifiedTopic, CategorizedTopic, TaggedTopicViewTemplate
+%ENDSECTION{"documentation"}%
+
+---++ Topics of type '%TOPIC%'
+%STARTINCLUDE%<!-- -->
+%DBCALL{"Applications.RenderSimpleTopicCreator"
+  EDITOR="Applications.ClassificationApp.TaggedTopicEdit"
+}%
+
+%DBCALL{"Applications.RenderTopicsOfType"
+  FIELDS="TopicTitle, Summary, Tag, Changed"
+  ROWS="20"
+}%
+<!-- -->%STOPINCLUDE%
+
+---++ <nop>%TOPIC% form
+| *Name:*| *Type:* | *Size:* | *Values:* | *Description:* | *Attributes:* |
+| TopicType | label | 1 | TaggedTopic | Document type  | |
+| <nop>TopicTitle | text | 75 | | title of this topic | |
+| Summary | text | 75 | | short description of the role of this topic | |
+| Tag | tag | 30 | | keywords for this topic | |
+
+
+%META:FORM{name="Applications.TopicType"}%
+%META:FIELD{name="TopicType" title="TopicType" value="TopicType, DataForm, DocuTopic"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Inheritance" attributes="" title="Inheritance" value="ApplicationTopic"}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Content classification using folksonomy"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

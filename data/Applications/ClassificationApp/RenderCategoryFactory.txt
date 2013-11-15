@@ -1,0 +1,103 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565281" format="1.1" version="14"}%
+%META:TOPICPARENT{name="TopicFunction"}%
+%TOC{depth="2"}%
+
+---++ Documentation
+%STARTSECTION{name="documentation" type="section"}%
+This function renders an input form to create a new category.
+
+%ENDSECTION{name="documentation" type="section"}%
+
+---++ Implementation
+<verbatim class="tml">
+%STARTINCLUDE%<!-- -->
+<noautolink>
+<form action="%SCRIPTURLPATH{"save"}%/%BASEWEB%/" method="post">
+<input type="hidden" name="refresh" value="on" />
+<input type="hidden" name="web" value="%BASEWEB%" />
+<input type="hidden" name="onlynewtopic" value="on" />
+<input type="hidden" name="formtemplate" value="Applications.ClassificationApp.Category" />
+<input type="hidden" name="templatetopic" value="Applications.ClassificationApp.CategoryTemplate" />
+<input type="hidden" name="action" value="form" />
+<input type="hidden" name="TopicType" value="Category, CategorizedTopic" />
+<input type="hidden" name="topicparent" value="none" />
+<div class="foswikiFormSteps clsCategoryFactory">
+<h2 >%MAKETEXT{"Create a new category in the [_1] web" args="<span class='foswikiAlert'><nop>%WEBLINK{"%BASEWEB%" format="$name"}%</span>"}%</h2>
+<div class="foswikiFormStep">
+  <h3>%MAKETEXT{"Title"}%:</h3>
+  <input class="foswikiInputField" type="text" id="cattitle" name="TopicTitle" size="60" value="%URLPARAM{"TopicTitle" encode="entity"}%" />
+  <div class="foswikiFormDescription">
+    %MAKETEXT{"Enter the title of the new category. This is a free-form text that the topic name will be derived from by default."}%
+  </div>
+</div>
+<div class="foswikiFormStep">
+  <h3>%MAKETEXT{"Topic"}%:</h3>
+  <input class="foswikiInputField" type="text" id="cattopic" name="topic" size="60" value="%URLPARAM{"topic" encode="entity"}%" />
+  <div class="foswikiFormDescription">
+    %MAKETEXT{"Enter the category topic name. This must be a unique ID among all categories within a taxonomy."}%
+  </div>
+</div>
+<div class="foswikiFormStep">
+  <h3>%MAKETEXT{"Summary"}%</h3>
+  <input class="foswikiInputField" type="text" name="Summary" size="60" value="%URLPARAM{"Summary" encode="entity"}%" />
+  <div class="foswikiFormDescription">
+    %MAKETEXT{"Enter a short summary line describing what this category is about."}%
+  </div>
+</div>
+<div class="foswikiFormStep">
+  <h3>%MAKETEXT{"Parent category"}%:</h3>
+  %DBCALL{"Applications.ClassificationApp.RenderCategoryEditor"}%
+  <div class="foswikiFormDescription">
+    %MAKETEXT{"Select one or more parent categories that the newly created category is subordinated to."}%
+  </div>
+</div>
+<div class="foswikiFormStep">
+  <h3>%MAKETEXT{"Icon"}%:</h3>
+  %DBCALL{"Applications.ClassificationApp.RenderIconSelector" 
+    BUTTONS="off" 
+    VALUE="%URLPARAM{"Icon"}%" 
+    SOURCE="%CLASSIFICATIONPLUGIN_ICONSET%"
+  }%
+  <div class="foswikiFormDescription">
+    %MAKETEXT{"Select an icon to be used when displaying this category in a list or hierarchy tree."}%
+  </div>
+</div>
+<div class="foswikiFormStep">
+  %BUTTON{"%MAKETEXT{"Submit"}%" type="save" icon="add"}%
+  %CLEAR%
+</div>
+</div>
+</form>
+%JQREQUIRE{"wikiword"}%<!-- -->
+%ADDTOZONE{"script" topic="%WEB%.%TOPIC%" section="init" requires="JQUERYPLUGIN::WIKIWORD"}%<!-- -->
+</noautolink>
+<!-- -->%STOPINCLUDE%
+</verbatim>
+
+---++ !JavaScript initialisation
+<verbatim class="tml">
+%STARTSECTION{"init"}%<literal>
+<script>
+jQuery(function($) {
+  $("#cattopic").wikiword("#cattitle", {suffix: 'Category', initial:'...Category'});
+});
+</script>
+</literal>%ENDSECTION{"init"}%
+</verbatim>
+
+---++ Test
+%DBCALL{"%TOPIC%"}%
+
+%DBCALL{"Applications.RenderFunctionCallers"}%
+
+---++ Copyright
+&copy; 2008-2013 Michael Daum http://michaeldaumconsulting.com
+
+%DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
+
+
+%META:FORM{name="Applications.ApplicationTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Renders a factory for Categories"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

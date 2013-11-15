@@ -1,0 +1,9 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565282" format="1.1" version="4"}%
+
+
+%INCLUDE{"%SYSTEMWEB%.WebTopicList"}%
+
+%META:FORM{name="Applications.WikiTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="WebTool"}%
+%META:FIELD{name="TopicTitle" attributes="c" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="List of all topics in this web"}%

@@ -1,0 +1,15 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565282" format="1.1" version="7"}%
+%META:TOPICPARENT{name="WebHome"}%
+| *Month:* | *Topic <br /> views:* | *Topic <br /> saves:* | *File <br /> uploads:* | *Most popular <br /> topic views:* | *Top contributors for <br /> topic save and uploads:* |
+| <!--statDate--> | <!--statViews--> | <!--statSaves--> | <!--statUploads--> | <!--statTopViews--> | <!--statTopContributors--> |
+| Jul 2012 |  0 |  0 |  0 |  |  |
+
+__Notes:__
+	* Do not edit this topic, it is updated automatically. (You can also <a href="%SCRIPTURLPATH{"statistics"}%/%WEB%/%TOPIC%">force</a> an update)
+	* %SYSTEMWEB%.CompleteDocumentation tells you how to enable the automatic updates of the statistics.
+	* Suggestion: You could archive this topic once a year and delete the previous year's statistics from the table.
+
+%META:FORM{name="Applications.WikiTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="WebTool"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="" title="Summary" value="Statistics for <nop>Applications/ClassificationApp Web"}%

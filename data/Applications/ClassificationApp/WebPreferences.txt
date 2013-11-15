@@ -1,0 +1,32 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565282" format="1.1" version="5"}%
+
+
+%TOC%
+
+---+++ Naming
+Text to be displayed on the sitemap and in the headerbar describing this web
+using a kind of tagline:
+   * Set WEBSUMMARY = Categorization and folksomony application
+
+---+++ Access rights
+   * Set #DENYWEBVIEW =
+   * Set #ALLOWWEBVIEW = 
+   * Set #DENYWEBCHANGE = 
+   * Set ALLOWWEBCHANGE = %USERSWEB%.AdminGroup
+   * Set ALLOWTOPICCHANGE = %USERSWEB%.AdminGroup
+
+---+++ Application Pointer
+   * Set CLASSIFICATIONPLUGIN_AUTOREPARENT  = 1
+
+---+++ Misc
+<noautolink>
+Definition of DataForms:
+   * Set WEBFORMS = Applications.ClassificationApp.Category, Applications.ClassificationApp.ClassifiedTopic, Applications.ClassificationApp.CategorizedTopic, Applications.ClassificationApp.TaggedTopic, Applications.WikiTopic, Applications.ApplicationTopic
+
+</noautolink>
+
+%META:FORM{name="Applications.ApplicationTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="ApplicationTopic, WebTool"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Preferences of the <nop>%25WEB%25 web"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="WikiWorkbench"}%

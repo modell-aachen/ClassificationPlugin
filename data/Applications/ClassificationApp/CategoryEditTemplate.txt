@@ -1,0 +1,48 @@
+%META:TOPICINFO{author="micha" comment="reprev" date="1357824700" format="1.1" reprev="9" version="9"}%
+%META:TOPICPARENT{name="TopicView"}%
+%{<verbatim class="tml">}%
+%TMPL:INCLUDE{"Applications.ClassificationApp.ClassifiedTopicEdit"}%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"topictype"}%%MAKETEXT{"category"}%%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"formfields"}%<!-- formfields -->
+%TMPL:P{"categoriestab"}%
+<!-- //formfields -->%TMPL:END%
+%{</verbatim>}%
+
+%{<verbatim class="tml">}%
+%TMPL:DEF{"settings"}%<!-- settings -->
+<h2>Category preferences</h2>
+<div class="foswikiFormSteps">
+<table class="foswikiLayoutTable">
+<tr>
+  <th>%MAKETEXT{"Order"}%:</th>
+  <td><input class="foswikiInputField" type="text" name="Order" size="10" value="%URLPARAM{"Order" default="%FORMFIELD{topic="%BASEWEB%.%BASETOPIC%" "Order"}%"}%" /></td>
+</tr>
+<tr>
+  <th>%MAKETEXT{"Imported Categories"}%:</th>
+  <td><input class="foswikiInputField" type="text" name="ImportedCategory" size="80" value="%URLPARAM{"ImportedCategory" default="%FORMFIELD{topic="%BASEWEB%.%BASETOPIC%" "ImportedCategory"}%"}%" /></td>
+</tr>
+<tr>
+  <th valign="top">%MAKETEXT{"Icon"}%:</th>
+  <td>
+    %DBCALL{"Applications.ClassificationApp.RenderIconSelector"
+      VALUE="%URLPARAM{"Icon" default="%FORMFIELD{topic="%BASEWEB%.%BASETOPIC%" "Icon"}%"}%"
+      SOURCE="%CLASSIFICATIONPLUGIN_ICONSET%"
+    }%
+  </td>
+</tr>
+</table>
+</div>
+<!-- //settings -->%TMPL:END%
+%{</verbatim>}%
+
+%META:FORM{name="Applications.ApplicationTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="TopicView"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Editor for category topics"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%

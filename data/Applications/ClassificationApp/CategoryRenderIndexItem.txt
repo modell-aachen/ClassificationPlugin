@@ -1,0 +1,50 @@
+%META:TOPICINFO{author="micha" comment="reprev" date="1357646398" format="1.1" reprev="9" version="9"}%
+%META:TOPICPARENT{name="TopicFunction"}%
+%TOC{depth="2"}%
+
+---++ Documentation
+%STARTSECTION{name="documentation" type="section"}%
+This method is called by RenderCategory to display
+a summary for an object of type ClassifiedTopic.
+
+---+++++ Parameters
+   * OBJECT
+   * TITLE
+
+%ENDSECTION{name="documentation" type="section"}%
+
+---++ Implementation
+<verbatim class="tml">
+%STARTINCLUDE%<!-- --><noautolink>
+%CATINFO{cat="%DBQUERY{topic="%OBJECT%" format="$topic"}%"
+   maxchildren="6"
+   sortchildren="on"
+   morechildren="<a href='$url' title='%MAKETEXT{"more"}%'>...</a>"
+   format="<div class='clsIndexItem clsCategoryItem' style='background-image:url($icon)'>
+     <a href='$url'>%IF{"defined TITLE" then="%TITLE%" else="$title"}%</a>$percntIF{
+       \"'$count'>'0'\" then=\"&nbsp;($count)\"
+     }$percnt<!-- -->
+     $percntIF{\"'$summary'!=''\" then=\"<div class='foswikiTopicInfo'>$summary</div>\"}$percnt<!-- -->
+     <div class='clsSubCategories'>$children $more</div>
+   </div>"
+}%%CLEAR%</noautolink><!-- -->%STOPINCLUDE%
+</verbatim>
+
+---++ Test
+<div class="alt">
+%DBCALL{"%TOPIC%" OBJECT="IntranetDirectory"}%
+</div>
+
+%DBCALL{"Applications.RenderFunctionCallers"}%
+
+---++ Copyright
+&copy; 2007-2013 Michael Daum http://michaeldaumconsulting.com
+
+%DBCALL{"Applications.GnuGeneralPublicLicense" section="notice"}%
+
+
+%META:FORM{name="Applications.ApplicationTopic"}%
+%META:FIELD{name="TopicType" title="TopicType" value="DocuTopic, TopicFunction"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value=""}%
+%META:FIELD{name="Summary" attributes="c" title="Summary" value="Render a summary for a Category in a category index"}%
+%META:FIELD{name="WikiApplication" attributes="" title="WikiApplication" value="ClassificationApp"}%
