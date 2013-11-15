@@ -1,13 +1,12 @@
-%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565283" format="1.1" version="12"}%
-
-
----+!! %WEBLINK%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1374652917" format="1.1" reprev="14" version="14"}%
+---+!! %TOPICTITLE%
 
 ---++ %MAKETEXT{"Welcome"}%
 %DBCALL{"Applications.ClassificationApp.WelcomeMessage"}%
 
 <div class="foswikiGrid">
-<div class="foswikiCol8 border">
+<div class="foswikiRow">
+<div class="foswikiCol8">
 ---++ %MAKETEXT{"Categories"}%
 <verbatim class="jqLoader {section:'parties'}">
 %STARTSECTION{"parties"}%<!-- -->
@@ -30,7 +29,7 @@
 <!-- -->%ENDSECTION{"tagcloud"}%
 </div>
 %STOPCHAPTER%
-<div class="foswikiCol4 last">
+<div class="foswikiCol4 border">
 ---++ %MAKETEXT{"Recent changes"}%
 <verbatim class="jqLoader {section:'recentchanges'}">
 %STARTSECTION{"recentchanges"}%<!-- -->
@@ -41,10 +40,14 @@
 </verbatim>
 %STOPCHAPTER%
 </div>
+</div>
+<div class="foswikiRow">
 <div class="foswikiCol12">
 ---
 </div>
-<div class="foswikiCol4 border">
+</div>
+<div class="foswikiRow">
+<div class="foswikiCol4">
 ---++ %MAKETEXT{"Topic list"}%
    * ...
    * ...
@@ -56,13 +59,13 @@
 ---++ %MAKETEXT{"Quick links"}%
    * [[Categories]]
    * [[ClassifiedTopics]]
-   * WebPreferences
-   * WebTopicList
-   * WebStatistics
-   * WebNotify
+   * [[WebPreferences]]
+   * [[WebTopicList]]
+   * [[WebStatistics]]
+   * [[WebNotify]]
 %STOPCHAPTER%
 </div>
-<div class="foswikiCol4 last">
+<div class="foswikiCol4 border">
 ---++ %MAKETEXT{"Topics tagged \"[_1]\"" args="%QUERYTAG%"}%
 <!--
    * Set QUERYTAG = test
@@ -75,6 +78,7 @@
   sort="on"
 }%
 %STOPCHAPTER%
+</div>
 </div>
 </div><!-- end of grid -->
 ---
@@ -94,3 +98,4 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquam molestie
 %META:PREFERENCE{name="NATSKIN_SIDEBAR" title="NATSKIN_SIDEBAR" type="Local" value="off"}%
 %META:PREFERENCE{name="DISPLAYREVISIONINFO" title="DISPLAYREVISIONINFO" type="Local" value="off"}%
 %META:PREFERENCE{name="NOWYSIWYG" title="NOWYSIWYG" type="Set" value="on"}%
+%META:PREFERENCE{name="TOPICTITLE" title="TOPICTITLE" type="Local" value="_ClassificationTemplate"}%

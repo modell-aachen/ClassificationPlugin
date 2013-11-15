@@ -21,7 +21,7 @@ jQuery(function($) {
           }
           $("#renameTagDialog").dialog("close");
           $.blockUI({message:"<h1> Processing ... </h1>"});
-          if (typeof(foswikiStrikeOne) != 'undefined') {
+          if (typeof(foswikiStrikeOne) !== 'undefined') {
             foswikiStrikeOne($this[0]);
           }
         },

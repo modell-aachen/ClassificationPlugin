@@ -49,6 +49,7 @@ sub getOptions { # needed by FieldDefinition
   my @values = ();
   my @valuesFromQuery = $query->param($this->{name});
   foreach my $item (@valuesFromQuery) {
+    next unless defined $item;
     foreach my $value (split(/\s*,\s*/, $item)) {
       push @values, $value if $value;
     }

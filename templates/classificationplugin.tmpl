@@ -1,4 +1,15 @@
-%TMPL:DEF{"categoryeditor"}%%DBCALL{
+%TMPL:DEF{"categoryeditor"}%%TMPL:P{"categoryeditor::jstree"}%%TMPL:END%
+
+%TMPL:DEF{"categoryeditor::jstree"}%%DBCALL{
+  "Applications.ClassificationApp.RenderCategoryBrowser"
+  NAME="$name"
+  VALUE="$value"
+  TOP="$top"
+  THEWEB="$baseweb"
+  MODE="select"
+}%<!-- -->%TMPL:END%
+
+%TMPL:DEF{"categoryeditor::jstreeview"}%%DBCALL{
   "Applications.ClassificationApp.RenderCategoryEditor" 
   NAME="$name" 
   VALUE="$value" 
@@ -20,21 +31,20 @@
 %TMPL:DEF{"querytags::default"}%%DBCALL{
   "Applications.ClassificationApp.RenderKnownTags"
   TAG="%URLPARAM{"term"}%"
-  LIMIT="%URLPARAM{"limit"}%"
+  LIMIT="%URLPARAM{"limit" default="10"}%"
   THEWEB="%URLPARAM{"web" default="%BASEWEB%"}%"
 }%%TMPL:END%
 
 %TMPL:DEF{"querytags::solr"}%%DBCALL{
   "Applications.ClassificationApp.RenderKnownTagsSolr"
   TAG="%URLPARAM{"term"}%"
-  LIMIT="%URLPARAM{"limit"}%"
+  LIMIT="%URLPARAM{"limit" default="10"}%"
   THEWEB="%URLPARAM{"web" default="%BASEWEB%"}%"
 }%%TMPL:END%
 
 %TMPL:DEF{"querycats"}%%DBCALL{
   "Applications.ClassificationApp.RenderKnownCats"
   CAT="%URLPARAM{"q"}%"
-  LIMIT="%URLPARAM{"limit"}%"
+  LIMIT="%URLPARAM{"limit" default="10"}%"
   THEWEB="%URLPARAM{"web" default="%BASEWEB%"}%"
 }%%TMPL:END%
-

@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="micha" comment="reprev" date="1366028972" format="1.1" reprev="29" version="30"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1381922633" format="1.1" reprev="29" version="31"}%
 %META:TOPICPARENT{name="TopicFunction"}%
 %TOC{depth="2"}%
 
@@ -119,7 +119,9 @@ jQuery(function($) {
 </verbatim>
 
 ---++ Test
+%STARTSECTION{"test"}%
 %DBCALL{"%TOPIC%" THEWEB="%URLPARAM{"theweb"}%"}%
+%ENDSECTION{"test"}%
 
 %DBCALL{"Applications.RenderFunctionCallers"}%
 

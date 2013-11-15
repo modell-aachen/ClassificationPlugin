@@ -15,13 +15,16 @@
 package Foswiki::Plugins::ClassificationPlugin::Hierarchy;
 
 use strict;
+use warnings;
+
 use Foswiki::Plugins::DBCachePlugin::Core ();
 use Foswiki::Plugins::ClassificationPlugin::Category ();
 use Storable ();
 use Foswiki::Prefs ();
 use Foswiki::Func ();
+use JSON ();
 
-use constant OBJECTVERSION => 0.81;
+use constant OBJECTVERSION => 0.82;
 use constant CATWEIGHT => 1.0; # used in computeSimilarity()
 use constant DEBUG => 0; # toggle me
 
@@ -30,7 +33,6 @@ use vars qw(%insideInit);
 ###############################################################################
 # static
 sub writeDebug {
-  #&Foswiki::Func::writeDebug('- ClassificationPlugin - '.$_[0]) if DEBUG;
   print STDERR '- ClassificationPlugin::Hierarchy - '.$_[0]."\n" if DEBUG;
 }
 
@@ -89,7 +91,7 @@ sub new {
 sub finish {
   my $this = shift;
 
-  #writeDebug("called finish()");
+  writeDebug("called finish()");
   my $gotUpdate = $this->{gotUpdate};
   $this->{gotUpdate} = 0;
 
@@ -100,10 +102,10 @@ sub finish {
     }
   }
 
-  #writeDebug("gotUpdate=$gotUpdate");
+  writeDebug("gotUpdate=$gotUpdate");
   if ($gotUpdate) {
-    writeDebug("saving hierarchy $this->{web}");
     my $cacheFile = Foswiki::Plugins::ClassificationPlugin::Core::getCacheFile($this->{web});
+    writeDebug("saving hierarchy $this->{web} to $cacheFile");
 
     # SMELL: don't cache the prefs for now
     undef $this->{_prefs}; 
@@ -176,6 +178,10 @@ sub init {
   $insideInit{$this->{web}} = 1;
 
   writeDebug("called Hierarchy::init for $this->{web} ... EXPENSIVE");
+
+  # reset all
+  $this->purgeCache(5);
+
   my $session = $Foswiki::Plugins::SESSION;
   $this->{_prefs} = new Foswiki::Prefs($session);
 
@@ -186,8 +192,9 @@ sub init {
     return;
   }
 
-  # itterate over all topics and collect categories
+  # iterate over all topics and collect categories
   my $seenImport = {};
+  
   foreach my $topicName ($db->getKeys()) {
     my $topicObj = $db->fastget($topicName);
     next unless $topicObj;
@@ -202,7 +209,7 @@ sub init {
 
     if ($topicType =~ /\bCategory\b/) {
       # this topic is a category in itself
-      #writeDebug("found category '$topicName' in web $this->{web}");
+      writeDebug("found category '$topicName' in web $this->{web}");
       my $cat = $this->{_categories}{$topicName};
       $cat = $this->createCategory($topicName) unless $cat;
 
@@ -210,7 +217,7 @@ sub init {
       if ($cats && @$cats) {
         $cat->setParents(@$cats);
       } else {
-        $cat->setParents('TopCategory');
+        $cat->setParents('TopCategory') if $cat->{name} ne 'TopCategory';
       }
 
       my $summary = $form->fastget("Summary") || '';
@@ -275,11 +282,6 @@ sub init {
     $cat->init();
   }
 
-  # reset distances, delay computeDistance til we need it
-  undef $this->{_distance};
-  if (DEBUG) {
-    $this->computeDistance();
-  }
   $this->{gotUpdate} = 1;
 
   if (0) {
@@ -290,7 +292,7 @@ sub init {
       }
       writeDebug($text);
     }
-    $this->printDistanceMatrix();
+    #$this->printDistanceMatrix();
   }
 
   writeDebug("done init $this->{web}");
@@ -313,7 +315,7 @@ sub printDistanceMatrix {
       my $catId2 = $cat2->{id};
       my $dist =  $$distance[$catId1][$catId2];
       next unless $dist;
-      #writeDebug("distance($catName1/$catId1, $catName2/$catId2) = $dist");
+      writeDebug("distance($catName1/$catId1, $catName2/$catId2) = $dist");
     }
   }
 }
@@ -788,7 +790,7 @@ sub getCategory {
   }
 
   if ($cat) {
-    my $cache = $Foswiki::Plugins::SESSION->{cache} || $Foswiki::Plugins::SESSION->{cache};
+    my $cache = $Foswiki::Plugins::SESSION->{cache};
     if (defined $cache) {
       #print STDERR "### addDependency($cat->{origWeb}, $cat->{name})\n";
       $cache->addDependency($cat->{origWeb}, $cat->{name})
@@ -894,6 +896,7 @@ sub getPreferences {
   return $this->{_prefs};
 }
 
+
 ###############################################################################
 sub checkAccessPermission {
   my ($this, $mode, $user, $topic, $order) = @_;
@@ -929,5 +932,75 @@ sub checkAccessPermission {
 
   return $allowed;
 }
+
+###############################################################################
+sub collectTopicsOfCategory {
+  my ($this) = @_;
+
+  my $db = Foswiki::Plugins::DBCachePlugin::Core::getDB($this->{web});
+
+  writeDebug("collecting topics in $this->{web}");
+
+  # reset _topics
+  foreach my $cat ($this->getCategories()) {
+    $cat->{_topics} = {};
+    $cat->{gotUpdate} = 1;
+  }
+
+  foreach my $topicName ($db->getKeys()) {
+    my $topicObj = $db->fastget($topicName);
+
+    my $form = $topicObj->fastget("form");
+    next unless $form;
+
+    $form = $topicObj->fastget($form);
+    next unless $form;
+
+    my $topicTypes = $form->fastget('TopicType');
+    next unless $topicTypes;
+
+    next if $topicTypes =~ /\bCategory\b/o;
+
+    my $cats = $this->getCategoriesOfTopic($topicObj);
+    next unless $cats;
+
+    foreach my $catName (@$cats) {
+      my $cat = $this->getCategory($catName);
+      #writeDebug("adding $topicName it to category $catName");
+      $cat->{_topics}{$topicName} = 1;
+    }
+  }
+
+  $this->{gotUpdate} = 1;
+}
+
+###############################################################################
+sub filterCategories {
+  my ($this, $params) = @_;
+
+  my $title = $params->{title};
+  my $name = $params->{name};
+  my $callback = $params->{callback};
+  my $caseSensitive = Foswiki::Func::isTrue($params->{casesensitive}, 0);
+
+  my @result = ();
+  foreach my $cat (values %{$this->{_categories}}) {
+    if ($caseSensitive) {
+      next if defined $title && $cat->{title} !~ /$title/;
+      next if defined $name && $cat->{name} !~ /$name/;
+    } else {
+      next if defined $title && $cat->{title} !~ /$title/i;
+      next if defined $name && $cat->{name} !~ /$name/i;
+    }
+    if (defined $callback) {
+      &$callback($cat);
+    } else {
+      push @result, $cat;
+    }
+  }
+
+  return @result;
+}
+
 
 1;

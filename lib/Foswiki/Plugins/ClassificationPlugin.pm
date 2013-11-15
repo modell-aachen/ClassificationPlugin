@@ -17,10 +17,12 @@ use strict;
 use warnings;
 use Foswiki::Contrib::DBCacheContrib::Search ();
 
-our $VERSION = '1.00';
-our $RELEASE = "1";
+our $VERSION = '2.00';
+our $RELEASE = '2.00';
 our $NO_PREFS_IN_TOPIC = 1;
 our $SHORTDESCRIPTION = 'A topic classification plugin and application';
+
+our $jsTreeConnector;
 
 our $doneInitCore;
 our $doneInitServices;
@@ -66,6 +68,14 @@ sub initPlugin {
   Foswiki::Func::registerTagHandler('DISTANCE', sub {
     initCore();
     return Foswiki::Plugins::ClassificationPlugin::Core::handleDISTANCE(@_);
+  });
+
+  Foswiki::Func::registerRESTHandler('jsTreeConnector', sub {
+    unless (defined $jsTreeConnector) {
+      require Foswiki::Plugins::ClassificationPlugin::JSTreeConnector;
+      $jsTreeConnector = Foswiki::Plugins::ClassificationPlugin::JSTreeConnector->new();
+    }
+    $jsTreeConnector->dispatchAction(@_);
   });
 
   Foswiki::Func::registerRESTHandler('splitfacet', sub {
@@ -119,6 +129,7 @@ sub initPlugin {
 
   $doneInitCore = 0;
   $doneInitServices = 0;
+  $jsTreeConnector = undef;
   return 1;
 }
 
@@ -169,8 +180,14 @@ sub afterSaveHandler {
 }
 
 ###############################################################################
-# SMELL: I'd prefer a proper finishHandler, alas it does not exist
-sub modifyHeaderHandler {
+sub afterRenameHandler {
+  initCore();
+  return Foswiki::Plugins::ClassificationPlugin::Core::afterRenameHandler(@_);
+}
+
+###############################################################################
+sub finishPlugin {
+
   Foswiki::Plugins::ClassificationPlugin::Core::finish(@_)
     if $doneInitCore;
   Foswiki::Plugins::ClassificationPlugin::Services::finish(@_)

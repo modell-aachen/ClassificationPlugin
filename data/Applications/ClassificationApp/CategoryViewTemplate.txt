@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565279" format="1.1" version="14"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1380204072" format="1.1" reprev="15" version="15"}%
 %META:TOPICPARENT{name="TopicView"}%
 %{<verbatim class="tml">}%
 %TMPL:INCLUDE{"Applications.WikiTopicView"}%
@@ -35,7 +35,7 @@
 %CATINFO{
    cat="%URLPARAM{"catname"}%"
    format="<h1>$link 
-     $percntIF{\"'$summary'!=''\"
+     $percntIF{\"'$percntENCODE{\"$summary\" type=\"entity\"}$percnt'!=''\"
        then=\"<br /><span class='foswikiTopicSummary'>$summary</span>\"
      }$percnt</h1>
      $percntMAKETEXT{\"Filed in [_1]\" 

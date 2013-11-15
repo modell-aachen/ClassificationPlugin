@@ -1,32 +1,69 @@
-%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565281" format="1.1" version="10"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1383817823" format="1.1" reprev="13" version="13"}%
 %META:TOPICPARENT{name="TopicFunction"}%
-%TOC{depth="2"}%
+ %TOC{depth="2"}%
 
 ---++ Documentation
 %STARTSECTION{name="documentation" type="section"}%
 
 ---+++++ Parameters
-   * TOP: node from where to start the category, defaults to 'TopCategory'
-   * THEWEB: where to search for categories, defaults to BASEWEB
-
-See also RenderCategoryEditor.
+   * THEWEB: where to search for categories, defaults to =%<nop>BASEWEB%=
+   * NAME: name of the formfield to store the selection (only used when MODE is set to =select=); defaults to =Category=
+   * VALUE: list of pre-selected categories
+   * TOP: node from where to start the category, defaults to =TopCategory=
+   * MODE: could be =edit=, =select= or =browse=, defaults to =browse=
+      * =edit=: allows to modify the hierarchy 
+      * =select=: select one or more categories; specify the name of the formfield to be used in the NAME parameter
+      * =browse=: navigate among categories
+   * BUTTONS: =on=, =off= - toggle the display of the buttons, defaults to =on=
 
 %ENDSECTION{name="documentation" type="section"}%
 
 ---++ Implementation
 <verbatim class="tml">
 %STARTINCLUDE%<!-- -->
-%DBCALL{"Applications.ClassificationApp.RenderCategoryEditor" 
-  THEWEB="%IF{"defined THEWEB" then="%THEWEB%" else="%BASEWEB%"}%" 
-  TOP="%IF{"defined TOP" then="%TOP%" else="TopCategory"}%"
-  THEFORMAT="browser"
-}%
-<style>.clsClearButton, .clsUndoButton {display:none}</style>
-<!-- -->%STOPINCLUDE%
+<div class="jqHierarchy clsBrowser" data-web="%THEWEB{default="%BASEWEB%"}%" data-root="%TOP{default="TopCategory"}%" %IF{"'%MODE%'='select'" then="data-input-field-name='%NAME{default="Category"}%'"}% data-mode="%MODE{default="browse"}%" data-display-counts="true" data-container=".jqHierarchyContainer">
+    %IF{"'%MODE%'='select'"
+      then="<input type='hidden' name='%NAME{default="Category"}%' value='%VALUE{default=""}%' />"
+      else="<!-- -->"
+    }%%IF{"'%BUTTONS{default="on"}%'='on'"
+      then="$percntDBCALL{\"%WEB%.%TOPIC%\" section=\"buttons\"}$percnt"
+      else="<!-- -->"
+    }%
+  <div class="jqHierarchyContainer jqUITooltip" data-theme='default' data-position="right" data-arrow="true"></div>
+</div>
+%DBCALL{"%WEB%.%TOPIC%" section="init"}%%STOPINCLUDE%
+</verbatim>
+
+---++ init
+<verbatim class="tml">
+%STARTSECTION{"init"}%%JQREQUIRE{"jstree, pnotify, wikiword, ui::tooltip, blockui"}%<!-- -->
+%ADDTOZONE{"script" 
+  id="JQUERYPLUGIN::HIERARCHY"
+  text="<script src='%PUBURLPATH%/System/ClassificationPlugin/jquery.hierarchy.js'></script>" 
+  requires="JQUERYPLUGIN::JSTREE, JQUERYPLUGIN::PNOTIFY, JQUERYPLUGIN::WIKIWORD, JQUERYPLUGIN::UI::TOOLTIP, JQUERYPLUGIN::BLOCKUI"
+}%<!-- -->%ENDSECTION{"init"}%
+</verbatim>
+
+---++ buttons
+<verbatim class="tml">
+%STARTSECTION{"buttons"}%<div class="jqHierarchyButtons jqUITooltip" data-theme="info" data-position="top" data-arrow="true">
+ <input type="text" size="28" class="foswikiInputField jqHierarchySearchField" style="display:none" /> 
+ %BUTTON{"%MAKETEXT{"Filter"}%" icon="find" class="simple jqHierarchySearchButton" title="%MAKETEXT{"Search for matching categories"}%"}% 
+ %IF{"'%USERNAME%' ingroup 'AdminGroup'" 
+   then="%BUTTON{"%MAKETEXT{"Refresh"}%" icon="arrow_refresh" class="jqHierarchyRefreshButton simple" title="%MAKETEXT{"Refresh hierarchy cache on the backend"}%"}%"
+ }%%CLEAR% 
+</div>%ENDSECTION{"buttons"}%
 </verbatim>
 
 ---++ Test
-%DBCALL{"%TOPIC%" UNIQUE="off"}%
+---+++ select
+%DBCALL{"%TOPIC%" MODE="select"}%
+
+---+++ browse
+%DBCALL{"%TOPIC%" MODE="browse"}%
+
+---+++ edit
+%DBCALL{"%TOPIC%" MODE="edit"}%
 
 %DBCALL{"Applications.RenderFunctionCallers"}%
 

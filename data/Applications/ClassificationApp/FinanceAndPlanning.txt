@@ -1,11 +1,12 @@
-%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1357565280" format="1.1" version="2"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1372239615" format="1.1" reprev="3" version="3"}%
 %META:TOPICPARENT{name="DepartmentsCategory"}%
 %DBCALL{"Applications.ClassificationApp.RenderCategory"}%
 
 %META:FORM{name="Applications.ClassificationApp.Category"}%
-%META:FIELD{name="TopicType" attributes="" title="TopicType" value="Category, CategorizedTopic"}%
-%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="Finance  & Planing"}%
+%META:FIELD{name="TopicType" title="TopicType" value="Category, CategorizedTopic, WikiTopic"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="Finance  & Planning"}%
 %META:FIELD{name="Summary" attributes="" title="Summary" value=""}%
 %META:FIELD{name="Category" attributes="" title="Category" value="DepartmentsCategory"}%
 %META:FIELD{name="Icon" attributes="" title="Icon" value="coins.png"}%
 %META:FIELD{name="ImportedCategory" attributes="" title="<nop>ImportedCategory" value=""}%
+%META:TOPICMOVED{by="micha" date="1372239615" from="Applications/ClassificationApp.FinanceAndPlaning" to="Applications/ClassificationApp.FinanceAndPlanning"}%

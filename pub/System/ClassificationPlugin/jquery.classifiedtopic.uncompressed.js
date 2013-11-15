@@ -1,7 +1,7 @@
 jQuery(function($) {
   "use strict";
 
-  $('.clsTopicInfoMore').live("click", function() {
+  $(document).on("click", ".clsTopicInfoMore", function() {
     var $this = $(this),
         $container = $this.parent(),
         web = foswiki.getPreference("WEB"),

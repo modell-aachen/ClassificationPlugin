@@ -9,7 +9,6 @@ data/Applications/ClassificationApp/BusinessStructure.txt 0644
 data/Applications/ClassificationApp/CampainManagementCategory.txt 0644
 data/Applications/ClassificationApp/CategorizedTopicEditTemplate.txt 0644
 data/Applications/ClassificationApp/CategorizedTopicRenderIndexItem.txt 0644
-data/Applications/ClassificationApp/CategorizedTopicTemplate.txt 0644
 data/Applications/ClassificationApp/CategorizedTopic.txt 0644
 data/Applications/ClassificationApp/CategorizedTopicViewTemplate.txt 0644
 data/Applications/ClassificationApp/CategoryBrowser.txt 0644
@@ -21,7 +20,6 @@ data/Applications/ClassificationApp/CategoryViewTemplate.txt 0644
 data/Applications/ClassificationApp/ChannelManagementCategory.txt 0644
 data/Applications/ClassificationApp/ClassifiedTopicEditTemplate.txt 0644
 data/Applications/ClassificationApp/ClassifiedTopicRenderIndexItem.txt 0644
-data/Applications/ClassificationApp/ClassifiedTopicTemplate.txt 0644
 data/Applications/ClassificationApp/ClassifiedTopic.txt 0644
 data/Applications/ClassificationApp/ClassifiedTopicViewTemplate.txt 0644
 data/Applications/ClassificationApp/CompetitionCategory.txt 0644
@@ -39,8 +37,8 @@ data/Applications/ClassificationApp/EmployeeDirectoryCategory.txt 0644
 data/Applications/ClassificationApp/EventsForum.txt 0644
 data/Applications/ClassificationApp/FeatureRequestCategory.txt 0644
 data/Applications/ClassificationApp/FeedbackForum.txt 0644
-data/Applications/ClassificationApp/FinanceAndPlaningBudgetCategory.txt 0644
-data/Applications/ClassificationApp/FinanceAndPlaning.txt 0644
+data/Applications/ClassificationApp/FinanceAndPlanningBudgetCategory.txt 0644
+data/Applications/ClassificationApp/FinanceAndPlanning.txt 0644
 data/Applications/ClassificationApp/FinanceFormTemplatesCategory.txt 0644
 data/Applications/ClassificationApp/FinanceReportingCategory.txt 0644
 data/Applications/ClassificationApp/ForumCategory.txt 0644
@@ -66,7 +64,6 @@ data/Applications/ClassificationApp/MarketingCategory.txt 0644
 data/Applications/ClassificationApp/MarketingResearchCategory.txt 0644
 data/Applications/ClassificationApp/MeetingRoomReservationCategory.txt 0644
 data/Applications/ClassificationApp/MigrationAndConversionForum.txt 0644
-data/Applications/ClassificationApp/NatSkinSearchViewTemplate.txt 0644
 data/Applications/ClassificationApp/NewsAndAnnouncementsCategory.txt 0644
 data/Applications/ClassificationApp/OpenJobsCategory.txt 0644
 data/Applications/ClassificationApp/OrgChart.txt 0644
@@ -101,6 +98,9 @@ data/Applications/ClassificationApp/SalesCategory.txt 0644
 data/Applications/ClassificationApp/SalesForecastCategory.txt 0644
 data/Applications/ClassificationApp/SalesReportingCategory.txt 0644
 data/Applications/ClassificationApp/SecurityForum.txt 0644
+data/Applications/ClassificationApp/SeoTopicEditTemplate.txt 0644
+data/Applications/ClassificationApp/SeoTopic.txt 0644
+data/Applications/ClassificationApp/SeoTopicViewTemplate.txt 0644
 data/Applications/ClassificationApp/ServicesCategory.txt 0644
 data/Applications/ClassificationApp/ServicesForum.txt 0644
 data/Applications/ClassificationApp/SoftwareCategory.txt 0644
@@ -108,7 +108,6 @@ data/Applications/ClassificationApp/StarterKitCategory.txt 0644
 data/Applications/ClassificationApp/SupportForum.txt 0644
 data/Applications/ClassificationApp/TaggedTopicEditTemplate.txt 0644
 data/Applications/ClassificationApp/TaggedTopicRenderIndexItem.txt 0644
-data/Applications/ClassificationApp/TaggedTopicTemplate.txt 0644
 data/Applications/ClassificationApp/TaggedTopic.txt 0644
 data/Applications/ClassificationApp/TaggedTopicViewTemplate.txt 0644
 data/Applications/ClassificationApp/TestCategorizedTopic1.txt 0644
@@ -129,6 +128,7 @@ data/Applications/ClassificationApp/TestCategory7.txt 0644
 data/Applications/ClassificationApp/TestCategory8.txt 0644
 data/Applications/ClassificationApp/TestCategory9.txt 0644
 data/Applications/ClassificationApp/TestCategory.txt 0644
+data/Applications/ClassificationApp/TestSeoTopic.txt 0644
 data/Applications/ClassificationApp/TestTagging.txt 0644
 data/Applications/ClassificationApp/TestTopic0.txt 0644
 data/Applications/ClassificationApp/TestTopic1.txt 0644
@@ -154,8 +154,8 @@ data/Applications/ClassificationApp/WebSearchAdvanced.txt 0644
 data/Applications/ClassificationApp/WebSearch.txt 0644
 data/Applications/ClassificationApp/WebStatistics.txt 0644
 data/Applications/ClassificationApp/WebTool.txt 0644
+data/Applications/ClassificationApp/WebTopicEditTemplate.txt 0644
 data/Applications/ClassificationApp/WebTopicList.txt 0644
-data/Applications/ClassificationApp/WebTopicViewTemplate.txt 0644
 data/Applications/ClassificationApp/WelcomeMessage.txt 0644
 data/Applications/ClassificationApp/WikiApplication.txt 0644
 data/Applications/ClassificationApp/WikisCategory.txt 0644
@@ -185,6 +185,7 @@ lib/Foswiki/Plugins/ClassificationPlugin/Access.pm 0644
 lib/Foswiki/Plugins/ClassificationPlugin/Category.pm 0644
 lib/Foswiki/Plugins/ClassificationPlugin/Core.pm 0644
 lib/Foswiki/Plugins/ClassificationPlugin/Hierarchy.pm 0644
+lib/Foswiki/Plugins/ClassificationPlugin/JSTreeConnector.pm 0644
 lib/Foswiki/Plugins/ClassificationPlugin.pm 0644
 lib/Foswiki/Plugins/ClassificationPlugin/Services.pm 0644
 locale/ClassificationPlugin/de.po 0644
@@ -326,6 +327,10 @@ pub/System/ClassificationPlugin/jquery.catselector.uncompressed.js 0644
 pub/System/ClassificationPlugin/jquery.classifiedtopic.js 0644
 pub/System/ClassificationPlugin/jquery.classifiedtopic.js.gz 0644
 pub/System/ClassificationPlugin/jquery.classifiedtopic.uncompressed.js 0644
+pub/System/ClassificationPlugin/jquery.hierarchy.js 0644
+pub/System/ClassificationPlugin/jquery.hierarchy.js.gz 0644
+pub/System/ClassificationPlugin/jquery.hierarchy.uncompressed.js 0644
+pub/System/ClassificationPlugin/jquery.tagcloud.uncompressed.js 0644
 pub/System/ClassificationPlugin/jquery.tagselector.js 0644
 pub/System/ClassificationPlugin/jquery.tagselector.js.gz 0644
 pub/System/ClassificationPlugin/jquery.tagselector.uncompressed.js 0644
