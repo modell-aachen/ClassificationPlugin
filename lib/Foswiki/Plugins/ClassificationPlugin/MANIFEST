@@ -189,6 +189,9 @@ lib/Foswiki/Plugins/ClassificationPlugin/JSTreeConnector.pm 0644
 lib/Foswiki/Plugins/ClassificationPlugin.pm 0644
 lib/Foswiki/Plugins/ClassificationPlugin/Services.pm 0644
 locale/ClassificationPlugin/de.po 0644
+locale/ClassificationPlugin/fr.po 0644
+locale/ClassificationPlugin/it.po 0644
+locale/ClassificationPlugin/zh-cn.po 0644
 locale/ClassificationPlugin/Foswiki.pot 0644
 pub/Applications/ClassificationApp/IconSet/anchor.png 0644
 pub/Applications/ClassificationApp/IconSet/application_cascade.png 0644
