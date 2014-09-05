@@ -4,121 +4,131 @@ msgstr ""
 
 #: data/_ClassificationTemplate/WebHome.txt
 msgid "Add more text here"
-msgstr ""
+msgstr "Ajouter un texte"
 
 #: data/Applications/ClassificationApp/ClassifiedTopicEditTemplate.txt
 #: data/_ClassificationTemplate/WebHome.txt
 msgid "Categories"
-msgstr ""
+msgstr "Catégories"
 
 #: data/Applications/ClassificationApp/RenderCategoryEditor.txt
 msgid "Clear"
-msgstr ""
+msgstr "Clair"
 
 #: data/Applications/ClassificationApp/WelcomeMessage.txt
 msgid "Create [[%1][categories]] matching the subject fields covered in this web."
-msgstr ""
+msgstr "Créer [] pour lier les domaines des sujets traités dans le web "
 
 #: data/Applications/ClassificationApp/RenderCategoryFactory.txt
 msgid "Create a new category in the %1 web"
-msgstr ""
+msgstr "Crée une  nouvelle catégorie dans …"
 
 #: data/Applications/ClassificationApp/WelcomeMessage.txt
 msgid "Customize each section on this dashboard to your needs by hovering over the heading. It will display a pencil icon."
 msgstr ""
+"personnaliser chaque section dans le tableau de bord suivant vos besoins  en "
+"passant sur les titres ! Un icones  d'un crayon va etre affiché."
 
 #: data/Applications/ClassificationApp/WelcomeMessage.txt
 msgid "Edit this page and give it a name. This will be used as the display title linking to this web, e.g. in breadcrumbs and search interfaces."
 msgstr ""
+"Modifier cette page et lui affecter un nom .il sera utilisé comme titre "
+"d'affichagerelié a ce web, exemple breadcrumbs et interfaces de recherche"
 
 #: data/Applications/ClassificationApp/RenderCategoryFactory.txt
 msgid "Enter a short summary line describing what this category is about."
-msgstr ""
+msgstr "Entrer un court sommaire decrivant cette catégorie  "
 
 #: data/Applications/ClassificationApp/RenderCategoryFactory.txt
 msgid "Enter the category topic name. This must be a unique ID among all categories within a taxonomy."
 msgstr ""
+"Entrer le nom du sujet de la catégorie . Il doit  etre une unique ID dans "
+"toutes les catégories within a taxanomy"
 
 #: data/Applications/ClassificationApp/RenderCategoryFactory.txt
 msgid "Enter the title of the new category. This is a free-form text that the topic name will be derived from by default."
 msgstr ""
+"Entrer le nom de la nouvelle ctégorie . C'est un texte de format libre dont "
+"le  nom du sujet va etre derivé par defaut   "
 
 #: data/Applications/ClassificationApp/CategoryViewTemplate.txt
 #: data/Applications/ClassificationApp/RenderClassifiedTopicView.txt
 msgid "Filed in %1"
-msgstr ""
+msgstr "Terminé à 1%"
 
 #: data/Applications/ClassificationApp/RenderCategoryBrowser.txt
 #: data/Applications/ClassificationApp/RenderCategoryEditor.txt
 msgid "Filter"
-msgstr ""
+msgstr "Filtre"
 
 #: data/Applications/ClassificationApp/SeoTopic.txt
 msgid "Generate description"
-msgstr ""
+msgstr "Generer la  description"
 
 #: data/Applications/ClassificationApp/SeoTopic.txt
 msgid "Generate keywords"
-msgstr ""
+msgstr "Généerer les mots de passe"
 
 #: data/Applications/ClassificationApp/SeoTopic.txt
 msgid "Generate title"
-msgstr ""
+msgstr "Générer les titres "
 
 #: data/Applications/ClassificationApp/SeoTopicEditTemplate.txt
 msgid "HTML Title"
-msgstr ""
+msgstr "Titre du HTML"
 
 #: data/Applications/ClassificationApp/CategoryEditTemplate.txt
 #: data/Applications/ClassificationApp/RenderCategoryFactory.txt
 #: data/Applications/ClassificationApp/RenderCategorySettings.txt
 msgid "Icon"
-msgstr ""
+msgstr "Icône"
 
 #: data/Applications/ClassificationApp/CategoryEditTemplate.txt
 #: data/Applications/ClassificationApp/RenderCategorySettings.txt
 msgid "Imported Categories"
-msgstr ""
+msgstr "Catégories importés "
 
 #: data/Applications/ClassificationApp/WelcomeMessage.txt
 msgid "Install Foswiki:Extensions/NatSkin for best usability, design and readability of your content."
 msgstr ""
+"Install foswiki: extensions/Natskin pour un usage meilleur, design et "
+"clareté de votre  contenu"
 
 #: data/Applications/ClassificationApp/SeoTopicEditTemplate.txt
 msgid "Meta desciption"
-msgstr ""
+msgstr "Description du meta"
 
 #: data/Applications/ClassificationApp/SeoTopicEditTemplate.txt
 msgid "Meta keywords"
-msgstr ""
+msgstr "Mots de passe du meta"
 
 #: data/Applications/ClassificationApp/Category.txt
 msgid "New"
-msgstr ""
+msgstr "Nouveau"
 
 #: data/Applications/ClassificationApp/RenderCategoryEditor.txt
 msgid "Nothing found"
-msgstr ""
+msgstr "Rien n'a été trouvé"
 
 #: data/Applications/ClassificationApp/CategoryEditTemplate.txt
 msgid "Order"
-msgstr ""
+msgstr "Ordre"
 
 #: data/Applications/ClassificationApp/RenderCategoryFactory.txt
 msgid "Parent category"
-msgstr ""
+msgstr "Catégorie principale"
 
 #: data/Applications/ClassificationApp/RenderCategorySettings.txt
 msgid "Parent topic"
-msgstr ""
+msgstr "Sujet principale"
 
 #: data/_ClassificationTemplate/WebHome.txt
 msgid "Quick links"
-msgstr ""
+msgstr "Liens rapides "
 
 #: data/_ClassificationTemplate/WebLinks.txt
 msgid "Recent Changes"
-msgstr ""
+msgstr "Changement récents"
 
 #: data/_ClassificationTemplate/WebHome.txt
 msgid "Recent changes"
@@ -126,7 +136,7 @@ msgstr ""
 
 #: data/Applications/ClassificationApp/RenderCategoryBrowser.txt
 msgid "Refresh"
-msgstr ""
+msgstr "Rafraichir "
 
 #: data/Applications/ClassificationApp/RenderCategoryBrowser.txt
 msgid "Refresh hierarchy cache on the backend"
@@ -134,48 +144,52 @@ msgstr ""
 
 #: data/Applications/ClassificationApp/RenderTagEditor.txt
 msgid "Related tags"
-msgstr ""
+msgstr "favoris relié "
 
 #: data/Applications/ClassificationApp/SeoTopicEditTemplate.txt
 msgid "SEO"
-msgstr ""
+msgstr "SEO"
 
 #: data/Applications/ClassificationApp/SeoTopicEditTemplate.txt
 msgid "Search engine optimization"
-msgstr ""
+msgstr "Chercher l'optimisation de l'engine"
 
 #: data/Applications/ClassificationApp/RenderCategoryBrowser.txt
 msgid "Search for matching categories"
-msgstr ""
+msgstr "chercher à relier les catégories "
 
 #: data/Applications/ClassificationApp/RenderCategoryFactory.txt
 msgid "Select an icon to be used when displaying this category in a list or hierarchy tree."
 msgstr ""
+"Selectionner une icône pour etre utilisé  lors de  displaing de cette  "
+"catégorie dans une liste ou arbre hierarchique"
 
 #: data/Applications/ClassificationApp/RenderCategoryFactory.txt
 msgid "Select one or more parent categories that the newly created category is subordinated to."
 msgstr ""
+"Selectionner une ou plusieur pricipales catégories  que les nouvelle "
+"catégories y sont reliés"
 
 #: data/Applications/ClassificationApp/RenderClassifiedTopicView.txt
 msgid "Show all tags"
-msgstr ""
+msgstr "Montrer tous les mots clés "
 
 #: data/Applications/ClassificationApp/WelcomeMessage.txt
 msgid "Some tips:"
-msgstr ""
+msgstr "Quelques conseils"
 
 #: data/Applications/ClassificationApp/RenderCategoryFactory.txt
 msgid "Submit"
-msgstr ""
+msgstr "Soumettre"
 
 #: data/Applications/ClassificationApp/RenderCategoryFactory.txt
 msgid "Summary"
-msgstr ""
+msgstr "Sommaire"
 
 #: data/Applications/ClassificationApp/ClassifiedTopicEditTemplate.txt
 #: data/_ClassificationTemplate/WebHome.txt
 msgid "Tags"
-msgstr ""
+msgstr "Mots clés"
 
 #: data/Applications/ClassificationApp/WebAtom.txt
 #: data/Applications/ClassificationApp/WebRss.txt
@@ -190,15 +204,15 @@ msgstr ""
 
 #: data/Applications/ClassificationApp/RenderCategoryFactory.txt
 msgid "Title"
-msgstr ""
+msgstr "Titre"
 
 #: data/Applications/ClassificationApp/RenderCategoryFactory.txt
 msgid "Topic"
-msgstr ""
+msgstr "Sujet"
 
 #: data/_ClassificationTemplate/WebHome.txt
 msgid "Topic list"
-msgstr ""
+msgstr "Liste des sujets"
 
 #: data/_ClassificationTemplate/WebHome.txt
 msgid "Topics tagged \"%1\""
@@ -206,11 +220,11 @@ msgstr ""
 
 #: data/Applications/ClassificationApp/RenderCategoryEditor.txt
 msgid "Undo"
-msgstr ""
+msgstr "Annuler "
 
 #: data/_ClassificationTemplate/WebHome.txt
 msgid "Welcome"
-msgstr ""
+msgstr "aceuillir"
 
 #: data/Applications/ClassificationApp/WelcomeMessage.txt
 msgid "You just created a new and empty web. That's why this dashboard might look at little silly in the beginning. As soon as you start creating more content, it will fill up with hopefully useful information that helps you keeping track of what's going on in this web."
@@ -218,29 +232,29 @@ msgstr ""
 
 #: data/Applications/ClassificationApp/CategorizedTopicEditTemplate.txt
 msgid "categorized topic"
-msgstr ""
+msgstr "Sujets classés "
 
 #: data/Applications/ClassificationApp/CategoryEditTemplate.txt
 msgid "category"
-msgstr ""
+msgstr "Catégorie"
 
 #: data/Applications/ClassificationApp/ClassifiedTopicEditTemplate.txt
 msgid "classified topic"
-msgstr ""
+msgstr "Sujets classés "
 
 #: data/Applications/ClassificationApp/RenderTagEditor.txt
 msgid "found in %1 other topic(s)"
-msgstr ""
+msgstr "Trouver dans 1% d'utres sujets "
 
 #: data/Applications/ClassificationApp/CategoryRenderIndexItem.txt
 #: data/Applications/ClassificationApp/RenderClassifiedTopicView.txt
 msgid "more"
-msgstr ""
+msgstr "Plus"
 
 #: data/Applications/ClassificationApp/WelcomeMessage.txt
 msgid "requires Foswiki:Extensions/EditChapterPlugin"
-msgstr ""
+msgstr "Necessite Foswiki:Extensions/EditChapterPlugin"
 
 #: data/Applications/ClassificationApp/SeoTopicEditTemplate.txt
 msgid "seo topic"
-msgstr ""
+msgstr "Voir sujet"
