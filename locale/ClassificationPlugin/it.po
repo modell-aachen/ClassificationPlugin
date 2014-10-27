@@ -1,3 +1,19 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-10-27 15:00+0200\n"
+"PO-Revision-Date: 2014-10-27 15:00+0200\n"
+"Last-Translator: Modell Aachen <access@modell-aachen.de>\n"
+"Language-Team: Italian <http://translate.modell-"
+"aachen.de/projects/classificationplugin/releasebarcelona/it/>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 1.9\n"
+
 #: data/Applications/ClassificationApp/WelcomeMessage.txt
 msgid "... and finally delete this message."
 msgstr ""
@@ -35,7 +51,7 @@ msgid "Edit this page and give it a name. This will be used as the display title
 msgstr ""
 "Modifica questa pagina e assegnale un nome il quale risulterà il titolo in "
 "evidenza per questa pagina web ad esempio nei collegamenti e nel motore di "
-"ricerca"
+"ricerca."
 
 #: data/Applications/ClassificationApp/RenderCategoryFactory.txt
 msgid "Enter a short summary line describing what this category is about."
@@ -168,7 +184,7 @@ msgstr ""
 msgid "Select one or more parent categories that the newly created category is subordinated to."
 msgstr ""
 "Selezionare una o più categorie superiori a cui la nuova categoria è "
-"assoggettata"
+"assoggettata."
 
 #: data/Applications/ClassificationApp/RenderClassifiedTopicView.txt
 msgid "Show all tags"
@@ -236,7 +252,7 @@ msgstr "Categorie argomenti"
 
 #: data/Applications/ClassificationApp/CategoryEditTemplate.txt
 msgid "category"
-msgstr "Categoria "
+msgstr "Categoria"
 
 #: data/Applications/ClassificationApp/ClassifiedTopicEditTemplate.txt
 msgid "classified topic"
